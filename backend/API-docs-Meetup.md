@@ -254,7 +254,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/me/groups
+  * URL: /api/groups/current
   * Body: none
 
 * Successful Response
