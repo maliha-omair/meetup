@@ -57,7 +57,7 @@ router.get("/", async (req,res,next)=>{
         include:{
             model: Image,
             // as: 'previewImage',
-            attributes:['url'],
+            attributes:[['url','previewImage']],
             limit: 1,        
         },  
             
@@ -73,7 +73,7 @@ router.get("/", async (req,res,next)=>{
         return g;
     });
     res.status(200)
-    res.json(updatedGroups)
+    res.json(groups)
 });
 
 router.get("/current",requireAuth, async (req,res)=>{
@@ -94,7 +94,7 @@ router.get("/:groupId",requireAuth, async (req,res)=>{
         },
         include:[{
             model: Image,
-            attributes: ['id', 'url']
+            attributes: ['id', 'url', ['groupId', 'imageableId']   ]
         },{
             model: User
         }]
@@ -129,7 +129,6 @@ router.post("/:groupId/images",requireAuth, async (req,res)=>{
             groupId: req.params.groupId,
             eventId: null
         })
-        console.log("new Image", newImage)
         res.status(200)
         res.json(newImage)
     }else{
