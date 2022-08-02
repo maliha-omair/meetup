@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { User, Group , Image } = require('../../db/models');
+const { User, Group , Image , Membership } = require('../../db/models');
 const {  requireAuth } = require('../../utils/auth');
 
 app.use(cookieParser());
@@ -198,4 +198,43 @@ router.delete("/:groupId", requireAuth, async(req,res)=>{
     }
 });
 
+router.post("/:groupId/members", requireAuth, async(req,res)=>{
+    const group = await Group.findByPk(req.params.groupId)
+    if(group){
+        const member = await Membership.findOne({
+            where: {
+                memberId: req.user.id
+            }
+        })
+        if(member){
+            if(member.status === 'pending'){
+                res.json({
+                    "message": "Membership has already been requested",
+                    "statusCode": 400
+                });
+            }else{
+                res.json({
+                    "message": "User is already a member of the group",
+                    "statusCode": 400
+                });
+            }
+        }else{
+            const newMember = await Membership.create({
+                groupId: req.params.groupId,
+                memberId: req.user.id,
+                status: 'pending'
+            })
+            console.log("newMember is ", newMember)
+            res.status(200)
+            res.json(newMember)
+        }
+
+    }else{
+        res.status(404)
+        res.json({
+            "message" : "Group couldn't be found",
+            "status" : 404
+        });
+    }
+});
 module.exports = router;

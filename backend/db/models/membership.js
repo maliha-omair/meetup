@@ -15,17 +15,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId'
       })
       Membership.belongsTo(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'memberId'
       })
     }
   }
   Membership.init({
-    userId: DataTypes.INTEGER,
+    memberId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER,
     status: DataTypes.ENUM('co-host','pending','member'),
   }, {
     sequelize,
     modelName: 'Membership',
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"]
+      }
+    },
   });
   return Membership;
 };
