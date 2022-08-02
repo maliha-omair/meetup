@@ -49,14 +49,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Group, {
         foreignKey: 'organizerId'
-      });
+      })
       User.hasMany(models.Membership, {
         foreignKey: 'userId'
-      });
+      })
       User.hasMany(models.Attendee, {
-        foreignKey: 'userId'
-      });
-      User.hasMany(models.Image, {
         foreignKey: 'userId'
       })
     }

@@ -52,10 +52,27 @@ router.post("/",requireAuth,validateNewGroup,async (req,res,next)=>{
 });
 
 router.get("/", async (req,res,next)=>{
-    const groups = await Group.findAll()
+    const result = {}
+    const groups = await Group.findAll({
+        include:{
+            model: Image,
+            as: 'previewImage',
+            attributes:['url'],
+            limit: 1
+        },        
+    })
+    const updatedGroups = groups.map(g => {
+        g= g.toJSON();
+        console.log(g)
+        if(g.previewImage && g.previewImage.length > 0){
+            g.previewImage = g.previewImage[0].url   
+        }
+        return g;
+    });
     res.status(200)
-    res.json(groups)
+    res.json(updatedGroups)
 });
+
 router.get("/current",requireAuth, async (req,res)=>{
     const group = await Group.findAll({
         where: {
@@ -72,9 +89,12 @@ router.get("/:groupId",requireAuth, async (req,res)=>{
         where: {
             id:req.params.groupId
         },
-        include:{
-            model: Image
-        }
+        include:[{
+            model: Image,
+            attributes: ['id', 'url']
+        },{
+            model: User
+        }]
     });
     if(!group){
         res.json({
