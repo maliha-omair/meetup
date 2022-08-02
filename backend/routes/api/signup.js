@@ -30,19 +30,16 @@ const validateSignup = [
 
 // Sign up
 router.post(
-    '/',
-    validateSignup,
-    async (req, res) => {
-      const { firstName, lastName, email, password, username } = req.body;
-      console.log("first Name and last Name ",firstName, " ", lastName)
-      const user = await User.signup({ firstName, lastName, email, username, password });
-  
-      await setTokenCookie(res, user);
-      console.log(user.firstName," ", user.lastName )
-      return res.json({
-        user
-      });
-    }
-  );
+  '/',
+  validateSignup,
+  async (req, res) => {
+    const { firstName, lastName, email, password, username } = req.body;
+    const user = await User.signup({ firstName, lastName, email, username, password });
+    const token = await setTokenCookie(res, user);
+    return res.json({
+      user, token
+    });
+  }
+);
 
 module.exports = router;
