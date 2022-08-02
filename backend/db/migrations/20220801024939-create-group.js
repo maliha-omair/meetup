@@ -31,10 +31,12 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       city: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       state: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
