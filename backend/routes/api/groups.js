@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { User, Group } = require('../../db/models');
+const { User, Group , Image } = require('../../db/models');
 const {  requireAuth } = require('../../utils/auth');
 
 app.use(cookieParser());
@@ -57,5 +57,35 @@ router.get("/", async (req,res,next)=>{
     res.json(groups)
 });
 
-// router.post("/:groupId")
+router.post("/:groupId/images",requireAuth, async (req,res)=>{
+    const group = await Group.findOne({
+        where: {
+            id : req.params.groupId,
+            organizerId : req.user.id 
+        }
+    });
+    console.log("group", group)
+   
+    if(group){
+        const {url} = req.body;
+        console.log("image url", url)
+        console.log("user is", req.user.id)
+        const newImage = await Image.create({
+            url,
+            userId: req.user.id,
+            groupId: req.params.groupId,
+            eventId: null
+        })
+        console.log("new Image", newImage)
+        res.status(200)
+        res.json(newImage)
+    }else{
+        res.status(404)
+        res.json({
+            "message" : "Group couldn't be found",
+            "status" : 404
+        })
+    }
+    
+});
 module.exports = router;

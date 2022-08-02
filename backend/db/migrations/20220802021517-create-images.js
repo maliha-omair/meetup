@@ -22,6 +22,7 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: {
             tableName: 'Groups',
@@ -31,6 +32,7 @@ module.exports = {
       },
       eventId: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: {
             tableName: 'Events',
