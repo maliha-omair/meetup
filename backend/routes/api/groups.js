@@ -56,16 +56,19 @@ router.get("/", async (req,res,next)=>{
     const groups = await Group.findAll({
         include:{
             model: Image,
-            as: 'previewImage',
+            // as: 'previewImage',
             attributes:['url'],
-            limit: 1
-        },        
+            limit: 1,        
+        },  
+            
     })
     const updatedGroups = groups.map(g => {
         g= g.toJSON();
         console.log(g)
-        if(g.previewImage && g.previewImage.length > 0){
-            g.previewImage = g.previewImage[0].url   
+        console.log(g.Images[0].url)
+        if(g.Images[0].url ){
+            g.previewImage = g.Images[0].url   
+            g.Images = null
         }
         return g;
     });
