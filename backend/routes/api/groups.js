@@ -175,4 +175,27 @@ router.put("/:groupId", validateNewGroup, requireAuth, async(req,res)=>{
     }
 });
 
+router.delete("/:groupId", requireAuth, async(req,res)=>{
+    const group = await Group.findOne({
+        where: {
+            id : req.params.groupId,
+            organizerId : req.user.id 
+        }
+    });
+    if(group){
+         group.destroy();
+         res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+         });
+
+    }else{
+        res.status(404)
+        res.json({
+            "message" : "Group couldn't be found",
+            "status" : 404
+        });
+    }
+});
+
 module.exports = router;
