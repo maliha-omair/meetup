@@ -66,6 +66,27 @@ router.get("/current",requireAuth, async (req,res)=>{
     res.json(group)
 });
 
+router.get("/:groupId",requireAuth, async (req,res)=>{
+
+    const group = await Group.findOne({
+        where: {
+            id:req.params.groupId
+        },
+        include:{
+            model: Image
+        }
+    });
+    if(!group){
+        res.json({
+            "message": "Group couldn't be found",
+            "statusCode": 404
+        })
+    }else{
+        res.json(group)
+    }
+    
+});
+
 router.post("/:groupId/images",requireAuth, async (req,res)=>{
     const group = await Group.findOne({
         where: {
