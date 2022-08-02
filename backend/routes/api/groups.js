@@ -56,6 +56,15 @@ router.get("/", async (req,res,next)=>{
     res.status(200)
     res.json(groups)
 });
+router.get("/current",requireAuth, async (req,res)=>{
+    const group = await Group.findAll({
+        where: {
+            organizerId: req.user.id
+        }
+    });
+    res.status(200)
+    res.json(group)
+});
 
 router.post("/:groupId/images",requireAuth, async (req,res)=>{
     const group = await Group.findOne({
@@ -88,4 +97,5 @@ router.post("/:groupId/images",requireAuth, async (req,res)=>{
     }
     
 });
+
 module.exports = router;
