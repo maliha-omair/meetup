@@ -141,4 +141,38 @@ router.post("/:groupId/images",requireAuth, async (req,res)=>{
     
 });
 
+router.put("/:groupId", validateNewGroup, requireAuth, async(req,res)=>{
+    const { groupId } = req.params
+    const {name,about,type,private,city,state} = req.body;
+    const group = await Group.findOne({
+        where: {
+            id : req.params.groupId,
+            organizerId : req.user.id 
+        }
+    });
+    if(group){
+        const updatedGroup = await group.update({
+            name,
+            about,
+            type,
+            private,
+            city,
+            state
+        },{
+            where: {
+                id: groupId
+            }
+        });
+        console.log(updatedGroup)
+        res.status(200);
+        res.json(updatedGroup)
+    }else{
+        res.status(404)
+        res.json({
+            "message" : "Group couldn't be found",
+            "status" : 404
+        })
+    }
+});
+
 module.exports = router;
