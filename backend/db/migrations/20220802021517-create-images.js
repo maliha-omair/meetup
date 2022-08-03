@@ -12,13 +12,33 @@ module.exports = {
         type: Sequelize.STRING
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users',
+          },
+          key: 'id'
+        },
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: {
+            tableName: 'Groups',
+          },
+          key: 'id'
+        },
       },
       eventId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: {
+            tableName: 'Events',
+          },
+          key: 'id'
+        },
       },
       createdAt: {
         allowNull: false,
