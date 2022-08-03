@@ -61,7 +61,8 @@ router.get(
       const { user } = req;
       if (user) {
         return res.json({
-          user: user.toSafeObject()
+          user: {...user.toSafeObject(), firstName: user.firstName,
+            lastName:user.lastName}
         });
       } else return res.json({});
     }

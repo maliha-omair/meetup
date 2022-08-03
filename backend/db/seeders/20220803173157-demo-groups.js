@@ -1,45 +1,23 @@
 'use strict';
+const { faker } = require('@faker-js/faker');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-
-    await queryInterface.bulkInsert('Groups',
-      [
-
-        {
-          name: 'MCNA Summer Camp',
-          organizerId: 5,
-          about: 'Join summer camp and help children to explore in fun learning way',
-          type: "In person",
-          private: true,
-          city: "ChesterBrook",
-          state: "PA"
-        },
-        {
-          name: 'Relief work',
-          organizerId: 2,
-          about: 'Join hands with helping hands to help our future (our children)',
-          type: "Online",
-          private: true,
-          city: "Collegeville",
-          state: "PA"
-        },
-        {
-          name: 'YMJ Outdoor fun',
-          organizerId: 6,
-          about: 'Educate you children in fun learning way through YMJ ',
-          type: "In person",
-          private: false,
-          city: "Devon",
-          state: "PA"
-        },
-      ], {});
+    let groups = [];
+    for(let i=0; i<5; i++){
+      groups.push({
+        name: faker.random.words(3),
+        organizerId: 5,
+        about: faker.lorem.words(70),
+        type: i%2===0?"In person":"Online",
+        private: true,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
+    }
+    await queryInterface.bulkInsert('Groups',groups, {});
   },
-
-
   async down(queryInterface, Sequelize) {
-  
-    await queryInterface.bulkDelete('Groups', null, {});
-   
+    await queryInterface.bulkDelete('Groups', null, {});   
 }
 };
