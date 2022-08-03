@@ -7,7 +7,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { User, Group, Image, Membership, Venue } = require('../../db/models');
 const { Op } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
-const membership = require('../../db/models/membership');
+const { isCoHost, isGroup, isOrganizer, notAuthorizedErr } = require('../../utils/common');
 
 app.use(cookieParser());
 
@@ -36,11 +36,26 @@ const validateNewGroup = [
     handleValidationErrors
 ];
 
-async function isGroup(groupId) {
-    const isGroup = await Group.findByPk(groupId);
-    if (!isGroup || isGroup.length < 1) return false
-    else return true
-}
+const validateNewVenue = [
+    check('address')
+        .exists({ checkFalsy: false })
+        .withMessage("Street address is required"),
+    check('city')
+        .exists({ checkFalsy: false })
+        .withMessage("City is required"),
+    check('state')
+        .exists({ checkFalsy: false })
+        .withMessage("state is required"),
+    check('lat')
+        .isNumeric({ min: -90, max: 90 })
+        .withMessage("Latitude is not valid"),
+    check('lng')
+        .isNumeric({ min: -180, max: 180 })
+        .withMessage("Longitude is not valid"),
+    handleValidationErrors
+];
+
+
 
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
     // let user = await User.findByPk(req.user.id);
@@ -197,16 +212,6 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
 });
 
 // MemberShip
-async function isOrganizer(groupId, user) {
-    const isOrganizer = await Group.findOne({
-        where: {
-            Id: groupId,
-            organizerId: user.id
-        }
-    });
-    if (!isOrganizer || isOrganizer.length < 1) return false
-    else return true
-}
 
 router.get("/:groupId/members", async (req, res, next) => {
     const groupId = req.params.groupId
@@ -284,17 +289,7 @@ router.post("/:groupId/members", requireAuth, async (req, res, next) => {
 
 });
 
-async function isCoHost(groupId, user) {
-    const isHost = await Membership.findOne({
-        where: {
-            groupId: groupId,
-            memberId: user.id,
-            status: "co-host"
-        }
-    });
-    if (!isHost || isHost.length < 1) return false
-    else return true
-}
+
 
 router.put("/:groupId/members", requireAuth, async (req, res, next) => {
     const { memberId, status } = req.body;
@@ -327,7 +322,7 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
 });
 
 router.delete(":groupId/membership", requireAuth, async (req, res, next) => {
-    const { groupId } = req.params.groupId;
+    const  groupId  = req.params.groupId;
     const { memberId } = req.body;
     if (!isGroup(groupId)) return groupNotFoundError(req, res, next);
 
@@ -356,20 +351,49 @@ router.delete(":groupId/membership", requireAuth, async (req, res, next) => {
 
 //Venues
 
-router.get("/:groupId/venues", requireAuth, async (req,res,next){
-    const {groupId} = req.params.groupId;
-    if(isOrganizer(groupId,req.user) || isCoHost(groupId, req.user)){
-        const venue = Venue.findAll({
+router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
+ 
+    const  groupId = req.params.groupId;
+    console.log("group Id is ", groupId);
+    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
+    if ((await isOrganizer(groupId, req.user)) || (await isCoHost(groupId, req.user))) {
+        const venue = await Venue.findAll({
             where: {
                 groupId: groupId
             }
-        })
+        })        
         res.status(200)
         res.json(venue)
-    } 
+    }else{     
+        return notAuthorizedErr(req,res,next);
+    }
 });
 
+router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, next) => {
+    
+    console.log("in here")
+    const {address,city,state,lat,lng} = req.body;
+    const groupId = req.params.groupId;
+    
+    if(!isGroup(groupId)) return groupNotFoundError(req,res,next);
 
+    if (isOrganizer(groupId, req.user) || isCoHost(groupId, req.user)) {
+        const newVenue = await Venue.create({
+            groupId,
+            address,
+            city,
+            state,
+            lat,
+            lng
+        });
+        res.status(200);
+        res.json(newVenue);
+    }else{
+        return notAuthorizedErr(req,res,next)
+    }
+   
+
+});
 
 function membershipNotExistsErr(req, _res, next) {
     const err = new Error("Membership does not exist for this User");
@@ -413,5 +437,9 @@ function groupNotFoundError(req, _res, next) {
     err.status = 404;
     return next(err);
 }
+
+// exports.isGroup = isGroup;
+// exports.isCoHost = isCoHost;
+// exports.isOrganizer = isOrganizer;
 
 module.exports = router;
