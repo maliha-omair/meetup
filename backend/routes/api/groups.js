@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { User, Group, Image, Membership } = require('../../db/models');
+const { User, Group, Image, Membership, Venue } = require('../../db/models');
 const { Op } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
 const membership = require('../../db/models/membership');
@@ -353,6 +353,23 @@ router.delete(":groupId/membership", requireAuth, async (req, res, next) => {
         });
     }
 });
+
+//Venues
+
+router.get("/:groupId/venues", requireAuth, async (req,res,next){
+    const {groupId} = req.params.groupId;
+    if(isOrganizer(groupId,req.user) || isCoHost(groupId, req.user)){
+        const venue = Venue.findAll({
+            where: {
+                groupId: groupId
+            }
+        })
+        res.status(200)
+        res.json(venue)
+    } 
+});
+
+
 
 function membershipNotExistsErr(req, _res, next) {
     const err = new Error("Membership does not exist for this User");
