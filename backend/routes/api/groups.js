@@ -36,6 +36,11 @@ const validateNewGroup = [
     handleValidationErrors
 ];
 
+async function isGroup(groupId){
+    const isGroup = await Group.findByPk(groupId);
+    if(!isGroup || isGroup.length < 1) return false
+    else return true 
+}
 
 router.post("/",requireAuth,validateNewGroup,async (req,res,next)=>{
     // let user = await User.findByPk(req.user.id);
@@ -91,6 +96,7 @@ router.get("/current",requireAuth, async (req,res)=>{
 
 router.get("/:groupId",requireAuth, async (req,res)=>{
 
+
     const group = await Group.findOne({
         where: {
             id:req.params.groupId
@@ -102,7 +108,7 @@ router.get("/:groupId",requireAuth, async (req,res)=>{
             model: User
         }]
     });
-    if(!group){
+    if(!group || group.length < 1){
         res.json({
             "message": "Group couldn't be found",
             "statusCode": 404
@@ -142,7 +148,7 @@ router.post("/:groupId/images",requireAuth, async (req,res)=>{
     
 });
 
-router.put("/:groupId", validateNewGroup, requireAuth, async(req,res)=>{
+router.put("/:groupId", validateNewGroup, requireAuth, async(req,res,next)=>{
     const { groupId } = req.params
     const {name,about,type,private,city,state} = req.body;
     const group = await Group.findOne({
@@ -167,11 +173,7 @@ router.put("/:groupId", validateNewGroup, requireAuth, async(req,res)=>{
         res.status(200);
         res.json(updatedGroup)
     }else{
-        res.status(404)
-        res.json({
-            "message" : "Group couldn't be found",
-            "status" : 404
-        })
+         groupNotFoundError(req,res,next);
     }
 });
 
@@ -190,11 +192,7 @@ router.delete("/:groupId", requireAuth, async(req,res)=>{
          });
 
     }else{
-        res.status(404)
-        res.json({
-            "message" : "Group couldn't be found",
-            "status" : 404
-        });
+        groupNotFoundError(req,res,next);
     }
 });
 
@@ -206,14 +204,22 @@ async function isOrganizer(groupId,user){
             organizerId : user.id
         }
     });
-    if(isOrganizer) return true
-    else return false
+    if(!isOrganizer || isOrganizer.length < 1) return false
+    else return true
 }
 
 router.get("/:groupId/members",  async(req,res,next)=>{
     const groupId = req.params.groupId
     let result = {}
-    
+    const hasGroup = await Membership.findAll({
+        where:{
+            groupId:groupId
+        }
+    });
+    console.log("groupId is ",groupId);
+    console.log("group is ", hasGroup)
+    if(!hasGroup || hasGroup.length < 1) return groupNotFoundError(req,res,next);
+
     if(!isOrganizer(groupId,req.user)) {
         const members = await User.findAll({
             include: {
@@ -249,8 +255,8 @@ router.post("/:groupId/members", requireAuth, async(req,res,next)=>{
     const memberId = req.user.id
     const status = "pending"
 
-    const group = await Group.findByPk(groupId);
-    if(!group){
+   
+    if(!isGroup(groupId)){
        return groupNotFoundError(req,res,next)
     }
 
@@ -286,8 +292,8 @@ async function isCoHost(groupId,user){
             status : "co-host"
         }
     });
-    if(isHost) return true
-    else return false
+    if(!isHost || isHost.length < 1) return false
+    else return true
 }
 
 router.put("/:groupId/members", requireAuth, async(req,res,next)=>{
@@ -305,25 +311,56 @@ router.put("/:groupId/members", requireAuth, async(req,res,next)=>{
     
     const user = await User.findByPk(memberId);
     if(!group) return groupNotFoundError(req,res,next);    
-    if(!user) return userNotFoundError(req,res,next);
+    if(!user || user.length < 1) return userNotFoundError(req,res,next);
     if(!group.Memberships) return membershipNotFoundErr(req,res,next); 
     if(group.Memberships.length !== 1) return membershipNotFoundErr(req,res,next); 
     
     if(status === "co-host" && group.Memberships[0].status === "member" && isOrganizer(groupId, req.user)){
-        console.log("status to change is co-host, user has status member and he is organizer")
         group.Memberships[0].status = "co-host"
         await group.Memberships[0].save();
-        res.json(membership);
+        res.json(group.Memberships[0]);
     }else if(status === "member" && group.Memberships[0].status === "pending" && (isOrganizer(groupId, req.user) || isCoHost(groupId,req.user))){
-        console.log("status to change is member, user has status pending and he is organizer")
         group.Memberships[0].status = "member";
         await group.Memberships[0].save();
         res.json(group.Memberships[0]);
-    };
-    
-              
+    };                 
 });
 
+router.delete(":groupId/membership", requireAuth, async(req,res,next)=>{
+    const {groupId} = req.params.groupId;
+    const {memberId} = req.body;
+    if(!isGroup(groupId)) return groupNotFoundError(req,res,next);
+    
+    const user = await User.findByPk(memberId);
+    if(!user) return userNotFoundError(req,res,next);
+    
+    const membership = await Membership.findOne({
+        where: {
+            memberId: memberId
+        }
+    });
+    if(!membership) return membershipNotExistsErr(req,res,next);
+    if(membership.memberId === req.user.id    || isCoHost(groupId,req.user) ){
+        membership.destroy();
+        res.json({
+            "message": "Successfully deleted membership from group",
+            "status" : 200
+        });
+    }else{
+        res.json({
+            "message": "Unauthorized",
+            "status" : 401
+        });
+    }    
+});
+
+function membershipNotExistsErr(req,_res,next){
+    const err = new Error("Membership does not exist for this User");
+    err.title = 'Not Found';
+    err.errors = ["Not a member"];
+    err.status = 404;
+    return next(err);
+}
 function userAlreadyMemberErr(req,_res, next) {
     const err = new Error("User is already a member of the group");
     err.title = 'Bad Request';
