@@ -71,6 +71,7 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
+  console.error(err)
   res.status(err.status || 500);
   res.json({
     // title: err.title || 'Server Error',
