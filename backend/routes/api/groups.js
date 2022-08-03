@@ -96,7 +96,7 @@ router.get("/current", requireAuth, async (req, res) => {
 
 router.get("/:groupId", requireAuth, async (req, res) => {
 
-
+    console.log("group ID ", req.params.groupId)
     const group = await Group.findOne({
         where: {
             id: req.params.groupId
