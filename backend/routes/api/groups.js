@@ -85,7 +85,7 @@ router.get("/", async (req, res, next) => {
         include: [
             {
                 model: Membership,
-                attributes: ['id']
+                attributes: []
             }, {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
