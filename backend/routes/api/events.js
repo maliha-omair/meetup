@@ -4,6 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op, Sequelize} = require('sequelize')
 const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 
 router.get("/", async (req, res, next) => {
@@ -83,10 +84,70 @@ router.get("/:eventId", async (req, res, next) => {
 
 });
 
-router.get("/:eventId/attendees",requireAuth, async (req,res,next)=>{
+router.get("/:eventId/attendees", async (req,res,next)=>{
+    const eventId = req.params.eventId;
+    const event = await Event.findByPk(eventId);
+    
+    if(!event) return eventNotFoundError(req,res,next);
+
+    const groupId = event.groupId;
+
+
+    if((await isOrganizer(groupId,req.user)) || ((await isCoHost(groupId,req.user)))){
+        const attendance = await Attendee.findAll({
+            where: {
+                eventId: eventId               
+            },
+            attributes: ['eventId','userId','status']
+        });
+        res.status(200);
+        res.json(attendance);
+    }else if(!(await isOrganizer(groupId,req.user)) || (!(await isCoHost(groupId,req.user)))){
+        const attendance = await Attendee.findAll({
+            
+            where: {
+                eventId: eventId,
+                status: {
+                    [Op.notIn]: ['pending']
+                }
+            },
+            attributes: ['eventId','userId','status']
+        });
+        res.status(200);
+        res.json(attendance);
+    }
 
 });
+router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
+    const eventId = req.params.eventId
+   
+    const userId = req.body.userId;
 
+    const event = await Event.findByPk(eventId)
+    if(!event) return eventNotFoundError(req,res,next);
+
+    const attendance = await Attendee.findOne({
+        where:{
+            eventId: eventId,
+            userId : userId
+        }        
+    });
+
+    
+    if(!attendance) return attendanceNotFoundErr(req,res,next)
+
+    const groupId = attendance.groupId;
+    console.log("current user and deleted user are ",req.user.id, "  ", attendance.userId);
+    if((req.user.id === attendance.userId) || (await isOrganizer(groupId,req.user) || (await isCoHost(groupId,req.user)))){
+        await attendance.destroy();
+        res.status(200);
+        res.json({
+            "message": "Successfully deleted attendance from event"
+        })
+    }else{
+        return notUserOrOrganizerErr(req,res,next)
+    }
+});
 router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId;
     const event = await Event.findByPk(eventId);
@@ -147,13 +208,21 @@ router.put("/:eventId/attendees", requireAuth, async (req, res, next) => {
     if (!attendee) return attendanceNotFoundErr(req, res, next);    
     if (status === "pending") cannotChangeStatusError(req,res,next);
     const groupId = event.groupId;
-    if(!(await isOrganizer(groupId,req.user))) notAuthorizedErr(req,res,next);
+    if(!(await isOrganizer(groupId,req.user)) || !(await isCoHost(groupId,user))) notAuthorizedErr(req,res,next);
     attendee.status = status;
     attendee.save();
     res.status(200);
     res.json(attendee);   
 });
 
+
+function notUserOrOrganizerErr(req, _res, next) {
+    const err = new Error("Only the User or organizer may delete an Attendance");
+    err.title = 'Forbidden';
+    err.errors = ["not authorized"];
+    err.status = 403;
+    return next(err);
+}
 function userNotFoundError(req, _res, next) {
     const err = new Error("Validation Error");
     err.title = 'Validation Error';

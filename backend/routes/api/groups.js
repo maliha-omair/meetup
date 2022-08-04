@@ -5,7 +5,7 @@ const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { User, Group, Image, Membership, Venue, Event } = require('../../db/models');
-const { Op, Sequelize, ValidationError } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
 const { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 
@@ -258,7 +258,7 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
         }
     });
     if (group) {
-        group.destroy();
+        await group.destroy();
         res.json({
             "message": "Successfully deleted",
             "statusCode": 200
@@ -279,11 +279,23 @@ router.get("/:groupId/members", async (req, res, next) => {
             groupId: groupId
         }
     });
-    console.log("groupId is ", groupId);
-    console.log("group is ", hasGroup)
+    
     if (!hasGroup || hasGroup.length < 1) return groupNotFoundError(req, res, next);
 
-    if (!isOrganizer(groupId, req.user)) {
+
+    if((await isOrganizer(groupId, req.user)) || (await isCoHost(groupId,req.user))){
+        const members = await User.findAll({
+            include: {
+                model: Membership,
+                attributes: ['status'],
+                where: {
+                    groupId: groupId
+                }
+            },
+        })
+        result.Members = members;
+        res.json(result);
+    }else if(!(await isOrganizer(groupId, req.user))){
         const members = await User.findAll({
             include: {
                 model: Membership,
@@ -297,20 +309,9 @@ router.get("/:groupId/members", async (req, res, next) => {
         })
         result.Members = members;
         res.json(result);
-    } else {
-        const members = await User.findAll({
-            include: {
-                model: Membership,
-                attributes: ['status'],
-                where: {
-                    groupId: groupId
-                }
-            },
-        })
-        result.Members = members;
-        res.json(result);
     }
-})
+   
+});
 
 router.post("/:groupId/members", requireAuth, async (req, res, next) => {
 
@@ -396,7 +397,7 @@ router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
     });
     if (!membership) return membershipNotExistsErr(req, res, next);
     if (membership.memberId === req.user.id || isCoHost(groupId, req.user)) {
-        membership.destroy();
+        await membership.destroy();
         res.json({
             "message": "Successfully deleted membership from group",
             "status": 200
