@@ -241,7 +241,13 @@ Returns all the groups.
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36",
           "numMembers": 10,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "groupId": 1,
+              "url": "image url"
+            }
+          ]
         }
       ]
     }
@@ -278,7 +284,13 @@ Returns all the groups.
           "createdAt": "2021-11-19 20:39:36",
           "updatedAt": "2021-11-19 20:39:36",
           "numMembers": 10,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "groupId": 1,
+              "url": "image url"
+            }
+          ]
         }
       ]
     }
@@ -316,7 +328,7 @@ Returns the details of a group specified by its id.
       "Images": [
         {
           "id": 1,
-          "imageableId": 1,
+          "groupId": 1,
           "url": "image url"
         }
       ],
@@ -811,10 +823,16 @@ Returns all the events.
           "startDate": "2021-11-19 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 8,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
-            "name": "Evening Tennis on the Water",
+            "name": "Evening Tengenis on the Water",
             "city": "New York",
             "state": "NY"
           },
@@ -829,7 +847,13 @@ Returns all the events.
           "startDate": "2021-11-20 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 4,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
             "name": "Evening Tennis on the Water",
@@ -874,7 +898,13 @@ Returns all the events of a group specified by its id
           "startDate": "2021-11-19 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 8,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
             "name": "Evening Tennis on the Water",
@@ -892,7 +922,13 @@ Returns all the events of a group specified by its id
           "startDate": "2021-11-20 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 4,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
             "name": "Evening Tennis on the Water",
@@ -1353,7 +1389,7 @@ Request a new membership for a group specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:groupId/members
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1425,7 +1461,7 @@ Change the status of a membership for a group specified by id.
     * Current User must already be the organizer
 * Request
   * Method: PUT
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:groupId/members
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1519,7 +1555,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: /api/groups/:groupId/membership
+  * URL: /api/groups/:groupId/members
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1965,7 +2001,13 @@ Return events filtered by query parameters.
           "startDate": "2021-11-19 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 8,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
             "name": "Evening Tennis on the Water",
@@ -1983,7 +2025,13 @@ Return events filtered by query parameters.
           "startDate": "2021-11-20 20:00:00",
           "endDate": "2021-11-19 22:00:00",
           "numAttending": 4,
-          "previewImage": "image url",
+          "Images": [
+            {
+              "id": 1,
+              "eventId": 1,
+              "url": "image url"
+            }
+          ],
           "Group": {
             "id": 1,
             "name": "Evening Tennis on the Water",

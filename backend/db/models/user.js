@@ -34,7 +34,18 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope('currentUser').findByPk(user.id);
       }
     }
-    static async signup({ firstName, lastName, username, email, password }) {
+
+    static async userExists(email){
+      const user = await User.findOne({
+        where:{
+          email: email
+        }
+      });
+      if(user) return true;
+      else return false;
+    }
+    
+    static async signup({ firstName, lastName, username, email, password }) {      
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
@@ -47,15 +58,9 @@ module.exports = (sequelize, DataTypes) => {
     }
     static associate(models) {
       // define association here
-      User.hasMany(models.Group, {
-        foreignKey: 'organizerId'
-      })
-      User.hasMany(models.Membership, {
-        foreignKey: 'memberId'
-      })
-      User.hasMany(models.Attendee, {
-        foreignKey: 'userId'
-      })
+      User.hasMany(models.Group, {foreignKey: 'organizerId', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Membership, {foreignKey: 'memberId', onDelete: 'CASCADE', hooks: true })
+      User.hasMany(models.Attendee, { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true })
     }
   }
   User.init({
