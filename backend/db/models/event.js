@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'venueId'
       })
       Event.hasMany(models.Attendee, {foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true})
+      Event.hasMany(models.Image, {foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true});
     }
   }
   Event.init({
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     type: DataTypes.ENUM('In person','Online'),
     capacity: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
+    price: DataTypes.FLOAT,
     startDate: {
       type:DataTypes.DATE,
       defaultValue: sequelize.literal("CURRENT_TIMESTAMP")

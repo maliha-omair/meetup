@@ -4,7 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { User, Group, Image, Membership, Venue } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
-const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError } = require('../../utils/common');
+const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 // const group = require("./groups")
 
 
@@ -35,7 +35,7 @@ router.put("/:venueId", requireAuth,validateNewVenue, async (req, res, next) => 
     const venueId = req.params.venueId;
     const venue = await Venue.findByPk(venueId);
 
-    if (!venue) return venueNotFoundError;
+    if (!venue) return venueNotFoundError(req,res,next);
 
     if ((await isOrganizer(venue.groupId, req.user)) || (await isCoHost(venue.groupId, req.user))) {
         venue.address = address;

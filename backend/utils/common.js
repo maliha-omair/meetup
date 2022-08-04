@@ -1,5 +1,5 @@
 
-const { User, Group, Image, Membership, Venue } = require('../db/models');
+const { User, Group, Image, Membership, Venue, Event } = require('../db/models');
 
 async function isGroup(groupId) {
     const group = await Group.findByPk(groupId);
@@ -29,7 +29,11 @@ async function isOrganizer(groupId, user) {
     if (!isOrganizer || isOrganizer.length < 1) return false
     else return true
 }
-
+async function isEvent(eventId) {
+    const event = await Event.findByPk(eventId);
+    if (!event ) return false
+    else return true
+}
 function venueNotFoundError(req, _res, next) {
     const err = new Error("Group couldn't be found");
     err.status = 404;
@@ -44,4 +48,4 @@ function notAuthorizedErr(req, _res, next) {
     return next(err);
 }
 
-module.exports = { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError };
+module.exports = { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent };
