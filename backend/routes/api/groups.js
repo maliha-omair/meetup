@@ -187,6 +187,7 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
 
 router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) => {
     const { groupId } = req.params
+    if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
     const { name, about, type, private, city, state } = req.body;
     const group = await Group.findOne({
         where: {
