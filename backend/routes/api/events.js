@@ -83,6 +83,36 @@ router.get("/:eventId", async (req, res, next) => {
 
 });
 
+// router.post("/:eventId/images", requireAuth, async (req, res, next) => {
+//     const eventId = req.params.eventId;
+//     const { url } = req.body;
+
+//     if (!(await isEvent(eventId))) return eventNotFoundError(req, res, next);
+//     if (!(await isOrganizer(groupId, req.user))) return notAuthorizedErr(req, res, next)
+
+//     const event = await Group.findOne({
+//         where: {
+//             id: eventId,
+//             organizerId: req.user.id
+//         }
+//     });
+
+//     const newImage = await Image.create({
+//         url,
+//         userId: req.user.id,
+//         groupId: req.params.groupId,
+//         eventId: null
+//     })
+
+//     let result = {}
+//     result.id = newImage.id;
+//     result.imageableId = parseInt(groupId);
+//     result.url = url;
+//     res.status(200);
+//     res.json(result);
+// });
+
+
 function eventNotFoundError(req, _res, next) {
     const err = new Error("Event couldn't be found");
     err.title = 'Not Found';
