@@ -364,7 +364,7 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
 
     const user = await User.findByPk(memberId);
     if (!group) return groupNotFoundError(req, res, next);
-    if (!user || user.length < 1) return userNotFoundError(req, res, next);
+    if (!user) return userNotFoundError(req, res, next);
     if (!group.Memberships) return membershipNotFoundErr(req, res, next);
     if (group.Memberships.length !== 1) return membershipNotFoundErr(req, res, next);
     if (status === "pending") throw new ValidationError("cannot change status to pending");
@@ -543,7 +543,7 @@ function userAlreadyRequestedErr(req, _res, next) {
     const err = new Error("Membership has already been requested");
     err.title = 'Bad Request';
     err.errors = ["Membership has already been requested"];
-    err.status = 404;
+    err.status = 400;
     return next(err);
 }
 function membershipNotFoundErr(req, _res, next) {
