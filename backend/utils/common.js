@@ -32,8 +32,6 @@ async function isOrganizer(groupId, user) {
 
 function venueNotFoundError(req, _res, next) {
     const err = new Error("Group couldn't be found");
-    err.title = 'Not Found';
-    err.errors = ['Not Found'];
     err.status = 404;
     return next(err);
 }

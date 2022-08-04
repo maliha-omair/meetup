@@ -17,9 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.belongsTo(models.Venue, {
         foreignKey: 'venueId'
       })
-      Event.hasMany(models.Attendee, {
-        foreignKey: 'eventId'
-      })
+      Event.hasMany(models.Attendee, {foreignKey: 'eventId', onDelete: 'CASCADE', hooks: true})
     }
   }
   Event.init({
