@@ -4,7 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { User, Group, Image, Membership, Venue } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
-const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError } = require('../../utils/common');
+const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 // const group = require("./groups")
 
 

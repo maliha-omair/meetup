@@ -4,10 +4,10 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { User, Group, Image, Membership, Venue } = require('../../db/models');
+const { User, Group, Image, Membership, Venue, Event } = require('../../db/models');
 const { Op, Sequelize, ValidationError } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
-const { isCoHost, isGroup, isOrganizer, notAuthorizedErr } = require('../../utils/common');
+const { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 
 app.use(cookieParser());
 
@@ -55,8 +55,43 @@ const validateNewVenue = [
     handleValidationErrors
 ];
 
-
-
+const validateNewEvent = [
+    check('venueId')
+        .custom((value, {req}) => {
+            
+                   return Venue.findAll({
+                        where : {id: value}
+                    }).then(venue => {
+                        if (venue.length <= 0) {
+                            return Promise.reject('Venue does not exist')
+                        }
+                    })              
+        }),       
+    
+    check('name')
+        .isLength({ min: 5 })
+        .withMessage('Name must be at least 5 characters'),
+    check('type')
+        .isIn(['Online', 'In person'])
+        .withMessage('Type must be Online or In person'),
+    check('capacity')
+        .isNumeric()
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .isNumeric()
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({ checkFalsy: false })
+        .withMessage("Description is required"),
+    check('startDate')
+        // .isDate()
+        .isAfter()
+        .withMessage("Start date must be in the future"),
+    // check('endDate')
+    //     .isBefore('startDate')
+    //     .withMessage("End date is less than start date"),
+    handleValidationErrors
+];
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
    
     const { name, about, type, private, city, state } = req.body;
@@ -417,6 +452,77 @@ router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, 
         return notAuthorizedErr(req, res, next)
     }
 });
+
+// Events
+router.get("/:groupId/events", async (req, res, next) => {
+    const groupId = req.params.groupId;
+    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next)
+
+    const event = await Event.findAll({
+        where :{
+            groupId :groupId
+        },
+        // attributes: {
+
+        //     include: [
+
+        //         [Sequelize.fn('COUNT', Sequelize.col('Memberships.id')), 'numMembers']
+        //     ]
+        // },
+        include: [
+            // {
+            //     model: Membership,
+            //     attributes: []
+            // },
+             {
+                model: Image,
+                attributes: ['id', 'groupId', 'url']
+            },
+            {
+                model: Group,
+                attributes:['id','name','city','state']
+            },
+            {
+                model: Venue,
+                attributes:['id','city','state']
+            }
+        ],
+        // group: ['Group.id','Images.id']
+
+    })
+    res.status(200)
+    res.json(event)
+
+});
+
+
+
+
+router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,next)=>{
+    console.log("in here")
+    const groupId = req.params.groupId;
+    const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
+    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
+    if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
+        const newEvent = await Event.create({
+            groupId,
+            venueId,
+            name,
+            description,
+            type,
+            capacity,
+            price,
+            startDate,
+            endDate
+        });
+        res.status(200);
+        res.json(newEvent);      
+    } else {
+        return notAuthorizedErr(req, res, next)
+    }
+    
+});
+
 
 
 function membershipNotExistsErr(req, _res, next) {
