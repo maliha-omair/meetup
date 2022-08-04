@@ -35,7 +35,7 @@ router.put("/:venueId", requireAuth,validateNewVenue, async (req, res, next) => 
     const venueId = req.params.venueId;
     const venue = await Venue.findByPk(venueId);
 
-    if (!venue) return venueNotFoundError;
+    if (!venue) return venueNotFoundError(req,res,next);
 
     if ((await isOrganizer(venue.groupId, req.user)) || (await isCoHost(venue.groupId, req.user))) {
         venue.address = address;

@@ -5,7 +5,7 @@ const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { User, Group, Image, Membership, Venue } = require('../../db/models');
-const { Op, Sequelize } = require('sequelize')
+const { Op, Sequelize, ValidationError } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
 const { isCoHost, isGroup, isOrganizer, notAuthorizedErr } = require('../../utils/common');
 
@@ -90,7 +90,7 @@ router.get("/", async (req, res, next) => {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
             }],
-        group: ['Group.id','Images.id','Images.groupId','Images.url']
+        group: ['Group.id','Images.id']
 
     })
     res.status(200)
@@ -115,7 +115,7 @@ router.get("/current", requireAuth, async (req, res) => {
             model: Image,
             attributes: ['id', 'groupId', 'url']
         }],
-        group: 'Group.id'
+        group: ['Group.id','Images.id']
     });
 
     res.status(200)
@@ -148,7 +148,7 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
         }, {
             model: Venue
         }],
-        group: 'Group.id'
+        group: ['Group.id','Images.id','Venues.id']
     });
     res.status(200)
     res.json(group)
@@ -284,7 +284,7 @@ router.post("/:groupId/members", requireAuth, async (req, res, next) => {
     const status = "pending"
 
 
-    if (!isGroup(groupId)) {
+    if (!await isGroup(groupId)) {
         return groupNotFoundError(req, res, next)
     }
 
@@ -332,8 +332,9 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
     if (!user || user.length < 1) return userNotFoundError(req, res, next);
     if (!group.Memberships) return membershipNotFoundErr(req, res, next);
     if (group.Memberships.length !== 1) return membershipNotFoundErr(req, res, next);
-
-    if (status === "co-host" && group.Memberships[0].status === "member" && isOrganizer(groupId, req.user)) {
+    if (status === "pending") throw new ValidationError("cannot change status to pending");
+    
+    if (status === "co-host" && (group.Memberships[0].status === "member" || group.Memberships[0].status === "pending")  && isOrganizer(groupId, req.user)) {
         group.Memberships[0].status = "co-host"
         await group.Memberships[0].save();
         res.json(group.Memberships[0]);
@@ -344,10 +345,11 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
     };
 });
 
-router.delete(":groupId/membership", requireAuth, async (req, res, next) => {
+router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
+    console.log("in here")
     const groupId = req.params.groupId;
     const { memberId } = req.body;
-    if (!isGroup(groupId)) return groupNotFoundError(req, res, next);
+    if (!(await isGroup(groupId))) return groupNotFoundError(req, res, next);
 
     const user = await User.findByPk(memberId);
     if (!user) return userNotFoundError(req, res, next);
@@ -398,7 +400,7 @@ router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, 
     const { address, city, state, lat, lng } = req.body;
     const groupId = req.params.groupId;
 
-    if (!isGroup(groupId)) return groupNotFoundError(req, res, next);
+    if (! (await isGroup(groupId))) return groupNotFoundError(req, res, next);
 
     if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
         const newVenue = await Venue.create({
@@ -415,6 +417,7 @@ router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, 
         return notAuthorizedErr(req, res, next)
     }
 });
+
 
 function membershipNotExistsErr(req, _res, next) {
     const err = new Error("Membership does not exist for this User");
