@@ -90,7 +90,7 @@ router.get("/", async (req, res, next) => {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
             }],
-        group: 'Group.Id'
+        group: 'Group.id'
 
     })
     res.status(200)
@@ -115,7 +115,7 @@ router.get("/current", requireAuth, async (req, res) => {
             model: Image,
             attributes: ['id', 'groupId', 'url']
         }],
-        group: 'Group.Id'
+        group: 'Group.id'
     });
 
     res.status(200)
@@ -148,7 +148,7 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
         }, {
             model: Venue
         }],
-        group: 'Group.Id'
+        group: 'Group.id'
     });
     res.status(200)
     res.json(group)
