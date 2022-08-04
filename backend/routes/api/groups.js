@@ -82,17 +82,18 @@ router.get("/", async (req, res, next) => {
                 [Sequelize.fn('COUNT', Sequelize.col('Memberships.id')), 'numMembers']
             ]
         },
-        include: [
-            {
-                model: Membership,
-                attributes: []
-            }, {
-                model: Image,
-                attributes: ['id', 'groupId', 'url']
-            }],
+        include: [{
+            model: Membership,
+            attributes: []
+        }],
         group: 'Group.id'
 
     })
+
+    // , {
+    //     model: Image,
+    //     attributes: ['id', 'groupId', 'url']
+    // }
     res.status(200)
     res.json(groups)
 });
