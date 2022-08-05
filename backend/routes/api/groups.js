@@ -47,10 +47,10 @@ const validateNewVenue = [
         .exists({ checkFalsy: false })
         .withMessage("state is required"),
     check('lat')
-        .isNumeric({ min: -90, max: 90 })
+        .isFloat({ min: -90, max: 90 })
         .withMessage("Latitude is not valid"),
     check('lng')
-        .isNumeric({ min: -180, max: 180 })
+        .isFloat({ min: -180, max: 180 })
         .withMessage("Longitude is not valid"),
     handleValidationErrors
 ];

@@ -11,12 +11,12 @@ const { route } = require('./session');
 const validateQueryParams = [
     check('page')
         .optional()
-        .isNumeric()      
-        .isLength({ max:10,min: 0 })
+        .isNumeric()
+        .isInt({ min: 0, max: 10 })
         .withMessage('Page must be greater than or equal to 0'),
     check('size')
         .optional()
-        .isLength({ max: 20, min: 0 })
+        .isInt({ min: 0, max: 20 })
         .withMessage('About must be 50 characters or more'),
     check('name')
         .optional()
@@ -52,7 +52,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
     if(startDate)where.startDate = startDate
 
     pagination.limit = size
-    pagination.offset = size * (page - 1)
+    pagination.offset = size * (page )
     
     const events = await Event.findAll({
        
