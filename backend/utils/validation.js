@@ -23,15 +23,18 @@ const { validationResult } = require('express-validator');
   
   const handleValidationErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
-
+    // const errResult = []
     if (!validationErrors.isEmpty()) {
-     
-      const errors = validationErrors
+      var errors = {};
+       validationErrors
         .array()
-        .map((error) => `${error.msg}`);
-        console.log("is not emplty", errors)
-      const err = Error("Validation Error");
-      err.errors = errors;
+        .forEach((error) =>  {
+          errors[error.param] = error.msg;  
+        });
+        console.log( errors)
+        const err =  Error("Validation Error");
+        err.errors = errors;
+     
       err.status = 400;
       next(err);
     }

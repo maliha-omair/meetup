@@ -60,29 +60,28 @@ app.use((_req, _res, next) => {
 
   // Process sequelize errors
 app.use((err, _req, _res, next) => {
-        // check if error is a Sequelize error:
-       console.log(err) 
+        // check if error is a Sequelize error:  
     if (err instanceof ValidationError) {
-      console.log("Instance of validation", typeof err)
         err.errors = err.errors.map((e) => e.message);
         err.title = 'Validation error';
         err.status = 400; 
     }
+   
     next(err);
 });
 
 // Error formatter
 app.use((err, _req, res, _next) => {
-  
   res.status(err.status || 500);
   var respObj ={
     // title: err.title || 'Server Error',
     message: err.message,
     statusCode: err.status
   }; 
+  console.log("response message is ", respObj.message)
   if(err.errors) respObj.errors = err.errors;
   if (!isProduction) respObj.stack = err.stack;
   res.json(respObj);
 });
 
-  module.exports = app;
+module.exports = app;

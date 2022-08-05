@@ -16,7 +16,7 @@ const validateNewGroup = [
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ max: 60 })
-        .withMessage('Name must be 60 characters or less'),
+        .withMessage( 'Name must be 60 characters or less'),
     check('about')
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
@@ -84,32 +84,41 @@ const validateNewEvent = [
         .exists({ checkFalsy: false })
         .withMessage("Description is required"),
     check('startDate')
-        // .isDate()
+        .isISO8601()
         .isAfter()
         .withMessage("Start date must be in the future"),
-    // check('endDate')
-    //     .isBefore('startDate')
-    //     .withMessage("End date is less than start date"),
+    check('endDate')
+        .isISO8601()
+    .custom((value, {req}) =>{
+            console.log(req.body.startDate)
+            console.log(value)
+            if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
+            return true;
+        })
+        ,
+        
     handleValidationErrors
 ];
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
    
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({
-        name,
+        organizerId: req.user.id,
+        name,    
         about,
         type,
         private,
         city,
         state,
-        organizerId: req.user.id
+    
     });
+    
     res.status(201)
     res.json(newGroup)
 });
 
 router.get("/", async (req, res, next) => {
-   
+    const result = {}
     const groups = await Group.findAll({
         attributes: {
             include: [
@@ -128,8 +137,9 @@ router.get("/", async (req, res, next) => {
         group: ['Group.id','Images.id']
 
     })
+    result.Groups = groups;
     res.status(200)
-    res.json(groups)
+    res.json(result)
 });
 
 router.get("/current", requireAuth, async (req, res) => {
@@ -152,9 +162,10 @@ router.get("/current", requireAuth, async (req, res) => {
         }],
         group: ['Group.id','Images.id']
     });
-
+    const result = {};
+    result.Groups = group
     res.status(200)
-    res.json(group)
+    res.json(result)
 });
 
 router.get("/:groupId", requireAuth, async (req, res, next) => {
@@ -179,9 +190,11 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
             attributes: ['id', 'url', 'groupId']
         }, {
             model: User,
-            as: 'Organizer'
+            as: 'Organizer',
+            attributes: ['id', 'firstName', 'lastName']
         }, {
-            model: Venue
+            model: Venue,
+            attributes: ['id', 'groupId', 'address', 'city', 'state','lat','lng']
         }],
         group: ['Group.id','Images.id','Venues.id','Organizer.id']
     });
