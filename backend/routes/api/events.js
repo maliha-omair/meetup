@@ -211,6 +211,29 @@ router.put("/:eventId/attendees", requireAuth, async (req, res, next) => {
     res.json(attendee);   
 });
 
+router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
+    const eventId = req.params.eventId;
+    const url = req.body.url;
+    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next);
+    const attendee = await Attendee.findOne({
+        where:{
+            eventId:eventId,
+            userId:req.user.id,
+        }
+    });
+    console.log(attendee)
+    if(!attendee) return notAuthorizedErr(req,res,next);
+    
+    const image = await Image.create({
+        url:url,
+        userId: req.user.id,
+        groupId: null,
+        eventId: eventId
+    })
+    res.status(200)
+    res.json(image)   
+    
+});
 
 function notUserOrOrganizerErr(req, _res, next) {
     const err = new Error("Only the User or organizer may delete an Attendance");
@@ -255,7 +278,13 @@ function attendanceAlreadyRequestedErr(req, _res, next) {
     err.status = 400;
     return next(err);
 }
-
+function eventNotFoundError(req, _res, next) {
+    const err = new Error("Event couldn't be found");
+    err.title = 'Not Found';
+    err.errors = ['Not Found'];
+    err.status = 404;
+    return next(err);
+}
 async function isMember(groupId,user){
     const member = await Membership.findAll({
         where:{
@@ -268,41 +297,7 @@ async function isMember(groupId,user){
 
 
 }
-// router.post("/:eventId/images", requireAuth, async (req, res, next) => {
-//     const eventId = req.params.eventId;
-//     const { url } = req.body;
-
-//     if (!(await isEvent(eventId))) return eventNotFoundError(req, res, next);
-//     if (!(await isOrganizer(groupId, req.user))) return notAuthorizedErr(req, res, next)
-
-//     const event = await Group.findOne({
-//         where: {
-//             id: eventId,
-//             organizerId: req.user.id
-//         }
-//     });
-
-//     const newImage = await Image.create({
-//         url,
-//         userId: req.user.id,
-//         groupId: req.params.groupId,
-//         eventId: null
-//     })
-
-//     let result = {}
-//     result.id = newImage.id;
-//     result.imageableId = parseInt(groupId);
-//     result.url = url;
-//     res.status(200);
-//     res.json(result);
-// });
 
 
-function eventNotFoundError(req, _res, next) {
-    const err = new Error("Event couldn't be found");
-    err.title = 'Not Found';
-    err.errors = ['Not Found'];
-    err.status = 404;
-    return next(err);
-}
+
 module.exports = router;
