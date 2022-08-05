@@ -16,7 +16,7 @@ const validateNewGroup = [
     check('name')
         .exists({ checkFalsy: true })
         .isLength({ max: 60 })
-        .withMessage('Name must be 60 characters or less'),
+        .withMessage( 'Name must be 60 characters or less'),
     check('about')
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
@@ -47,10 +47,10 @@ const validateNewVenue = [
         .exists({ checkFalsy: false })
         .withMessage("state is required"),
     check('lat')
-        .isNumeric({ min: -90, max: 90 })
+        .isFloat({ min: -90, max: 90 })
         .withMessage("Latitude is not valid"),
     check('lng')
-        .isNumeric({ min: -180, max: 180 })
+        .isFloat({ min: -180, max: 180 })
         .withMessage("Longitude is not valid"),
     handleValidationErrors
 ];
@@ -84,32 +84,41 @@ const validateNewEvent = [
         .exists({ checkFalsy: false })
         .withMessage("Description is required"),
     check('startDate')
-        // .isDate()
+        .isISO8601()
         .isAfter()
         .withMessage("Start date must be in the future"),
-    // check('endDate')
-    //     .isBefore('startDate')
-    //     .withMessage("End date is less than start date"),
+    check('endDate')
+        .isISO8601()
+    .custom((value, {req}) =>{
+            console.log(req.body.startDate)
+            console.log(value)
+            if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
+            return true;
+        })
+        ,
+        
     handleValidationErrors
 ];
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
    
     const { name, about, type, private, city, state } = req.body;
     const newGroup = await Group.create({
-        name,
+        organizerId: req.user.id,
+        name,    
         about,
         type,
         private,
         city,
         state,
-        organizerId: req.user.id
+    
     });
+    
     res.status(201)
     res.json(newGroup)
 });
 
 router.get("/", async (req, res, next) => {
-   
+    const result = {}
     const groups = await Group.findAll({
         attributes: {
             include: [
@@ -128,8 +137,9 @@ router.get("/", async (req, res, next) => {
         group: ['Group.id','Images.id']
 
     })
+    result.Groups = groups;
     res.status(200)
-    res.json(groups)
+    res.json(result)
 });
 
 router.get("/current", requireAuth, async (req, res) => {
@@ -152,9 +162,10 @@ router.get("/current", requireAuth, async (req, res) => {
         }],
         group: ['Group.id','Images.id']
     });
-
+    const result = {};
+    result.Groups = group
     res.status(200)
-    res.json(group)
+    res.json(result)
 });
 
 router.get("/:groupId", requireAuth, async (req, res, next) => {
@@ -179,9 +190,11 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
             attributes: ['id', 'url', 'groupId']
         }, {
             model: User,
-            as: 'Organizer'
+            as: 'Organizer',
+            attributes: ['id', 'firstName', 'lastName']
         }, {
-            model: Venue
+            model: Venue,
+            attributes: ['id', 'groupId', 'address', 'city', 'state','lat','lng']
         }],
         group: ['Group.id','Images.id','Venues.id','Organizer.id']
     });
@@ -250,23 +263,22 @@ router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) =>
     }
 });
 
-router.delete("/:groupId", requireAuth, async (req, res) => {
+router.delete("/:groupId", requireAuth, async (req, res, next) => {
     const group = await Group.findOne({
         where: {
             id: req.params.groupId,
             organizerId: req.user.id
         }
     });
-    if (group) {
-        await group.destroy();
-        res.json({
-            "message": "Successfully deleted",
-            "statusCode": 200
-        });
 
-    } else {
-        groupNotFoundError(req, res, next);
-    }
+    if (!group) groupNotFoundError(req, res, next);
+
+    await group.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
+
 });
 
 // MemberShip
@@ -274,13 +286,8 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
 router.get("/:groupId/members", async (req, res, next) => {
     const groupId = req.params.groupId
     let result = {}
-    const hasGroup = await Membership.findAll({
-        where: {
-            groupId: groupId
-        }
-    });
     
-    if (!hasGroup || hasGroup.length < 1) return groupNotFoundError(req, res, next);
+    if (!(await isGroup(groupId))) return groupNotFoundError(req, res, next);
 
 
     if((await isOrganizer(groupId, req.user)) || (await isCoHost(groupId,req.user))){
@@ -295,7 +302,7 @@ router.get("/:groupId/members", async (req, res, next) => {
         })
         result.Members = members;
         res.json(result);
-    }else if(!(await isOrganizer(groupId, req.user))){
+    }else{
         const members = await User.findAll({
             include: {
                 model: Membership,
@@ -316,13 +323,12 @@ router.get("/:groupId/members", async (req, res, next) => {
 router.post("/:groupId/members", requireAuth, async (req, res, next) => {
 
     const groupId = req.params.groupId;
-    const memberId = req.user.id
+    const memberId = req.body.memberId
     const status = "pending"
 
-
-    if (!await isGroup(groupId)) {
-        return groupNotFoundError(req, res, next)
-    }
+    if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
+    if (!await isGroup(groupId)) return groupNotFoundError(req, res, next)
+    
 
     const member = await Membership.findOne({
         where: {
@@ -392,7 +398,8 @@ router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
 
     const membership = await Membership.findOne({
         where: {
-            memberId: memberId
+            memberId: memberId,
+            groupId: groupId
         }
     });
     if (!membership) return membershipNotExistsErr(req, res, next);

@@ -6,20 +6,59 @@ const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../.
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op, Sequelize} = require('sequelize')
 const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
+const { route } = require('./session');
 
-router.get("/", async (req, res, next) => {
+const validateQueryParams = [
+    check('page')
+        .optional()
+        .isNumeric()
+        .isInt({ min: 0, max: 10 })
+        .withMessage('Page must be greater than or equal to 0'),
+    check('size')
+        .optional()
+        .isInt({ min: 0, max: 20 })
+        .withMessage('About must be 50 characters or more'),
+    check('name')
+        .optional()
+        .isString()
+        .withMessage("Name must be a string"),
+    check('type')
+        .optional()
+        .isString()
+        .isIn(['In person', 'Online'])
+        .withMessage("Type must be 'Online' or 'In Person'"),
+    check('startDate')
+        .optional()
+        .isISO8601('yyyy-mm-dd')
+        .withMessage("Start date must be a valid datetime"),
+    
+    handleValidationErrors
+];
+
+router.get("/", validateQueryParams, async (req, res, next) => {
    
-    const event = await Event.findAll({
-        attributes: {
-            include: [
-                [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
-            ]
-        },
+    let { page, size, name, type, startDate} = req.query;
+    
+    
+    
+    if(!page) page =0
+    if(!size) size =20
+    
+    let pagination = {}
+    let where = {}
+    console.log("page is ", page, "size is ", size)
+    if(name)where.name = name
+    if(type) where.type= type
+    if(startDate)where.startDate = startDate
+
+    pagination.limit = size
+    pagination.offset = size * (page )
+    
+    const events = await Event.findAll({
+       
+       
         include: [
-            {
-                model: Attendee,
-                attributes: []
-            },
+            
              {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
@@ -31,14 +70,42 @@ router.get("/", async (req, res, next) => {
             {
                 model: Venue,
                 attributes:['id','city','state']
-            }
+            },
+            
         ],
-        group: ['Event.id','Images.id','Group.id','Venue.id']
+        
+        where,
+         ...pagination
+     
 
-    })
+    });
+    for(let i=0; i<events.length; i++){
+        events[i] = events[i].toJSON();
+        events[i].numAttending = await Attendee.count({
+            where:{
+                eventId : events[i].id
+            }
+        })
+    }
+    const result = {};
+    result.Events = events
     res.status(200)
-    res.json(event)
+    res.json(result)
 
+});
+
+router.delete("/:eventId", requireAuth, async (req,res,next)=>{
+    const eventId = req.params.eventId
+    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
+
+    const event = await Event.findByPk(eventId)
+    if(event){
+        event.destroy();
+        res.status(200);
+        res.json({
+            "message": "Successfully deleted"
+        });
+    }
 });
 
 router.get("/:eventId", async (req, res, next) => {
@@ -114,6 +181,7 @@ router.get("/:eventId/attendees", async (req,res,next)=>{
     }
 
 });
+
 router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId
    
@@ -144,6 +212,7 @@ router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
         return notUserOrOrganizerErr(req,res,next)
     }
 });
+
 router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId;
     const event = await Event.findByPk(eventId);
@@ -152,7 +221,7 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
 
     const attendee = await Attendee.findOne({
         where: {
-            userId: req.user.id,
+            userId: req.body.userId,
             eventId: eventId
         }
     })
@@ -165,15 +234,15 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     }
 
     const newAttendee = await Attendee.create({
-        userId: req.user.id,
+        userId: req.body.userId,
         eventId: eventId,
         status: "pending"
     })
     if(newAttendee){
         const result = {
-            eventId: eventId,
-            userId: req.user.id,
-            status: "pending"
+            eventId: newAttendee.eventId,
+            userId: newAttendee.userId,
+            status: newAttendee.status
         }
         res.status(200);
         res.json(result)
