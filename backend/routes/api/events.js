@@ -93,6 +93,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
     res.json(result)
 
 });
+
 router.delete("/:eventId", requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
@@ -180,6 +181,7 @@ router.get("/:eventId/attendees", async (req,res,next)=>{
     }
 
 });
+
 router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId
    
@@ -210,6 +212,7 @@ router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
         return notUserOrOrganizerErr(req,res,next)
     }
 });
+
 router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     const eventId = req.params.eventId;
     const event = await Event.findByPk(eventId);
@@ -218,7 +221,7 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
 
     const attendee = await Attendee.findOne({
         where: {
-            userId: req.user.id,
+            userId: req.body.userId,
             eventId: eventId
         }
     })
@@ -231,15 +234,15 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     }
 
     const newAttendee = await Attendee.create({
-        userId: req.user.id,
+        userId: req.body.userId,
         eventId: eventId,
         status: "pending"
     })
     if(newAttendee){
         const result = {
-            eventId: eventId,
-            userId: req.user.id,
-            status: "pending"
+            eventId: newAttendee.eventId,
+            userId: newAttendee.userId,
+            status: newAttendee.status
         }
         res.status(200);
         res.json(result)
