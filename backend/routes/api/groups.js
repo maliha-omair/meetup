@@ -263,23 +263,22 @@ router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) =>
     }
 });
 
-router.delete("/:groupId", requireAuth, async (req, res) => {
+router.delete("/:groupId", requireAuth, async (req, res, next) => {
     const group = await Group.findOne({
         where: {
             id: req.params.groupId,
             organizerId: req.user.id
         }
     });
-    if (group) {
-        await group.destroy();
-        res.json({
-            "message": "Successfully deleted",
-            "statusCode": 200
-        });
 
-    } else {
-        groupNotFoundError(req, res, next);
-    }
+    if (!group) groupNotFoundError(req, res, next);
+
+    await group.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
+
 });
 
 // MemberShip
@@ -287,13 +286,8 @@ router.delete("/:groupId", requireAuth, async (req, res) => {
 router.get("/:groupId/members", async (req, res, next) => {
     const groupId = req.params.groupId
     let result = {}
-    const hasGroup = await Membership.findAll({
-        where: {
-            groupId: groupId
-        }
-    });
     
-    if (!hasGroup || hasGroup.length < 1) return groupNotFoundError(req, res, next);
+    if (!(await isGroup(groupId))) return groupNotFoundError(req, res, next);
 
 
     if((await isOrganizer(groupId, req.user)) || (await isCoHost(groupId,req.user))){
@@ -308,7 +302,7 @@ router.get("/:groupId/members", async (req, res, next) => {
         })
         result.Members = members;
         res.json(result);
-    }else if(!(await isOrganizer(groupId, req.user))){
+    }else{
         const members = await User.findAll({
             include: {
                 model: Membership,
@@ -329,13 +323,12 @@ router.get("/:groupId/members", async (req, res, next) => {
 router.post("/:groupId/members", requireAuth, async (req, res, next) => {
 
     const groupId = req.params.groupId;
-    const memberId = req.user.id
+    const memberId = req.body.memberId
     const status = "pending"
 
-
-    if (!await isGroup(groupId)) {
-        return groupNotFoundError(req, res, next)
-    }
+    if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
+    if (!await isGroup(groupId)) return groupNotFoundError(req, res, next)
+    
 
     const member = await Membership.findOne({
         where: {
@@ -405,7 +398,8 @@ router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
 
     const membership = await Membership.findOne({
         where: {
-            memberId: memberId
+            memberId: memberId,
+            groupId: groupId
         }
     });
     if (!membership) return membershipNotExistsErr(req, res, next);
