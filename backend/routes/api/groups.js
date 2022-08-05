@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { User, Group, Image, Membership, Venue, Event } = require('../../db/models');
+const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../../db/models');
 const { Op, Sequelize } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
 const { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
@@ -463,18 +463,16 @@ router.get("/:groupId/events", async (req, res, next) => {
         where :{
             groupId :groupId
         },
-        // attributes: {
-
-        //     include: [
-
-        //         [Sequelize.fn('COUNT', Sequelize.col('Memberships.id')), 'numMembers']
-        //     ]
-        // },
+        attributes: {
+            include: [
+                [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+            ]
+        },
         include: [
-            // {
-            //     model: Membership,
-            //     attributes: []
-            // },
+            {
+                model: Attendee,
+                attributes: []
+            },
              {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
@@ -488,8 +486,7 @@ router.get("/:groupId/events", async (req, res, next) => {
                 attributes:['id','city','state']
             }
         ],
-        // group: ['Group.id','Images.id']
-
+        group: ['Event.id','Images.id','Group.id','Venue.id']
     })
     res.status(200)
     res.json(event)
