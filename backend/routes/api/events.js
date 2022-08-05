@@ -6,6 +6,7 @@ const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../.
 const { handleValidationErrors } = require('../../utils/validation');
 const { Op, Sequelize} = require('sequelize')
 const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
+const { route } = require('./session');
 
 const validateQueryParams = [
     check('page')
@@ -91,6 +92,19 @@ router.get("/", validateQueryParams, async (req, res, next) => {
     res.status(200)
     res.json(result)
 
+});
+router.delete("/:eventId", requireAuth, async (req,res,next)=>{
+    const eventId = req.params.eventId
+    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
+
+    const event = await Event.findByPk(eventId)
+    if(event){
+        event.destroy();
+        res.status(200);
+        res.json({
+            "message": "Successfully deleted"
+        });
+    }
 });
 
 router.get("/:eventId", async (req, res, next) => {
