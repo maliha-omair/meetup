@@ -183,7 +183,7 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
         }, {
             model: Venue
         }],
-        group: ['Group.id','Images.id','Venues.id']
+        group: ['Group.id','Images.id','Venues.id','Organizer.id']
     });
     res.status(200)
     res.json(group)

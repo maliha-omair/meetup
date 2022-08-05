@@ -22,7 +22,7 @@ async function isCoHost(groupId, user) {
 async function isOrganizer(groupId, user) {
     const isOrganizer = await Group.findOne({
         where: {
-            Id: groupId,
+            id: groupId,
             organizerId: user.id
         }
     });
@@ -35,7 +35,7 @@ async function isEvent(eventId) {
     else return true
 }
 function venueNotFoundError(req, _res, next) {
-    const err = new Error("Group couldn't be found");
+    const err = new Error("Venue couldn't be found");
     err.status = 404;
     return next(err);
 }

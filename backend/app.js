@@ -75,12 +75,14 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   
   res.status(err.status || 500);
-  res.json({
+  var respObj ={
     // title: err.title || 'Server Error',
     message: err.message,
-    status: err.status,
-    stack: isProduction   ? null : err.stack
-  });
+    statusCode: err.status
+  }; 
+  if(err.errors) respObj.errors = err.errors;
+  if (!isProduction) respObj.stack = err.stack;
+  res.json(respObj);
 });
 
   module.exports = app;
