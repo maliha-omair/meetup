@@ -10,17 +10,16 @@ const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,is
 router.get("/", async (req, res, next) => {
    
     const event = await Event.findAll({
-        // attributes: {
-        //     include: [
-
-        //         [Sequelize.fn('COUNT', Sequelize.col('Memberships.id')), 'numMembers']
-        //     ]
-        // },
+        attributes: {
+            include: [
+                [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+            ]
+        },
         include: [
-            // {
-            //     model: Membership,
-            //     attributes: []
-            // },
+            {
+                model: Attendee,
+                attributes: []
+            },
              {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
@@ -34,7 +33,7 @@ router.get("/", async (req, res, next) => {
                 attributes:['id','city','state']
             }
         ],
-        // group: ['Group.id','Images.id']
+        group: ['Event.id','Images.id','Group.id','Venue.id']
 
     })
     res.status(200)
@@ -49,19 +48,17 @@ router.get("/:eventId", async (req, res, next) => {
     const event = await Event.findAll({
         where :{
             id : eventId
-        },
-        // attributes: {
-
-        //     include: [
-
-        //         [Sequelize.fn('COUNT', Sequelize.col('Memberships.id')), 'numMembers']
-        //     ]
-        // },
+        },      
+        attributes: {
+                include: [
+                    [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+                ]
+            },
         include: [
-            // {
-            //     model: Membership,
-            //     attributes: []
-            // },
+            {
+                model: Attendee,
+                attributes: []
+            },
              
             {
                 model: Group,
@@ -76,8 +73,7 @@ router.get("/:eventId", async (req, res, next) => {
                 attributes: ['id', 'groupId', 'url']
             }
         ],
-        // group: ['Group.id','Images.id']
-
+        group: ['Event.id','Images.id','Group.id','Venue.id']
     })
     res.status(200)
     res.json(event)
