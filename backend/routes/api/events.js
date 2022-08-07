@@ -46,7 +46,6 @@ router.get("/", validateQueryParams, async (req, res, next) => {
     
     let pagination = {}
     let where = {}
-    console.log("page is ", page, "size is ", size)
     if(name)where.name = name
     if(type) where.type= type
     if(startDate)where.startDate = startDate
