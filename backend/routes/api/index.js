@@ -17,6 +17,7 @@ router.use(restoreUser);
 router.use('/session', sessionRouter);
 
 router.use('/signup', signUpRouter);
+router.use('/users', signUpRouter);
 router.use('/groups', groupsRouter);
 router.use('/venues', venuesRouter);
 router.use('/events', eventsRouter);

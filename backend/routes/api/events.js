@@ -200,7 +200,6 @@ router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
     if(!attendance) return attendanceNotFoundErr(req,res,next)
 
     const groupId = attendance.groupId;
-    console.log("current user and deleted user are ",req.user.id, "  ", attendance.userId);
     if((req.user.id === attendance.userId) || (await isOrganizer(groupId,req.user) || (await isCoHost(groupId,req.user)))){
         await attendance.destroy();
         res.status(200);
@@ -213,14 +212,14 @@ router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
 });
 
 router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
-    const eventId = req.params.eventId;
+    const eventId = parseInt(req.params.eventId);
     const event = await Event.findByPk(eventId);
     if(!event) return eventNotFoundError(req,res,next);
     if(!(await isMember(event.groupId,req.user))) return notAuthorizedErr(req,res,next);
 
     const attendee = await Attendee.findOne({
         where: {
-            userId: req.body.userId,
+            userId: req.user.id,
             eventId: eventId
         }
     })
@@ -233,10 +232,10 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
     }
 
     const newAttendee = await Attendee.create({
-        userId: req.body.userId,
+        userId: req.user.id,
         eventId: eventId,
         status: "pending"
-    })
+    });
     if(newAttendee){
         const result = {
             eventId: newAttendee.eventId,
@@ -280,7 +279,7 @@ router.put("/:eventId/attendees", requireAuth, async (req, res, next) => {
 });
 
 router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
-    const eventId = req.params.eventId;
+    const eventId = parseInt(req.params.eventId);
     const url = req.body.url;
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next);
     const attendee = await Attendee.findOne({
@@ -289,7 +288,6 @@ router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
             userId:req.user.id,
         }
     });
-    console.log(attendee)
     if(!attendee) return notAuthorizedErr(req,res,next);
     
     const image = await Image.create({
@@ -299,7 +297,11 @@ router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
         eventId: eventId
     })
     res.status(200)
-    res.json(image)   
+    res.json({
+        id:image.id,
+        imageableId: eventId,
+        url: image.url
+    })   
     
 });
 

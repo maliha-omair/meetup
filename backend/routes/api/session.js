@@ -33,10 +33,14 @@ router.post(
       err.errors = ['The provided credentials were invalid.'];
       return next(err);
     }
-    await setTokenCookie(res, user);
+    const token = await setTokenCookie(res, user);
     return res.json({
-      user
-    });
+      id:user.id, 
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email:user.email,
+      token
+  });
   }
 );
 
@@ -57,10 +61,10 @@ router.get(
     const { user } = req;
     if (user) {
       return res.json({
-        user: {
-          ...user.toSafeObject(), firstName: user.firstName,
-          lastName: user.lastName
-        }
+        id:user.id, 
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email:user.email
       });
     } else return res.json({
         "message": "User already exists",
