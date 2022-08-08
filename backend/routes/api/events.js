@@ -158,8 +158,7 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
     const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
     const e = await Event.findByPk(eventId);
     if(!e) return eventNotFoundError(req, res, next);
-    const group = e.getGroup();
-    console.log(group.toJSON());
+    const group = await e.getGroup();
     if ((await isOrganizer(group.id, req.user) ) || (await isCoHost(group.id, req.user))) {
         e.venueId = venueId;
         e.name = name;
