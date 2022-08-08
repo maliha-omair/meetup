@@ -156,7 +156,6 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
 router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
     const eventId = parseInt(req.params.eventId);
     const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
-    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
         const e = await Event.findByPk(eventId);
         if(!e) return eventNotFoundError(req, res, next);
