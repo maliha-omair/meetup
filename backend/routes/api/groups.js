@@ -466,7 +466,7 @@ router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, 
 
 // Events
 router.get("/:groupId/events", async (req, res, next) => {
-    const groupId = req.params.groupId;
+    const groupId = parseInt(req.params.groupId);
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next)
 
     const event = await Event.findAll({
@@ -499,7 +499,7 @@ router.get("/:groupId/events", async (req, res, next) => {
         group: ['Event.id','Images.id','Group.id','Venue.id']
     })
     res.status(200)
-    res.json(event)
+    res.json({Events: event})
 
 });
 
@@ -507,7 +507,7 @@ router.get("/:groupId/events", async (req, res, next) => {
 
 
 router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,next)=>{
-    const groupId = req.params.groupId;
+    const groupId = parseInt(req.params.groupId);
     const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {

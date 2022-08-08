@@ -546,4 +546,195 @@ describe("/api/groups", function() {
 
     });
 
+
+
+    describe("POST /api/groups/:groupId/events", function() {   
+
+        it("should create and return a new event for the group specified by id", async function() {
+            
+            const newVenue = {
+                address: faker.address.street(),
+                city: faker.address.city(),
+                state: faker.address.state(),
+                lat: parseFloat(faker.address.latitude()),
+                lng: parseFloat(faker.address.longitude())
+            };
+            const venueResponse =  await agent.post(`/api/groups/${newGroupId}/venues`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newVenue)
+            .expect(200);
+        
+            const newEvent = {
+                venueId: venueResponse.body.id,
+                name: faker.lorem.words(3),
+                type: 'Online',
+                capacity: 10,
+                price: faker.commerce.price(max= 100),
+                description: faker.lorem.words(10),
+                startDate: "2025-11-19T20:00:00.000Z",
+                endDate: "2026-11-19T20:00:00.000Z"
+            }
+            const response =  await agent.post(`/api/groups/${newGroupId}/events`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newEvent)
+            .expect(200);
+
+
+            expect(response.body).to.have.property('id');
+            expect(response.body.id).to.be.a('number');
+            expect(response.body.groupId).to.eql(newGroupId);
+            expect(response.body.name).to.eql(newEvent.name);
+            expect(response.body.type).to.eql(newEvent.type);
+            expect(response.body.capacity).to.eql(newEvent.capacity);
+            expect(response.body.price).to.eql(newEvent.price);
+            expect(response.body.description).to.eql(newEvent.description);
+            expect(response.body.startDate).to.eql(newEvent.startDate);
+            expect(response.body.endDate).to.eql(newEvent.endDate);
+        });   
+
+        it("should return 404 if group does not exist", async function() {
+            
+
+
+            const newVenue = {
+                address: faker.address.street(),
+                city: faker.address.city(),
+                state: faker.address.state(),
+                lat: parseFloat(faker.address.latitude()),
+                lng: parseFloat(faker.address.longitude())
+            };
+            const venueResponse =  await agent.post(`/api/groups/${newGroupId}/venues`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newVenue)
+            .expect(200);
+            
+            const newEvent = {
+                venueId: venueResponse.body.id,
+                name: faker.lorem.words(3),
+                type: 'Online',
+                capacity: 10,
+                price: faker.commerce.price(max= 10),
+                description: faker.lorem.words(10),
+                startDate: faker.date.soon(),
+                endDate: faker.date.future()
+            }
+
+            const response =  await agent.post(`/api/groups/99999999/events`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newEvent)
+            .expect(404);
+        
+            expect(response.body.message).to.eql('Group couldn\'t be found');
+            expect(response.body.statusCode).to.eql(404);
+        });   
+
+        it("should return bad request for validation errors", async function() {
+            
+            const newVenue = {
+                address: faker.address.street(),
+                city: faker.address.city(),
+                state: faker.address.state(),
+                lat: parseFloat(faker.address.latitude()),
+                lng: parseFloat(faker.address.longitude())
+            };
+            const venueResponse =  await agent.post(`/api/groups/${newGroupId}/venues`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newVenue)
+            .expect(200);
+        
+            const newEvent = {
+                venueId: 99999,
+                name: "123",
+                type: 'Online2',
+                capacity: 2.5,
+                price: "test",
+                startDate: "2011-11-19 20:00:00",
+                endDate: "2010-11-19 20:00:00"
+            }
+            const response =  await agent.post(`/api/groups/${newGroupId}/events`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newEvent)
+            .expect(400);
+
+        
+            expect(response.body.message).to.eql('Validation Error');
+            expect(response.body.statusCode).to.eql(400);
+            expect(response.body.errors).to.not.be.null;
+            expect(response.body.errors.venueId).to.eql("Venue does not exist");
+            expect(response.body.errors.name).to.eql("Name must be at least 5 characters");
+            expect(response.body.errors.type).to.eql("Type must be Online or In person");
+            expect(response.body.errors.price).to.eql("Price is invalid");
+            expect(response.body.errors.description).to.eql("Description is required");
+            expect(response.body.errors.startDate).to.eql("Start date must be in the future");
+            expect(response.body.errors.endDate).to.eql("End date is less than start date");
+        });   
+    });   
+
+
+
+    describe("GET /api/groups/:groupId/events", function() {   
+
+        it("should get all events of the group specified by id", async function() {
+            
+            const newVenue = {
+                address: faker.address.street(),
+                city: faker.address.city(),
+                state: faker.address.state(),
+                lat: parseFloat(faker.address.latitude()),
+                lng: parseFloat(faker.address.longitude())
+            };
+            const venueResponse =  await agent.post(`/api/groups/${newGroupId}/venues`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newVenue)
+            .expect(200);
+        
+            for(let i = 0; i < 5; i++){
+                const newEvent = {
+                    venueId: venueResponse.body.id,
+                    name: faker.lorem.words(3),
+                    type: 'Online',
+                    capacity: 10,
+                    price: faker.commerce.price(max= 100),
+                    description: faker.lorem.words(10),
+                    startDate: "2025-11-19T20:00:00.000Z",
+                    endDate: "2026-11-19T20:00:00.000Z"
+                }
+                await agent.post(`/api/groups/${newGroupId}/events`)
+                .set('XSRF-Token',xsrfToken)
+                .set('Accept', 'application/json')
+                .send(newEvent)
+                .expect(200);
+            }
+
+
+            const response =  await agent.get(`/api/groups/${newGroupId}/events`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .expect(200);
+
+            expect(response.body).to.have.property('Events');
+            expect(response.body.Events).to.be.an('array');
+            expect(response.body.Events).to.have.lengthOf.at.least(5);
+        });   
+
+        it("should return not found if group counldn't be found", async function() {
+    
+            const response =  await agent.get(`/api/groups/9999999/events`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .expect(404);
+            
+        
+            expect(response.body.message).to.eql('Group couldn\'t be found');
+            expect(response.body.statusCode).to.eql(404);
+
+        });           
+    });
 });
