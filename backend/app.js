@@ -78,7 +78,7 @@ app.use((err, _req, res, _next) => {
     message: err.message,
     statusCode: err.status
   }; 
-  console.log("response message is ", respObj.message)
+
   if(err.errors) respObj.errors = err.errors;
   if (!isProduction) respObj.stack = err.stack;
   res.json(respObj);

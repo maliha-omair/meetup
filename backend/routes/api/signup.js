@@ -12,7 +12,7 @@ const validateSignup = [
     check('email')
       .exists({ checkFalsy: true })
       .isEmail()
-      .withMessage('Please provide a valid email.'),
+      .withMessage('Invalid email'),
     check('username')
       .exists({ checkFalsy: true })
       .isLength({ min: 4 })
@@ -25,6 +25,12 @@ const validateSignup = [
       .exists({ checkFalsy: true })
       .isLength({ min: 6 })
       .withMessage('Password must be 6 characters or more.'),
+    check('firstName')
+      .exists({ checkFalsy: true })
+      .withMessage('First Name is required'),
+    check('lastName')
+      .exists({ checkFalsy: true })
+      .withMessage('Last Name is required'),
     handleValidationErrors
   ];
 
@@ -33,6 +39,7 @@ let signup  =  async (req, res) => {
  
   const { firstName, lastName, email, password, username } = req.body;
   if(await User.userExists(email)){
+      res.status(403);
       return res.json(
         {
           "message": "User already exists",

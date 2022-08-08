@@ -23,7 +23,7 @@ const { validationResult } = require('express-validator');
   
   const handleValidationErrors = (req, _res, next) => {
     const validationErrors = validationResult(req);
-    // const errResult = []
+  
     if (!validationErrors.isEmpty()) {
       var errors = {};
        validationErrors
@@ -31,7 +31,6 @@ const { validationResult } = require('express-validator');
         .forEach((error) =>  {
           errors[error.param] = error.msg;  
         });
-        console.log( errors)
         const err =  Error("Validation Error");
         err.errors = errors;
      
