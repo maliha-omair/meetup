@@ -96,6 +96,8 @@ describe("/api/groups", function() {
 
     });   
 
+
+
     describe("POST /api/groups/:groupId/image", function() {   
 
         it("should crate and return a new image for the group specified by id", async function() {
@@ -325,9 +327,103 @@ describe("/api/groups", function() {
             expect(response.body.Venues.length).to.be.eql(1);
         });
 
+        it("should return not found if group does not exist", async function() {
+            const response =  await agent.get(`/api/groups/999999999`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .expect(404);
+
+            expect(response.body.message).to.eql('Group couldn\'t be found');
+            expect(response.body.statusCode).to.eql(404);        
+        });
 
 
     });
+
+    describe("PUT /api/groups/:groupId", function() {   
+
+        it("should update a group", async function() {
+            
+            const updatedGroup = {
+                name: faker.random.words(3),
+                about: faker.lorem.words(70),
+                type: "In person",
+                private: false,
+                city: faker.address.cityName(),
+                state: faker.address.state()
+            };
+
+            const response =  await agent.put(`/api/groups/${newGroupId}`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(updatedGroup)
+            .expect(200);
+        
+            
+            expect(response.body).to.have.property('id');
+            expect(response.body.id).to.be.a('number');
+            expect(response.body.organizerId).to.eql(currentUser.id);
+            expect(response.body.name).to.eql(updatedGroup.name);
+            expect(response.body.about).to.eql(updatedGroup.about);
+            expect(response.body.type).to.eql(updatedGroup.type);
+            expect(response.body.private).to.eql(updatedGroup.private);
+            expect(response.body.city).to.eql(updatedGroup.city);
+            expect(response.body.state).to.eql(updatedGroup.state);
+            expect(response.body).to.have.property('createdAt');
+            expect(response.body).to.have.property('updatedAt');
+            newGroupId = response.body.id;
+        });   
+
+        it("should return bad request on validation errors", async function() {
+            
+            const newGroup = {
+                name: "012356789 012356789 012356789 012356789 012356789 012356789 012356789 012356789",
+                about: "012356789",
+                type: "InLine",
+                private: "Zero",
+            };
+            const response =  await agent.put(`/api/groups/${newGroupId}`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(newGroup)
+            .expect(400);
+        
+            expect(response.body.message).to.eql("Validation Error");
+            expect(response.body.statusCode).to.eql(400);
+            expect(response.body.errors).to.be.not.null;
+            expect(response.body.errors.name).to.eql('Name must be 60 characters or less');
+            expect(response.body.errors.about).to.eql('About must be 50 characters or more');
+            expect(response.body.errors.type).to.eql('Type must be \'Online\' or \'In person\'');
+            expect(response.body.errors.private).to.eql('Private must be a boolean');
+            expect(response.body.errors.city).to.eql('City is required');
+            expect(response.body.errors.state).to.eql('State is required');
+        });   
+
+        it("should return not found if group does not exist", async function() {
+
+            const updatedGroup = {
+                name: faker.random.words(3),
+                about: faker.lorem.words(70),
+                type: "In person",
+                private: false,
+                city: faker.address.cityName(),
+                state: faker.address.state()
+            };
+
+            const response =  await agent.put(`/api/groups/999999999`)
+            .set('XSRF-Token',xsrfToken)
+            .set('Accept', 'application/json')
+            .send(updatedGroup);
+
+            console.log(response.body)
+            // .expect(404);
+
+            expect(response.body.message).to.eql('Group couldn\'t be found');
+            expect(response.body.statusCode).to.eql(404);        
+        });
+
+
+    });   
 
 
     describe("PUT /api/groups/:groupId/members", function() {   

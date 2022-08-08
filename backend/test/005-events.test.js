@@ -222,7 +222,6 @@ describe("/api/events", function() {
             .set('XSRF-Token',localXsrfToken)
             .set('Accept', 'application/json')
             .expect(200);
-            console.log(response.body);            
             
             expect(response.body.eventId).to.be.eql(currentEvent.id);
             expect(response.body.userId).to.be.eql(localUser.id);

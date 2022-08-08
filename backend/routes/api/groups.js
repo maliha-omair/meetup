@@ -239,7 +239,8 @@ router.post("/:groupId/images", requireAuth, validateNewImage, async (req, res, 
 });
 
 router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) => {
-    const { groupId } = req.params
+    const { groupId } = req.params;
+    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
     const { name, about, type, private, city, state } = req.body;
     const group = await Group.findOne({
@@ -565,6 +566,7 @@ function userNotFoundError(req, _res, next) {
         new ValidationErrorItem(message= "User couldn't be found",type = 'Validation Error', path= "memberId")]);
 }
 function groupNotFoundError(req, _res, next) {
+
     const err = new Error("Group couldn't be found");
     err.title = 'Not Found';
     err.errors = ['Not Found'];
