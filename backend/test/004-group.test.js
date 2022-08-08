@@ -413,10 +413,8 @@ describe("/api/groups", function() {
             const response =  await agent.put(`/api/groups/999999999`)
             .set('XSRF-Token',xsrfToken)
             .set('Accept', 'application/json')
-            .send(updatedGroup);
-
-            console.log(response.body)
-            // .expect(404);
+            .send(updatedGroup)
+            .expect(404);
 
             expect(response.body.message).to.eql('Group couldn\'t be found');
             expect(response.body.statusCode).to.eql(404);        

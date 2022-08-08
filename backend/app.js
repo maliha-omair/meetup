@@ -67,7 +67,6 @@ app.use((err, _req, _res, next) => {
         err.errors.forEach((error) =>  {
           formattedErrors[error.path] = error.message;  
         });
-        console.log(formattedErrors)
         err.errors = formattedErrors; 
         err.title = 'Validation Error';
         err.status = 400; 

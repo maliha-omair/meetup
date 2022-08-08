@@ -35,6 +35,51 @@ const validateQueryParams = [
     handleValidationErrors
 ];
 
+const validateUpdateEvent = [
+    check('venueId')
+        .custom((value, {req}) => {
+            
+                   return Venue.findAll({
+                        where : {id: value}
+                    }).then(venue => {
+                        if (venue.length <= 0) {
+                            return Promise.reject('Venue does not exist')
+                        }
+                    })              
+        }),       
+    
+    check('name')
+        .isLength({ min: 5 })
+        .withMessage('Name must be at least 5 characters'),
+    check('type')
+        .isIn(['Online', 'In person'])
+        .withMessage('Type must be Online or In person'),
+    check('capacity')
+        .isNumeric()
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .isNumeric()
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({ checkFalsy: false })
+        .withMessage("Description is required"),
+    check('startDate')
+        .isISO8601()
+        .isAfter()
+        .withMessage("Start date must be in the future"),
+    check('endDate')
+        .isISO8601()
+    .custom((value, {req}) =>{
+            if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
+            return true;
+        })
+        ,
+        
+    handleValidationErrors
+];
+
+
+
 router.get("/", validateQueryParams, async (req, res, next) => {
    
     let { page, size, name, type, startDate} = req.query;
@@ -107,6 +152,32 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
     }
 });
 
+
+router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
+    const eventId = parseInt(req.params.eventId);
+    const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
+    if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
+    if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
+        const e = await Event.findByPk(eventId);
+        if(!e) return eventNotFoundError(req, res, next);
+        e.venueId = venueId;
+        e.name = name;
+        e.description =description;
+        e.type =type;
+        e.capacity =capacity;
+        e.price =price;
+        e.startDate =startDate;
+        e.endDate =endDate;
+        await e.save();
+        
+        res.status(200);
+        res.json(e);      
+    } else {
+        return notAuthorizedErr(req, res, next)
+    }
+    
+});
+
 router.get("/:eventId", async (req, res, next) => {
     const eventId = req.params.eventId;
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
@@ -147,7 +218,7 @@ router.get("/:eventId", async (req, res, next) => {
 });
 
 router.get("/:eventId/attendees", async (req,res,next)=>{
-    const eventId = req.params.eventId;
+    const eventId = parseInt(req.params.eventId);
     const event = await Event.findByPk(eventId);
     
     if(!event) return eventNotFoundError(req,res,next);
@@ -182,7 +253,7 @@ router.get("/:eventId/attendees", async (req,res,next)=>{
 });
 
 router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
-    const eventId = req.params.eventId
+    const eventId = parseInt(req.params.eventId)
    
     const userId = req.body.userId;
 
