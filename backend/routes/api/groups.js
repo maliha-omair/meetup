@@ -5,7 +5,7 @@ const app = express();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../../db/models');
-const { Op, Sequelize } = require('sequelize')
+const { Op, Sequelize, ValidationError, ValidationErrorItem } = require('sequelize')
 const { requireAuth } = require('../../utils/auth');
 const { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 
@@ -45,13 +45,20 @@ const validateNewVenue = [
         .withMessage("City is required"),
     check('state')
         .exists({ checkFalsy: false })
-        .withMessage("state is required"),
+        .withMessage("State is required"),
     check('lat')
         .isFloat({ min: -90, max: 90 })
         .withMessage("Latitude is not valid"),
     check('lng')
         .isFloat({ min: -180, max: 180 })
         .withMessage("Longitude is not valid"),
+    handleValidationErrors
+];
+
+const validateNewImage = [
+    check('url')
+        .exists({ checkFalsy: false })
+        .withMessage("Url is required"),
     handleValidationErrors
 ];
 
@@ -90,8 +97,6 @@ const validateNewEvent = [
     check('endDate')
         .isISO8601()
     .custom((value, {req}) =>{
-            console.log(req.body.startDate)
-            console.log(value)
             if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
             return true;
         })
@@ -204,7 +209,7 @@ router.get("/:groupId", requireAuth, async (req, res, next) => {
 
 });
 
-router.post("/:groupId/images", requireAuth, async (req, res, next) => {
+router.post("/:groupId/images", requireAuth, validateNewImage, async (req, res, next) => {
     const groupId = req.params.groupId;
     const { url } = req.body;
 
@@ -322,11 +327,10 @@ router.get("/:groupId/members", async (req, res, next) => {
 
 router.post("/:groupId/members", requireAuth, async (req, res, next) => {
 
-    const groupId = req.params.groupId;
-    const memberId = req.body.memberId
+    const groupId = parseInt(req.params.groupId);
+    const memberId = req.user.id;
     const status = "pending"
 
-    if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
     if (!await isGroup(groupId)) return groupNotFoundError(req, res, next)
     
 
@@ -335,7 +339,7 @@ router.post("/:groupId/members", requireAuth, async (req, res, next) => {
             memberId: memberId,
             groupId: groupId
         }
-    })
+    });
     if (member) {
         if (member.status === 'pending') {
             return userAlreadyRequestedErr(req, res, next);
@@ -364,7 +368,8 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
             model: Membership,
             where: {
                 memberId: memberId
-            }
+            },
+            required: false
 
         }
     });
@@ -374,13 +379,14 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
     if (!user) return userNotFoundError(req, res, next);
     if (!group.Memberships) return membershipNotFoundErr(req, res, next);
     if (group.Memberships.length !== 1) return membershipNotFoundErr(req, res, next);
-    if (status === "pending") throw new ValidationError("cannot change status to pending");
+    if (status === "pending") throw new ValidationError("Validation Error", [
+        new ValidationErrorItem(message= "Cannot change a membership status to 'pending'",type = 'ValidationError', path= "memberId")]);
     
-    if (status === "co-host" && (group.Memberships[0].status === "member" || group.Memberships[0].status === "pending")  && isOrganizer(groupId, req.user)) {
-        group.Memberships[0].status = "co-host"
+    if ((status === "co-host" || status === "member") && isOrganizer(groupId, req.user)) {
+        group.Memberships[0].status = status;
         await group.Memberships[0].save();
         res.json(group.Memberships[0]);
-    } else if (status === "member" && group.Memberships[0].status === "pending" && (isOrganizer(groupId, req.user) || isCoHost(groupId, req.user))) {
+    } else if (status === "member" && group.Memberships[0].status !== "co-host" && isCoHost(groupId, req.user)) {
         group.Memberships[0].status = "member";
         await group.Memberships[0].save();
         res.json(group.Memberships[0]);
@@ -388,7 +394,6 @@ router.put("/:groupId/members", requireAuth, async (req, res, next) => {
 });
 
 router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
-    console.log("in here")
     const groupId = req.params.groupId;
     const { memberId } = req.body;
     if (!(await isGroup(groupId))) return groupNotFoundError(req, res, next);
@@ -422,7 +427,6 @@ router.delete("/:groupId/members", requireAuth, async (req, res, next) => {
 router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
 
     const groupId = req.params.groupId;
-    console.log("group Id is ", groupId);
     if (!(await isGroup(groupId))) return groupNotFoundError(req, res, next);
     if ((await isOrganizer(groupId, req.user)) || (await isCoHost(groupId, req.user))) {
         const venue = await Venue.findAll({
@@ -439,9 +443,8 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
 
 router.post("/:groupId/venues", requireAuth, validateNewVenue, async (req, res, next) => {
 
-    console.log("in here")
     const { address, city, state, lat, lng } = req.body;
-    const groupId = req.params.groupId;
+    const groupId = parseInt(req.params.groupId);
 
     if (! (await isGroup(groupId))) return groupNotFoundError(req, res, next);
 
@@ -504,7 +507,6 @@ router.get("/:groupId/events", async (req, res, next) => {
 
 
 router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,next)=>{
-    console.log("in here")
     const groupId = req.params.groupId;
     const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
@@ -541,7 +543,7 @@ function userAlreadyMemberErr(req, _res, next) {
     const err = new Error("User is already a member of the group");
     err.title = 'Bad Request';
     err.errors = ["Already a member"];
-    err.status = 404;
+    err.status = 400;
     return next(err);
 }
 function userAlreadyRequestedErr(req, _res, next) {
@@ -552,18 +554,15 @@ function userAlreadyRequestedErr(req, _res, next) {
     return next(err);
 }
 function membershipNotFoundErr(req, _res, next) {
-    const err = new Error("Membership between the user and the group does not exits");
+    const err = new Error("Membership between the user and the group does not exist");
     err.title = 'Not Found';
     err.errors = ["Membership Not Found"];
     err.status = 404;
     return next(err);
 }
 function userNotFoundError(req, _res, next) {
-    const err = new Error("Validation Error");
-    err.title = 'Bad Request';
-    err.errors = ["User couldn't be found"];
-    err.status = 400;
-    return next(err);
+    throw new ValidationError("Validation Error", [
+        new ValidationErrorItem(message= "User couldn't be found",type = 'Validation Error', path= "memberId")]);
 }
 function groupNotFoundError(req, _res, next) {
     const err = new Error("Group couldn't be found");
@@ -573,8 +572,5 @@ function groupNotFoundError(req, _res, next) {
     return next(err);
 }
 
-// exports.isGroup = isGroup;
-// exports.isCoHost = isCoHost;
-// exports.isOrganizer = isOrganizer;
 
 module.exports = router;

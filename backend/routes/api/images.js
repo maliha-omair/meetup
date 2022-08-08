@@ -7,7 +7,6 @@ const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,is
 router.delete("/:imageId/", requireAuth, async (req,res,next)=>{
     const imageId = req.params.imageId;
     const image = await Image.findByPk(imageId);
-    console.log(imageId, " ", image)
     if(!image) return imageNotFoundError(req,res,next);
     if(image.userId === req.user.id){
         await image.destroy();

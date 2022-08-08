@@ -200,7 +200,6 @@ router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
     if(!attendance) return attendanceNotFoundErr(req,res,next)
 
     const groupId = attendance.groupId;
-    console.log("current user and deleted user are ",req.user.id, "  ", attendance.userId);
     if((req.user.id === attendance.userId) || (await isOrganizer(groupId,req.user) || (await isCoHost(groupId,req.user)))){
         await attendance.destroy();
         res.status(200);
@@ -289,7 +288,6 @@ router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
             userId:req.user.id,
         }
     });
-    console.log(attendee)
     if(!attendee) return notAuthorizedErr(req,res,next);
     
     const image = await Image.create({

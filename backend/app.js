@@ -62,11 +62,17 @@ app.use((_req, _res, next) => {
 app.use((err, _req, _res, next) => {
         // check if error is a Sequelize error:  
     if (err instanceof ValidationError) {
-        err.errors = err.errors.map((e) => e.message);
-        err.title = 'Validation error';
+       var formattedErrors = {};
+
+        err.errors.forEach((error) =>  {
+          formattedErrors[error.path] = error.message;  
+        });
+        console.log(formattedErrors)
+        err.errors = formattedErrors; 
+        err.title = 'Validation Error';
         err.status = 400; 
     }
-   
+    
     next(err);
 });
 
