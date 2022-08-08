@@ -45,8 +45,12 @@ let signup  =  async (req, res) => {
   }
   const user = await User.signup({ firstName, lastName, email, username, password });
   const token = await setTokenCookie(res, user);
+  
   return res.json({
-    user, token
+    id:user.id, 
+    firstName:user.firstName, 
+    lastName:user.lastName,
+    email:user.email, token
   });
 }
 
