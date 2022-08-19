@@ -34,13 +34,14 @@ router.post(
       return next(err);
     }
     const token = await setTokenCookie(res, user);
-    return res.json({
+    const response = res.json({
       id:user.id, 
       firstName: user.firstName,
       lastName: user.lastName,
       email:user.email,
       token
-  });
+    });
+    return response;
   }
 );
 
