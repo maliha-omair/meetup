@@ -1,0 +1,97 @@
+.main{
+    text-align: center;
+    justify-content: center;
+    display:flex;
+    
+    padding: 90px 0 90px 0;
+    background-color: rgb(252, 252, 252);
+}
+.sub-main{
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    justify-content: center;
+    height: 550px;
+    width: 35%;
+    box-shadow: 11px 12px 13px 12px rgb(207,207,207);
+    padding-top: 2px;
+    border-radius: 8px;
+    background-color: white;
+
+}
+.imgs{
+    padding-top:20px;
+    justify-content: center;
+    display:flex;    
+}
+.container-image{
+    background-color: white;
+    border-radius: 150px;
+    align-items: center;
+    display: flex;
+    height: 50px;
+    width: 50px;
+}
+.login{
+    height:80px;
+    width:80px;
+    border-radius: 130px;
+
+}
+input{
+    width: 250px;
+    height:30px;
+    border-radius: 8px;
+    box-shadow: inset 0px 0px 1px 0px;
+}
+
+.login-button{
+    align-items: center;
+    justify-content: center; 
+    width:250px;
+    height:35px;
+    border-radius: 8px;
+    background-color:#f65858;
+    padding-top: 8px;
+    padding-right: 12px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    color:white;
+    font-size:20px;
+    border:none;
+}
+.email-div{
+    display:flex;
+    flex-direction: column; 
+    padding-left: 60px;
+    justify-content: center;
+        
+    
+}
+.email{    
+    font-size: 16px;
+    display: flex;
+    
+}
+.pass-div{
+    display:flex;
+    flex-direction: column; 
+    padding-left: 60px;
+    justify-content: center;
+    
+}
+.pass{
+    font-size: 16px;
+    padding-right: 2.5rem;
+    display: flex;
+}
+.login-checkbox-div{
+    display: flex;
+    flex-direction: row;
+    margin:5px;
+    padding-left: 60px;
+}
+.login-check{
+    display:flex;
+    width: 20px;
+}
