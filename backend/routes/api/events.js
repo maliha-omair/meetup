@@ -342,7 +342,7 @@ router.put("/:eventId/attendees", requireAuth, async (req, res, next) => {
     if (!attendee) return attendanceNotFoundErr(req, res, next);    
     if (status === "pending") cannotChangeStatusError(req,res,next);
     const groupId = event.groupId;
-    if(!(await isOrganizer(groupId,req.user)) || !(await isCoHost(groupId,user))) notAuthorizedErr(req,res,next);
+    if(!(await isOrganizer(groupId,req.user)) && !(await isCoHost(groupId,user))) notAuthorizedErr(req,res,next);
     attendee.status = status;
     attendee.save();
     res.status(200);

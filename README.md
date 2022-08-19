@@ -14,4 +14,4 @@ Read [API Guide](./backend/API-docs-Meetup.md)
 - run seed on heroku `heroku run npm run sequelize db:seed:all` 
 
 ### Run tests
-- `npx dotenv npm tests`
+- `npx dotenv npm test`
