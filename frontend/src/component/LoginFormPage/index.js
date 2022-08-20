@@ -4,14 +4,13 @@ import { useHistory } from 'react-router-dom';
 import smallLogo from "../../assets/small-logo.png"
 import * as sessionActions from '../../store/session';
 import { Redirect } from 'react-router-dom';
-import "../../css/style.css"
+import "./LoginFormPage.css"
 
 
 
 export default function LoginFormPage(){
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
-    const [checked,setChecked] = useState(true)
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
@@ -19,6 +18,7 @@ export default function LoginFormPage(){
     if (sessionUser) return (
         <Redirect to="/" />
     );
+
     function handleSubmit(e){
         e.preventDefault();
         setErrors([]);
@@ -26,12 +26,11 @@ export default function LoginFormPage(){
             credential:email,
             password:password
         }
-        console.log(user)
         return dispatch(sessionActions.login(user))
-         .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
        
     }
 
