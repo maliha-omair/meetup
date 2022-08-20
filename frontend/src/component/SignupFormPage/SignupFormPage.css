@@ -2,14 +2,14 @@
     text-align: center;
     justify-content: center;
     display:flex;
-    
+    width: 1024px;
     padding: 90px 0 90px 0;
     background-color: rgb(252, 252, 252);
 }
 .sub-main{
     display: flex;
     flex-direction: column;
-    flex-direction: column;
+    
     justify-content: center;
     align-items: center;
     height: 550px;
@@ -48,7 +48,7 @@ input{
     width: 250px;
     height:30px;
     border-radius: 8px;
-    
+    justify-content: center;
 }
 
 .login-button{
@@ -76,6 +76,8 @@ input{
     font-size: 16px;
     font-weight: 550;
     display: flex;
+    justify-content: right;
+    align-items: right;
     
 }
 .pass-div{

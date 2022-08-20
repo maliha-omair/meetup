@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+
 const setUser = (user) => {
   return {
     type: SET_USER,
@@ -16,8 +17,8 @@ const removeUser = () => {
   };
 };
 
-export const login = (user) => async (dispatch) => {
-  const { credential, password } = user;
+export const login = (loginRequest) => async (dispatch) => {
+  const { credential, password } = loginRequest;
   const response = await csrfFetch('/api/session', {
     // mode: "no-cors",
     method: 'POST',
@@ -34,9 +35,36 @@ export const login = (user) => async (dispatch) => {
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
-  };
+};
+
+export const signup = (user) => async dispatch => {
+    const {firstName,lastName,userName,email,password} = user;
+    const response = await csrfFetch('/api/users',{
+        method: 'POST',
+        body:JSON.stringify({
+            firstName,
+            lastName,
+            userName,
+            email,
+            password,
+        }),          
+    });
+    if(response.ok){
+        const data = await response.json();
+        dispatch(setUser(data))
+        return response;
+    }    
+}
+
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+      method: 'DELETE',
+    });
+    dispatch(removeUser());
+    return response;
+};
 
 const initialState = { user: null };
 

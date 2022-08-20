@@ -1,9 +1,10 @@
+
 .main{
     text-align: center;
     justify-content: center;
     display:flex;
-    
-    padding: 90px 0 90px 0;
+    width: 1024px;
+       
     background-color: rgb(252, 252, 252);
 }
 .sub-main{
@@ -12,16 +13,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 550px;
+    height: 800px;
     width: 35%;
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
-    padding-top: 2px;
     border-radius: 8px;
     background-color: white;
 
 }
 .imgs{
-    padding-top:20px;
+    
     justify-content: center;
     display:flex;    
 }
@@ -40,9 +40,9 @@
     
 
 }
-.login-title{
+.title{
     font-family: Helvetica, Arial, Sans-Serif;
-    font-size: 28px;
+    font-size: 20px;
 }
 input{
     width: 250px;
@@ -67,6 +67,19 @@ input{
     display: flex;
     padding-top: 20px;
 }
+.name-div{
+    display:flex;
+    flex-direction: column;    
+    justify-content: center;  
+}
+.name{    
+    font-size: 16px;
+    font-weight: 550;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom:10px;    
+    
+}
 .email-div{
     display:flex;
     flex-direction: column;    
@@ -76,6 +89,9 @@ input{
     font-size: 16px;
     font-weight: 550;
     display: flex;
+    margin-top:5px;
+    margin-bottom:10px;
+
     
 }
 .pass-div{
@@ -90,6 +106,8 @@ input{
     font-weight: 550;
     font-family: Helvetica, Arial, Sans-Serif;
     display: flex;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 .login-checkbox-div{
     display: flex;
