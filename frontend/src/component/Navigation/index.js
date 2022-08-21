@@ -13,7 +13,6 @@ function Navigation({ isLoaded }){
       <ProfileButton user={sessionUser} />
     );
   } else {
-    console.log("no user is logged in ")
     sessionLinks = (
       <>
         <NavLink to="/login">Log In</NavLink>
