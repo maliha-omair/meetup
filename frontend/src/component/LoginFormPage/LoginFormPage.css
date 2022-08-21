@@ -21,24 +21,23 @@
 
 }
 .imgs{
-    
+    display:flex; 
     justify-content: center;
-    display:flex;    
+    height:50px;
+    width:50px;   
 }
 .container-image{
     background-color: white;
     border-radius: 150px;
     align-items: center;
     display: flex;
-    height: 50px;
-    width: 50px;
+    height: 20px;
+    width: 20px;
 }
 .login{
-    height:80px;
-    width:80px;
-    border-radius: 130px;
-    
-
+    height:50px;
+    width:50px;
+    border-radius: 130px; 
 }
 .title{
     font-family: Helvetica, Arial, Sans-Serif;
@@ -47,10 +46,8 @@
 input{
     width: 250px;
     height:30px;
-    border-radius: 8px;
-    
+    border-radius: 8px;    
 }
-
 .login-button{
     align-items: center;
     justify-content: center; 

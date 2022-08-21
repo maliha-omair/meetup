@@ -1,9 +1,7 @@
-import LoginFormPage from "../LoginFormPage";
-
 export default function Home(){
     return(
         <div>
-            <LoginFormPage />
+            <h1>Home Page</h1>
         </div>
     );
 }
