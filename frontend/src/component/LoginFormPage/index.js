@@ -39,9 +39,14 @@ export default function LoginFormPage(){
             <div className="main">
                 <div className="sub-main">
                     <div>
+                    <ul>
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+                    </div>
+                    <div>
                         <div className="imgs">
                             <div className="container-image">
-                                <img src={smallLogo} alt="logo" className="login"/>
+                                <img src={smallLogo} alt="logo" className="imgs"/>
                             </div>
                         </div>
                     </div>
