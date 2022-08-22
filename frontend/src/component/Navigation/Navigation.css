@@ -81,11 +81,11 @@
 }
 .dropdown-link:hover{
     text-decoration: none; 
-    color:rgba(59,130,246,.5);
+    color:rgb(151, 202, 209);
     font-size: 16px;
 }
 .dropdown-button{
-  background-color: #7bc2a8; /* Green */
+  background-color:rgb(151, 202, 209);
   border: none;
   color: white;
   padding: 15px;
