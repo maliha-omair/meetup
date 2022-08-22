@@ -8,13 +8,19 @@ import Home from './component/Home'
 import Logout from "./component/Logout";
 import Navigation from "./component/Navigation";
 import * as sessionActions from "./store/session";
+import Profile from "./component/Profile";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
-    setIsLoaded(true);
+    dispatch(sessionActions.restoreUser()).then(() => {
+      console.log("after refresh in app.js ");
+      setIsLoaded(true);
+    }).catch(()=>{
+      setIsLoaded(true);
+    });
+    // setIsLoaded(true);
   }, [dispatch]);
   
   return (
@@ -33,6 +39,9 @@ function App() {
         </Route>
         <Route path="/logout">
           <Logout />
+        </Route>
+        <Route path="/profile">
+          <Profile />
         </Route>
       </Switch>
       )}

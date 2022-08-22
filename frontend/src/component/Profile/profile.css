@@ -1,0 +1,13 @@
+.dot {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    padding: 8px;
+
+    background: #7bc2a8; /* Green */
+    border: 8px solid #666;
+    color: white;
+    text-align: center;
+
+    font: 150px Arial, sans-serif;
+  }

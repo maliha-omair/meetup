@@ -1,7 +1,7 @@
 // backend/routes/api/session.js
 const express = require('express')
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -57,7 +57,7 @@ router.delete(
 // Restore session user
 router.get(
   '/',
-  restoreUser,
+  requireAuth, restoreUser,
   (req, res) => {
     const { user } = req;
     if (user) {
@@ -67,13 +67,7 @@ router.get(
         lastName: user.lastName,
         email:user.email
       });
-    } else return res.json({
-        "message": "User already exists",
-        "statusCode": 403,
-        "errors": {
-         "email": "User with that email already exists"
-       }
-    });
+    } else return res.json({});
   }
 );
 
