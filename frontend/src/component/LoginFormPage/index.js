@@ -9,8 +9,9 @@ import "./LoginFormPage.css"
 
 
 export default function LoginFormPage(){
-    const [email,setEmail] = useState("")
-    const [password,setPassword] = useState("")
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const [demoUser,setDemoUser] = useState(false);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
@@ -21,24 +22,31 @@ export default function LoginFormPage(){
 
     function handleSubmit(e){
         e.preventDefault();
-        setErrors([]);
-        const user = {
-            credential:email,
-            password:password
+        let user={}
+        if(demoUser){
+             user = {
+                credential:"demo@aa.com",
+                password:"demouser"
+            }
+        }else{
+            user = {
+                credential:email,
+                password:password
+            }
         }
+        setErrors([]);        
         return dispatch(sessionActions.login(user))
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
         });
-       
     }
+    
 
     return(   
-        <form onSubmit={handleSubmit} className="main"> 
-         
-                <div className="sub-main">
-                   
+        <form onSubmit={handleSubmit} className="main">          
+
+                <div className="sub-main">                   
                     <div className="login-top">                            
                         <img src={smallLogo} alt="logo" className="logo-login"/>
                         <h1 className="login-title">Log in</h1>
@@ -59,9 +67,11 @@ export default function LoginFormPage(){
                     </div>    
                    
                     <div className="login-button-div">
-                        <button className="login-button" type="submit">Log in</button>
+                        <button className="login-button" kery="login" type="submit" onClick={()=>setDemoUser(false)}>Log in</button>
+                    </div> 
+                    <div className="login-button-div">
+                        <button className="login-button" key="demouser" type="submit" onClick={()=>setDemoUser(true)} >Demo User</button>
                     </div>
-                    
                 </div>            
  
         </form>     
