@@ -1,7 +1,7 @@
 import {useState} from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import smallLogo from "../../assets/small-logo.png"
+import smallLogo from "../../assets/meetup-logo.png"
 import * as sessionActions from '../../store/session';
 import { Redirect } from 'react-router-dom';
 import "./LoginFormPage.css"
@@ -44,26 +44,26 @@ export default function LoginFormPage(){
     
 
     return(   
-        <form onSubmit={handleSubmit} className="main">          
+        <form onSubmit={handleSubmit} className="main-login">          
 
-                <div className="sub-main">                   
+                <div className="sub-main-login">                   
                     <div className="login-top">                            
                         <img src={smallLogo} alt="logo" className="logo-login"/>
                         <h1 className="login-title">Log in</h1>
-                        <span className="not-a-member">Not a member yet? <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </span>
+                        <div className="not-a-member-login">Not a member yet? <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div>
                     </div>
                     <ul>
-                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                        {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
                     </ul>
                  
                     <div className="login-sub-div">
                         <label className="login-label" >Email</label>
-                        <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                        <input className="input-login" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     </div>
 
                     <div className="login-sub-div">
                         <label className="login-label">Password</label>
-                        <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                        <input className="input-login" type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                     </div>    
                    
                     <div className="login-button-div">

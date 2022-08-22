@@ -37,9 +37,9 @@ function ProfileButton({ user }) {
     <>
       <div className="profile-dropdown-main">
         <div>
-          <button  className="dropdown-button" onClick={openMenu}>
+          <div className="nav-dropdown" onClick={openMenu}>
             {user.firstName.charAt(0).toUpperCase()}
-          </button>
+          </div>
           <FontAwesomeIcon className="arrowIcon" icon={showMenu? faAngleDown: faAngleUp} onClick={openMenu} />
         </div>
         {showMenu && (

@@ -38,25 +38,25 @@
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 24px;
 }
-input{
+
+.input-signup{
     width: 250px;
-    height: 2.5rem;
+    height: 30px;
     border-radius: 0.5rem;
-    /* --tw-border-opacity: 1; */
     border-color: rgba(230,230,230,0.2);
     
     justify-content: center;
 }
-input:focus{
-  
-    /* --tw-border-opacity: 1; */
+
+.input-signup:focus{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
-    /* box-shadow: 0 0 10px #719ECE; */
 }
-li{
+
+.error-message-signup{
     color:red;
 }
+
 .login-button-signup{
     align-items: center;
     justify-content: center; 
@@ -80,12 +80,12 @@ li{
 }
 .signup-label{
     font-family: Helvetica, Arial, Sans-Serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     font-family: Helvetica, Arial, Sans-Serif;
     text-align: left;
 }
-.sub-div{
+.sub-div-signup{
     display: grid;
     grid-template-rows: auto;
     margin: 8px;

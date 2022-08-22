@@ -16,6 +16,7 @@
 .imgs{
     display:flex; 
     justify-content: center;
+    align-items: center;
     height:70px;
     width:70px;   
 }
@@ -34,8 +35,7 @@
     justify-content: space-around;   
 }
 .navigate-link{
-    text-decoration: none; 
-    
+    text-decoration: none;     
     font-family: Helvetica, Arial, Sans-Serif;
     color:black;
     font-size: .875rem;
@@ -49,48 +49,48 @@
 
 .profile-dropdown-main{
     display: grid;
-    position:relative;
-   
-    
-    
-
+    position:relative;   
 }
+
 .div-dropdown{
   position: absolute;
   top: 100%;
   left: -195%;
   min-width: 190px;
-  padding-top: 0.75rem;
+  padding-top: 20px;
+  margin-top: 10px;
   z-index: 52;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.14);
+  border: 1px solid white;
+  box-shadow: 0 3px 3px 3px rgba(138, 138, 138, 0.14);
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   height:200px;
   margin-right: 10px;
   justify-content: space-around;
   padding-left: 10px;
-  justify-content: left;
-  
+  justify-content: left;  
 }
+
 .dropdown-link{
     text-decoration: none; 
     font-family: Helvetica, Arial, Sans-Serif;  
-    font-size: 16px;
+    font-size: 14px;
     color: black;
     
 }
+
 .dropdown-link:hover{
     text-decoration: none; 
     color:rgb(151, 202, 209);
-    font-size: 16px;
+    font-size: 14px;
 }
-.dropdown-button{
+
+.nav-dropdown{
   background-color:rgb(151, 202, 209);
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   color: black;
-  border-color: black;
+  border: black 1px solid;
   padding: 15px;
   text-align: center;
   text-decoration: none;

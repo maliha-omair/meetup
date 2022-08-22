@@ -4,13 +4,13 @@ import "../HomeGuest/HomeGuest.css"
 export default function HomeGuest(){
     return(
         <div className="home-guest-main-div">
-            <div className="sub-div">
+            <div className="sub-div-guest-view">
                 <div className="left-intro-div">
                     <div >
                         <h1>Celebrating 20 years of real connections on Meetup</h1>
                     </div>
                     <div >
-                        <p>
+                        <p className="guest-view-p">
                         Whatever you’re looking to do this year, Meetup can help. For 20 
                         years, people have turned to Meetup to meet people, make friends, 
                         find support, grow a business, and explore their interests. 

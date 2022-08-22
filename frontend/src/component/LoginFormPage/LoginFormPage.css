@@ -1,24 +1,26 @@
 
-.main{
+.main-login{
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
-    display:flex;
+    
     /* width: x; */
-    padding: 20px 20px 20px 20px;
+    /* padding: 20px 20px 20px 20px; */
+    
     
 }
-.sub-main{
+.sub-main-login{
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
     justify-content: center;
     align-items: center;
     height: 500px;
-    width: 25%;
+    
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
     padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
     border-radius: 8px;
     
 
@@ -28,8 +30,9 @@
     width:50px;
     border-radius: 130px;
 }
-li{
+.li-login{
     color:red;
+    text-align: left;
 }
 
 .login-top{
@@ -43,13 +46,18 @@ li{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 20px;
 }
-input{
+
+.input-login{
     width: 250px;
     height:30px;
     border-radius: 8px;
     justify-content: center;
+    border-color: rgba(230,230,230,0.2);
 }
-
+.input-login:focus{   
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
 .login-button{
     align-items: center;
     justify-content: center; 
@@ -62,18 +70,21 @@ input{
     font-size:20px;
     border:none;
 }
+.login-button:hover{
+    background-color:rgba(246, 88, 88,0.8);
+}
 .login-button-div{
     display: flex;
     padding-top: 20px;
 }
 
-.not-a-amember{
+.not-a-amember-login{
     font-family: Helvetica, Arial, Sans-Serif;
-    
+    font-size: 14px;
 }
 .login-label{
     font-family: Helvetica, Arial, Sans-Serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     font-family: Helvetica, Arial, Sans-Serif;
     text-align: left;
@@ -81,7 +92,7 @@ input{
 .login-sub-div{
     display: grid;
     grid-template-rows: auto;
-    margin: 8px;
+    margin: 10px;
 }
 .login-top{
     display: flex;
