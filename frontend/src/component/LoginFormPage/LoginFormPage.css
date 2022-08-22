@@ -1,53 +1,55 @@
 
 .main{
+    display: flex;
     text-align: center;
+    align-items: center;
     justify-content: center;
     display:flex;
-    width: 1024px;
-       
-    background-color: rgb(252, 252, 252);
+    /* width: x; */
+    padding: 20px 20px 20px 20px;
+    
 }
 .sub-main{
     display: flex;
     flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 25%;
+    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
+    padding-top: 0px;
+    border-radius: 8px;
+    
+
+}
+.logo-login{
+    height:50px;
+    width:50px;
+    border-radius: 130px;
+}
+li{
+    color:red;
+}
+
+.login-top{
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 800px;
-    width: 35%;
-    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
-    border-radius: 8px;
-    background-color: white;
+}
 
-}
-.imgs{
-    display:flex; 
-    justify-content: center;
-    height:50px;
-    width:50px;   
-}
-.container-image{
-    background-color: white;
-    border-radius: 150px;
-    align-items: center;
-    display: flex;
-    height: 20px;
-    width: 20px;
-}
-.login{
-    height:50px;
-    width:50px;
-    border-radius: 130px; 
-}
-.title{
+.login-title{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 20px;
 }
 input{
     width: 250px;
     height:30px;
-    border-radius: 8px;    
+    border-radius: 8px;
+    justify-content: center;
 }
+
 .login-button{
     align-items: center;
     justify-content: center; 
@@ -64,59 +66,31 @@ input{
     display: flex;
     padding-top: 20px;
 }
-.name-div{
-    display:flex;
-    flex-direction: column;    
-    justify-content: center;  
-}
-.name{    
-    font-size: 16px;
-    font-weight: 550;
-    display: flex;
-    margin-top: 5px;
-    margin-bottom:10px;    
-    
-}
-.email-div{
-    display:flex;
-    flex-direction: column;    
-    justify-content: center;  
-}
-.email{    
-    font-size: 16px;
-    font-weight: 550;
-    display: flex;
-    margin-top:5px;
-    margin-bottom:10px;
 
-    
-}
-.pass-div{
-    display:flex;
-    flex-direction: column; 
-    font-family: Helvetica, Arial, Sans-Serif;
-    justify-content: center;
-    
-}
-.pass{
-    font-size: 16px;
-    font-weight: 550;
-    font-family: Helvetica, Arial, Sans-Serif;
-    display: flex;
-    margin-bottom: 10px;
-    margin-top: 5px;
-}
-.login-checkbox-div{
-    display: flex;
-    flex-direction: row;
-    align-items: left;       
-
-}
-.login-check{
-    display:flex;
-    width: 20px;
-  
-}
 .not-a-amember{
     font-family: Helvetica, Arial, Sans-Serif;
+    
+}
+.login-label{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align: left;
+}
+.login-sub-div{
+    display: grid;
+    grid-template-rows: auto;
+    margin: 8px;
+}
+.login-top{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.signup-link{
+    text-decoration: none; 
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:#0070f3;
 }

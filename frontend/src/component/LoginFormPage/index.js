@@ -1,6 +1,6 @@
 import {useState} from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import smallLogo from "../../assets/small-logo.png"
 import * as sessionActions from '../../store/session';
 import { Redirect } from 'react-router-dom';
@@ -35,32 +35,26 @@ export default function LoginFormPage(){
     }
 
     return(   
-        <form onSubmit={handleSubmit}> 
-            <div className="main">
+        <form onSubmit={handleSubmit} className="main"> 
+         
                 <div className="sub-main">
-                    <div>
+                   
+                    <div className="login-top">                            
+                        <img src={smallLogo} alt="logo" className="logo-login"/>
+                        <h1 className="login-title">Log in</h1>
+                        <span className="not-a-member">Not a member yet? <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </span>
+                    </div>
                     <ul>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
-                    </div>
-                    <div>
-                        <div className="imgs">
-                            <div className="container-image">
-                                <img src={smallLogo} alt="logo" className="imgs"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h1 className="login-title">Login</h1>
-                        <p className="not-a-member">Not a member yet? Sign up</p>
-                    </div>
-                    
-                    <div className="email-div">
-                        <label className="email" >Email</label>
+                 
+                    <div className="login-sub-div">
+                        <label className="login-label" >Email</label>
                         <input type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     </div>
-                    <div className="pass-div">
-                        <label className="pass">Password</label>
+
+                    <div className="login-sub-div">
+                        <label className="login-label">Password</label>
                         <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
                     </div>    
                    
@@ -69,7 +63,7 @@ export default function LoginFormPage(){
                     </div>
                     
                 </div>            
-            </div>
+ 
         </form>     
         
     )

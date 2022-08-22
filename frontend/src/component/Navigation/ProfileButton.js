@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import { NavLink } from 'react-router-dom';
+import './Navigation.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons'
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -31,19 +35,20 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-          {console.log("user has ",user)}
-          <li>{`${user.firstName} ${user.lastName}`}</li>
-          <li>{user.email}</li>
-          <li>
-            <NavLink onClick={logout} to="#">Log Out</NavLink>
-          </li>
-        </ul>
-      )}
+      <div className="profile-dropdown-main">
+        <div>
+          <button  className="dropdown-button" onClick={openMenu}>
+            {user.firstName.charAt(0).toUpperCase()}
+          </button>
+          <FontAwesomeIcon className="arrowIcon" icon={showMenu? faAngleDown: faAngleUp} onClick={openMenu} />
+        </div>
+        {showMenu && (
+          <div className="div-dropdown">
+            <NavLink to="/profile" className="dropdown-link">View profile</NavLink>
+            <NavLink onClick={logout} to="#" className="dropdown-link">Log out</NavLink> 
+          </div>
+        )}
+      </div>
     </>
   );
 }

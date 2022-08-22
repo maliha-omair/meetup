@@ -35,77 +35,76 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="main" >
-      <div className="sub-main">
-        <div>
-          <div className="imgs">
-            <div className="container-image">
-              <img src={smallLogo} alt="logo" className="login" />
-            </div>
-          </div>
-        </div>
-        <div>
-          <h1 className="title">Finish signing up</h1>
-
-        </div>
+    <form onSubmit={handleSubmit} className="main-signup" >
+      <div className="sub-main-signup">
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <div className="email-div">
-          <label>  First Name </label>
-            <input className="name"
+
+        <div className="signup-top">
+          <img src={smallLogo} alt="logo" className="logo-signup" />
+          <h1 className="login-title-signup">Finish signing up</h1>    
+        </div>
+       
+        <div className="sub-div">
+          <label className="signup-label">First Name</label>
+          <input 
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-            />
-          
+          />
         </div>
 
-        <label>
-          Last Name
-          <input className="name"
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+        <div className="sub-div">
+          <label className="signup-label">Last Name</label>
+            <input 
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
           />
-        </label>
-        <label>
-          Email
-          <input className="email"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+        </div>
+       
+        <div className="sub-div">
+          <label className="signup-label">Email</label>
+            <input 
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
           />
-        </label>
-        <label>
-          Username
-          <input className="pass"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
+        </div>
+
+        <div className="sub-div">
+          <label className="signup-label">Username</label>
+            <input 
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
           />
-        </label>
-        <label>
-          Password
-          <input className="pass"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password
-          <input className="pass"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <div className="login-button-div">
+        </div>
+
+        <div className="sub-div">
+          <label className="signup-label">Password</label>
+            <input 
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+          />          
+        </div>
+
+        <div className="sub-div">
+          <label className="signup-label">Confirm Password</label >
+            <input 
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+          />          
+        </div>
+
+        <div className="login-button-div-signup">
           <button type="submit" className="login-button">Sign Up</button>
         </div>
       </div>

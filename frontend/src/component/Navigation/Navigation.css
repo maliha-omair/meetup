@@ -1,0 +1,103 @@
+.main-meetup-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 16px;
+    padding-right: 25px;
+    padding-top: 10px;
+    height:50px;
+    position: relative;
+    border: 0.5px solid;
+    /* margin: top -20px; */
+    background-color: white;
+    border-color: lightgray;
+}
+.imgs{
+    display:flex; 
+    justify-content: center;
+    height:70px;
+    width:70px;   
+}
+.container-image{
+    background-color: white;
+    border-radius: 150px;
+    align-items: center;
+    display: flex;
+    height: 25px;
+    width: 20px;
+}
+.link-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    justify-content: space-around;   
+}
+.navigate-link{
+    text-decoration: none; 
+    
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:black;
+    font-size: .875rem;
+    font-style: normal;
+ }
+ 
+.navigate-link:hover{
+   text-decoration: none; 
+   color:#0070f3;
+}
+
+.profile-dropdown-main{
+    display: grid;
+    position:relative;
+   
+    
+    
+
+}
+.div-dropdown{
+  position: absolute;
+  top: 100%;
+  left: -195%;
+  min-width: 190px;
+  padding-top: 0.75rem;
+  z-index: 52;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.14);
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  height:200px;
+  margin-right: 10px;
+  justify-content: space-around;
+  padding-left: 10px;
+  justify-content: left;
+  
+}
+.dropdown-link{
+    text-decoration: none; 
+    font-family: Helvetica, Arial, Sans-Serif;  
+    font-size: 16px;
+    color: black;
+    
+}
+.dropdown-link:hover{
+    text-decoration: none; 
+    color:rgba(59,130,246,.5);
+    font-size: 16px;
+}
+.dropdown-button{
+  background-color: #7bc2a8; /* Green */
+  border: none;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 100%;  
+}
+
+.arrowIcon{
+    cursor: pointer;
+}

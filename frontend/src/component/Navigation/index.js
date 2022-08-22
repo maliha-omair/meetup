@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import mainLogo from "../../assets/meetup-main-logo.png"
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -9,25 +10,30 @@ function Navigation({ isLoaded }){
 
   let sessionLinks;
   if (sessionUser) {
+    console.log("session user is ",sessionUser)
     sessionLinks = (
       <ProfileButton user={sessionUser} />
     );
   } else {
     sessionLinks = (
       <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
+        <div className='link-div'>
+          <NavLink to="/login" className="navigate-link">Log In</NavLink>
+          <NavLink to="/signup"className="navigate-link">Sign Up</NavLink>
+        </div>
       </>
     );
   }
 
-  return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+  return (       
+    <div className='main-meetup-nav'>
+      <NavLink exact to="/" className="navigate-link">
+        <div className='container-image'>
+          <img src={mainLogo} alt="logo" className="imgs"/>
+        </div>
+      </NavLink>
+    {isLoaded && sessionLinks}
+    </div>
   );
 }
 
