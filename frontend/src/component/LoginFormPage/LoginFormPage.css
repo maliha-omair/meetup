@@ -15,12 +15,11 @@
     flex-direction: column;    
     justify-content: center;
     align-items: center;
-    height: 500px;
-    
+    height: 600px;    
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
     padding-top: 0px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     border-radius: 8px;
     
 

@@ -25,6 +25,7 @@ function App() {
   
   return (
     <>
+      
       <Navigation isLoaded={isLoaded}/>
       {isLoaded && (
       <Switch>
