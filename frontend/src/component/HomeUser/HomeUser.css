@@ -1,0 +1,12 @@
+.home-user-main-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sub-div{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding-left: 30px;
+}
