@@ -1,0 +1,48 @@
+.mainFooter{
+    color: white;
+    background-color: black;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 40px;
+    bottom: 0;
+    position: relative;
+    width:100%;
+}
+
+.footerLink{
+    color:white;
+    font-size: 12px;
+    padding-right:5px;
+    text-decoration: none;
+    font-family: Helvetica, Arial, Sans-Serif;
+}
+
+.container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.col{
+    padding: 0px 40px 0px 40px;
+}
+.subNavLink{
+    display:flex;
+    flex-direction: column;
+}
+.divider{
+    width:1024px;
+}
+.copyright{
+    display:flex;
+    padding:20px;
+    font-size: 13px;
+
+}

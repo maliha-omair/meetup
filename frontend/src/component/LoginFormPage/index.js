@@ -19,7 +19,6 @@ export default function LoginFormPage(){
     if (sessionUser) return (
         <Redirect to="/" />
     );
-
     function handleSubmit(e){
         e.preventDefault();
         let user={}

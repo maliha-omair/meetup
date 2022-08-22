@@ -10,7 +10,6 @@ function Navigation({ isLoaded }){
 
   let sessionLinks;
   if (sessionUser) {
-    console.log("session user is ",sessionUser)
     sessionLinks = (
       <ProfileButton user={sessionUser} />
     );

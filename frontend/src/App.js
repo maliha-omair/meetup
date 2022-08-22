@@ -9,6 +9,8 @@ import Logout from "./component/Logout";
 import Navigation from "./component/Navigation";
 import * as sessionActions from "./store/session";
 import Profile from "./component/Profile";
+import Footer from "./component/Footer";
+import "./index.css"
 
 function App() {
   const dispatch = useDispatch();
@@ -24,29 +26,37 @@ function App() {
   }, [dispatch]);
   
   return (
-    <>
-      
-      <Navigation isLoaded={isLoaded}/>
-      {isLoaded && (
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <LoginFormPage />
-        </Route>
-        <Route path="/signup">
-          <SignupFormPage />
-        </Route>
-        <Route path="/logout">
-          <Logout />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
-      </Switch>
-      )}
-     </>
+   
+      <div className="page-container">
+        <div className = "content-wrap">
+          <Navigation isLoaded={isLoaded}/>          
+          {isLoaded && (
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <LoginFormPage />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route path="/logout">
+              <Logout />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+          </Switch>
+          )}
+          
+          <div>
+          <Footer isLoaded={isLoaded} />
+          </div>
+
+        </div>
+      </div>
+    
   );
 }
 
