@@ -17,8 +17,8 @@
     display:flex; 
     justify-content: center;
     align-items: center;
-    height:70px;
-    width:70px;   
+    height:100px;
+    width:100px;   
 }
 .container-image{
     background-color: white;
@@ -39,7 +39,8 @@
     font-family: Helvetica, Arial, Sans-Serif;
     color:black;
     font-size: .875rem;
-    font-style: normal;
+    font-style:normal;
+    font-weight: 550;
  }
  
 .navigate-link:hover{
@@ -56,12 +57,13 @@
   position: absolute;
   top: 100%;
   left: -195%;
+  border-radius: 8px;
   min-width: 190px;
   padding-top: 20px;
   margin-top: 10px;
   z-index: 52;
   border: 1px solid white;
-  box-shadow: 0 3px 3px 3px rgba(138, 138, 138, 0.14);
+  box-shadow: 0 3px 3px 3px rgba(0,0,0,.1);
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr;
   height:200px;
@@ -81,7 +83,7 @@
 
 .dropdown-link:hover{
     text-decoration: none; 
-    color:rgb(151, 202, 209);
+    color:#008294;
     font-size: 14px;
 }
 
