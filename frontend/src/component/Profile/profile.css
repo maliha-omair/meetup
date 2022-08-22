@@ -22,7 +22,14 @@
   grid-template-columns: 1fr 1fr;
   width: 80%;
 }
-
+h1{
+  font-family: Helvetica, Arial, Sans-Serif; 
+  font-size: 2.625rem;
+  font-weight: 700;
+}
+h3{
+  font-family: Helvetica, Arial, Sans-Serif; 
+}
 .profile-pic-large{
   display: flex;
   flex-direction: row;

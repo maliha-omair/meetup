@@ -39,6 +39,7 @@ router.post(
       firstName: user.firstName,
       lastName: user.lastName,
       email:user.email,
+      memberSince: user.createdAt,
       token
     });
     return response;
