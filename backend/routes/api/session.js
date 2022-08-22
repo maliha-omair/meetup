@@ -65,7 +65,8 @@ router.get(
         id:user.id, 
         firstName: user.firstName,
         lastName: user.lastName,
-        email:user.email
+        email:user.email,
+        memberSince: user.createdAt
       });
     } else return res.json({});
   }

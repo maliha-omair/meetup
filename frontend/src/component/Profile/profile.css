@@ -2,12 +2,30 @@
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    padding: 8px;
-
+    margin: 40px;
+    padding: 50px;
     background: rgb(151, 202, 209);
     border: 8px solid #666;
-    color: white;
+    color: rgba(0, 0, 0,0.5);
     text-align: center;
+    font: 150px Arial, sans-serif;    
+}
+.profile-main-div{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; 
+}
 
-    font: 150px Arial, sans-serif;
-  }
+.profile-sub-div{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 80%;
+}
+
+.profile-pic-large{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  padding-right: 10px;
+}
