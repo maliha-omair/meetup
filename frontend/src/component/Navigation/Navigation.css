@@ -8,6 +8,7 @@
     height:50px;
     position: relative;
     border: 0.5px solid;
+    margin-bottom: 50px;
     /* margin: top -20px; */
     background-color: white;
     border-color: lightgray;
@@ -86,8 +87,10 @@
 }
 .dropdown-button{
   background-color:rgb(151, 202, 209);
-  border: none;
-  color: white;
+  width: 50px;
+  height: 50px;
+  color: black;
+  border-color: black;
   padding: 15px;
   text-align: center;
   text-decoration: none;
@@ -95,7 +98,7 @@
   font-size: 16px;
   margin-right: 10px;
   cursor: pointer;
-  border-radius: 100%;  
+  border-radius: 50%;  
 }
 
 .arrowIcon{
