@@ -13,13 +13,14 @@ import Footer from "./component/Footer";
 import "./index.css"
 import { GroupsForm } from "./component/Groups/GroupsForm";
 import GetAllGroups from "./component/Groups/GetAllGroups";
+import GetAGroup from "./component/Groups/GetAGroup";
+import UserGroup from "./component/Groups/UserGroup";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
-      console.log("after refresh in app.js ");
       setIsLoaded(true);
     }).catch(()=>{
       setIsLoaded(true);
@@ -54,6 +55,12 @@ function App() {
             </Route>
             <Route path="/allGroups">
               <GetAllGroups />
+            </Route>
+            <Route path="/singleGroup/:groupId">
+              <GetAGroup />
+            </Route>
+            <Route path="/userGroup">
+              <UserGroup />
             </Route>
           </Switch>
           )}
