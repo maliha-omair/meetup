@@ -39,7 +39,7 @@ export default function Footer({isLoaded}){
                     
                     <div className={styles.col}>
                          <h3>Discover</h3>
-                        <NavLink to="/" className={styles.footerLink}>Groups</NavLink>                                     
+                        <NavLink to="/allGroups" className={styles.footerLink}>Groups</NavLink>                                     
                     </div>
                     
                     <div className={styles.col}> 

@@ -114,8 +114,7 @@ router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
         type,
         private,
         city,
-        state,
-    
+        state,    
     });
     
     res.status(201)

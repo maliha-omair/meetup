@@ -12,6 +12,7 @@ import Profile from "./component/Profile";
 import Footer from "./component/Footer";
 import "./index.css"
 import { GroupsForm } from "./component/Groups/GroupsForm";
+import GetAllGroups from "./component/Groups/GetAllGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +51,9 @@ function App() {
             </Route>
             <Route path="/createGroup">
               <GroupsForm />
+            </Route>
+            <Route path="/allGroups">
+              <GetAllGroups />
             </Route>
           </Switch>
           )}

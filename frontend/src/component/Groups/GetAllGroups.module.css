@@ -1,0 +1,59 @@
+.mainDiv{
+    display:flex;
+    flex-direction: row;
+    /* width: 80%; */
+    justify-content: center;
+    align-items: center;
+}
+
+.subDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding:20px;
+    
+    
+}
+
+.groubDetailDiv{
+    display: flex;
+    flex-direction: column;
+    padding-left:20px;
+    padding-right:20px;
+    width: 50%;
+    
+}
+
+.groupName{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.city{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+}
+
+.about{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    padding-top:20px;
+}
+
+.members{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    padding-top:20px;
+}
+
+.heading{
+    display:flex;
+    flex-direction: row;
+    /* width: 80%; */
+    justify-content: center;
+    align-items: center;
+}
