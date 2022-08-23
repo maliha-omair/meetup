@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faHandsClapping} from '@fortawesome/free-solid-svg-icons'
 import "../HomeUser/HomeUser.css"
-import GetAllGroups from '../Groups/GetAllGroups'
+
 export default function HomeUser({user}){
     return(
         <div className="hone-user-main-div">

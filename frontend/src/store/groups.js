@@ -1,9 +1,10 @@
-import GetAllGroups from "../component/Groups/GetAllGroups";
+import GetAllGroups from "../component/GetAllGroups/GetAllGroups";
 import { csrfFetch } from "./csrf";
 
 
 const SET_CURRENT_GROUP = 'group/setCurrentGroup';
 const GET_GROUPS = 'group/getGroups'
+const USER_GROUPS = 'group/userGroups'
 
 const setCurrentGroup = (group) => {
   return {
@@ -16,6 +17,13 @@ const getAllGroups = (groups) => {
   return {
     type: GET_GROUPS,
     payload: groups    
+  }
+}
+
+const userGroups = (groups) => {
+  return{
+    type: USER_GROUPS,
+    payload: groups
   }
 }
 
@@ -45,11 +53,22 @@ export const createGroup = (group) => async dispatch =>{
     const response = await csrfFetch("/api/groups",{
       method:'GET'
     })
-    console.log("after getting response ", response)
+    
     if(response.ok){
       const data = await response.json();
-      console.log("data is ",data)
       dispatch(getAllGroups(data));
+      return response;
+    }
+  }
+
+  //get user groups
+  export const getUserGroups = () => async dispatch => {
+    const response = await csrfFetch(`/api/groups/current`,{
+      method: 'GET'
+    });
+    if(response.ok){
+      const data = await response.json();
+      dispatch(userGroups(data));
       return response;
     }
   }
@@ -65,6 +84,10 @@ export const createGroup = (group) => async dispatch =>{
       case GET_GROUPS:
         newState = {...state};
         newState.allGroups = action.payload.Groups;
+        return newState;
+      case USER_GROUPS:
+        newState = {...state} 
+        newState.userGroups = action.payload.Groups;
         return newState;
     //   case REMOVE_USER:
     //     newState = Object.assign({}, state);

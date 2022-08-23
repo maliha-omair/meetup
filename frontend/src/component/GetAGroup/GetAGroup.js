@@ -1,7 +1,7 @@
 import { NavLink, useParams } from "react-router-dom"
 import { useSelector } from 'react-redux';
 import image from "../../assets/groupDisplayHd.jpeg"
-import styles from "../Groups/GetAGroup.module.css"
+import styles from "../GetAGroup/GetAGroup.module.css"
 import Divider from "../Divider/Divider";
 import { useState } from "react";
 // import { useEffect } from "react";

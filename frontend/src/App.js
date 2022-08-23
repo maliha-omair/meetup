@@ -12,9 +12,10 @@ import Profile from "./component/Profile";
 import Footer from "./component/Footer";
 import "./index.css"
 import { GroupsForm } from "./component/Groups/GroupsForm";
-import GetAllGroups from "./component/Groups/GetAllGroups";
-import GetAGroup from "./component/Groups/GetAGroup";
-import UserGroup from "./component/Groups/UserGroup";
+import GetAllGroups from "./component/GetAllGroups/GetAllGroups";
+import GetAGroup from "./component/GetAGroup/GetAGroup";
+import UserGroup from "./component/UserGroups/UserGroups";
+import UserGroups from "./component/UserGroups/UserGroups";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function App() {
               <GetAGroup />
             </Route>
             <Route path="/userGroup">
-              <UserGroup />
+             <UserGroups />
             </Route>
           </Switch>
           )}
