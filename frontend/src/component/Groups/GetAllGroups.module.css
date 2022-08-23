@@ -4,6 +4,7 @@
     /* width: 80%; */
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .subDiv{
@@ -56,4 +57,9 @@
     /* width: 80%; */
     justify-content: center;
     align-items: center;
+}
+
+.image{
+    width: 178;
+    height: 100;
 }

@@ -8,12 +8,13 @@ export default function GetAllGroups(){
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
     const allGroups = useSelector(state => state.group.allGroups)
+    
     let groupsArr = [];
+    
     useEffect(()=>{
         dispatch(groupActions.getGroups())        
     },[dispatch])
     
-
 
     if(!allGroups){
         console.log("no groups in response")
@@ -23,21 +24,22 @@ export default function GetAllGroups(){
         groupsArr = Object.values(allGroups);
         console.log("groups Arr is ",groupsArr)
     }
+    function handleClick(groupId){
+        console.log("value from div",groupId)
+        
+    }
 
     return(allGroups && (
-        <>
-            
+        <>            
             <div className={styles.heading}>
                 <h1>Groups</h1>            
             </div>
             {groupsArr.map((group,idx)=>{
                 return(
-                    <div className={styles.mainDiv}>
-                         
-                        <div className={styles.subDiv}>
-                           
+                    <div className={styles.mainDiv} value={group.id} onClick={()=>{handleClick(group.id)}}>                         
+                        <div className={styles.subDiv}>                           
                             <div>
-                                <img src={image}/>
+                                <img src={image} className={styles.image}/>
                             </div>
                             <div className={styles.groubDetailDiv}>
                             
@@ -52,11 +54,9 @@ export default function GetAllGroups(){
                                     </div>
                                     <div className={styles.members}>
                                         {group.numMembers} members - {group.private ? `Private`: `Public`}
-                                    </div>
-                            
+                                    </div>                            
                             </div>
-                            <div>
-                                    
+                            <div>                                    
                             </div>
                         </div>
                     </div>
