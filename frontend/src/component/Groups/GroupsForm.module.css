@@ -44,7 +44,14 @@
     height: 30px;
     border-radius: 0.5rem;
     border-color: rgba(230,230,230,0.2);
-    
+    justify-content: center;
+}
+
+.inputOption{
+    width: 250px;
+    height: 30px;
+    border-radius: 0.5rem;
+    border-color: rgba(0, 0, 0, 0.1);
     justify-content: center;
 }
 
@@ -56,23 +63,23 @@
 .createGroupLabel{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     font-family: Helvetica, Arial, Sans-Serif;
     text-align: left;
 }
+
 .formButton{
     align-items: center;
     justify-content: center; 
     width:255px;
     height:35px;
     border-radius: 8px;
-    background-color:#f65858;
-    
+    background-color:#f65858;    
     color:white;
-    font-size:20px;
-    
+    font-size:20px;    
     border:none;
 }
+
 .buttonDiv{
     display: flex;
     padding-top: 20px;
@@ -83,10 +90,16 @@
     grid-template-rows: auto;
     margin: 8px;
 }
+
 .errorMessageLi{
     color:red;
 }
 
+.innerDivPrivate{
+    display:flex;
+    flex-direction: row;
+    
+}
 /* .error-message-signup{
     color:red;
 }

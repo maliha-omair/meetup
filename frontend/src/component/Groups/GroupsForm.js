@@ -62,16 +62,18 @@ export function GroupsForm(){
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>about</label>
-                    <input type="text" className={styles.input} value={about} onChange={((e)=>setAbout(e.target.value))}></input>   
+                    <input type="textarea" className={styles.input} value={about} onChange={((e)=>setAbout(e.target.value))}></input>   
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>type</label>
-                    <input type="textarea" 
-                    className={styles.input} value={type} onChange={(e)=>setType(e.target.value)}></input>   
+                    <select value={type} onChange={(e)=>setType(e.target.value)}  className={styles.inputOption}>
+                        <option value="In person" className={styles.inputOption}>In person</option>
+                        <option value="Online" className={styles.inputOption}>Online</option>
+                    </select>                    
                 </div>
-                <div className={styles.innerDiv}>
+                <div className={styles.innerDivPrivate}>
                     <label className={styles.createGroupLabel}>private</label>
-                    <input type="checkbox" className={styles.input} value={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
+                    <input type="checkbox" className={styles.inputPrivate} value={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>City</label>
@@ -84,8 +86,7 @@ export function GroupsForm(){
                 <div className={styles.buttonDiv}>
                     <button type="submit" className={styles.formButton}>Continue</button>
                 </div>
-            </div>
-           
+            </div>           
         </form>
     )
 }
