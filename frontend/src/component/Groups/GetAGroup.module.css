@@ -1,0 +1,83 @@
+.main{
+    display:flex;
+    width: 80%;
+    justify-content: center;
+}
+
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.groupDetail{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: center;
+    padding-bottom: 40px;
+    
+    
+}
+
+.groupImage{
+    display:flex;
+    width: 600px;
+    height: 376px;
+    border-radius: 10px
+}
+
+.imageDiv{
+   display: flex;
+   flex-direction: row;
+   padding-right:20px;
+   justify-content: right;  
+}
+
+.groupName{
+    font-size: 32px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-weight: bold;
+}
+
+.cityState{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    font-weight: 400px;
+}
+
+.members{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    font-weight: 400px;
+}
+
+.organizedB{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    
+}
+
+.groupMenu{
+    display:flex;
+    flex-direction: row;
+    justify-content:safe;
+    align-items: left;   
+}
+
+.event{
+    padding-left: 20px;
+    padding-top:20px
+}
+
+.tabs{
+    display:flex;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.innerMenu{
+    display: flex;
+    flex-direction: column;
+    width:80%;
+
+}
