@@ -17,6 +17,8 @@ const removeUser = () => {
   };
 };
 
+
+
 //login check authenticity
 export const login = (loginRequest) => async (dispatch) => {
   const { credential, password } = loginRequest;
@@ -63,6 +65,8 @@ export const signup = (user) => async dispatch => {
         return response;
     }    
 }
+
+
 //logout
 export const logout = () => async (dispatch) => {
     const response = await csrfFetch('/api/session', {

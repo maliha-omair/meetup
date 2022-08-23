@@ -26,7 +26,7 @@ function SignupFormPage() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            console.log("errors from response are",data.errors)
+            console.log("errors from response are",res.errors)
             setErrors(Object.values(data.errors))            
           }
         });

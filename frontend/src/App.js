@@ -11,6 +11,7 @@ import * as sessionActions from "./store/session";
 import Profile from "./component/Profile";
 import Footer from "./component/Footer";
 import "./index.css"
+import { GroupsForm } from "./component/Groups/GroupsForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,9 @@ function App() {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/createGroup">
+              <GroupsForm />
             </Route>
           </Switch>
           )}

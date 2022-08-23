@@ -1,0 +1,121 @@
+.main{
+    text-align: center;
+    justify-content: center;
+    display:flex;
+    
+    /* padding: 20px 20px 20px 20px; */
+    background-color: white;
+}
+
+.subMain{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+    height: 750px;
+    /* width: 25%; */
+    padding:0px 50px 0px 50px;
+    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
+    
+    border-radius: 8px;
+    background-color: white;
+
+}
+
+.signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.logo{
+    height:50px;
+    width:50px;
+    border-radius: 130px;
+}
+.login{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 24px;
+}
+
+.input{
+    width: 250px;
+    height: 30px;
+    border-radius: 0.5rem;
+    border-color: rgba(230,230,230,0.2);
+    
+    justify-content: center;
+}
+
+.input:focus{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
+.createGroupLabel{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: Helvetica, Arial, Sans-Serif;
+    text-align: left;
+}
+.formButton{
+    align-items: center;
+    justify-content: center; 
+    width:255px;
+    height:35px;
+    border-radius: 8px;
+    background-color:#f65858;
+    
+    color:white;
+    font-size:20px;
+    
+    border:none;
+}
+.buttonDiv{
+    display: flex;
+    padding-top: 20px;
+}
+
+.innerDiv{
+    display: grid;
+    grid-template-rows: auto;
+    margin: 8px;
+}
+.errorMessageLi{
+    color:red;
+}
+
+/* .error-message-signup{
+    color:red;
+}
+
+.login-button-signup{
+    align-items: center;
+    justify-content: center; 
+    width:255px;
+    height:35px;
+    border-radius: 8px;
+    background-color:#f65858;
+    
+    color:white;
+    font-size:20px;
+    
+    border:none;
+}
+.login-button-div-signup{
+    display: flex;
+    padding-top: 20px;
+}
+.email-div-signup{
+    display:flex;
+    flex-direction: column;    
+    justify-content: left;  
+}
+
+.sub-div-signup{
+    display: grid;
+    grid-template-rows: auto;
+    margin: 8px;
+} */
