@@ -19,6 +19,7 @@ import UserGroups from "./component/UserGroups";
 
 import AboutGroup from "./component/AboutGroup";
 import UpdateGroup from "./component/UpdateGroup";
+import AboutMeetup from "./component/AboutMeetup";
 
 
 function App() {
@@ -74,7 +75,9 @@ function App() {
             <Route path="/userGroup">
              <UserGroups sessionUser={sessionUser}/>
             </Route>
-                       
+            <Route path="/aboutMeetup">
+             <AboutMeetup/>
+            </Route>          
           </Switch>
           )}
           
