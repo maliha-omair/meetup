@@ -2,11 +2,14 @@
     display:flex;
     width: 80%;
     justify-content: center;
+    align-items: center;
 }
 
 .mainDiv{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -66,21 +69,61 @@
 
 .event{
     padding-left: 20px;
-    padding-top:20px
+    padding-top:20px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color:black
+}
+
+.event:hover{
+    color: rgb(151, 202, 209);
+}
+
+.about{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.about:hover{
+   color: rgb(151, 202, 209);
+}
+.update{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.update:hover{
+   color: rgb(151, 202, 209);
+}
+.edit{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.edit:hover{
+   color: rgb(151, 202, 209);
+}
+.innerMenu{
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    padding-top: 10px;
+    justify-content: space-around;
+    
 }
 
 .tabs{
     display:flex;
-    padding-right: 20px;
-    padding-top: 20px;
+    flex-direction: row;   
 }
 
-.innerMenu{
-    display: flex;
-    flex-direction: column;
-    width:80%;
-
-}
 
 .joinGroup{
     color: white;
@@ -99,6 +142,7 @@
     color: white;
     font-family: Helvetica, Arial, Sans-Serif;
     background-color:#f65858;    
+    padding-left:10px;
 }
 
 .createEvent:hover{
@@ -108,3 +152,16 @@
     cursor: pointer;
 }
 
+.dropDown{
+    
+    font-family: Helvetica, Arial, Sans-Serif;
+    cursor: pointer;
+   
+    /* z-index: 52; */
+    /* border: 1px solid white; */
+   
+   
+   
+    
+    
+  }

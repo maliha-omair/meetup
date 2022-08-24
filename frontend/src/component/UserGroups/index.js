@@ -40,7 +40,7 @@ export default function UserGroups({sessionUser}){
     
     function handleClick(groupId){
         console.log("value from div",groupId);
-        history.push(`/singleGroup/${groupId}`)        
+        history.push(`/groups/${groupId}`)        
     }
 
     if(!userGroups){

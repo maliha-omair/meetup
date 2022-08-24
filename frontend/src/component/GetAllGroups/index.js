@@ -30,7 +30,7 @@ export default function GetAllGroups(){
     function handleClick(groupId){
         
         console.log("value from div",groupId);
-        history.push(`/singleGroup/${groupId}`)        
+        history.push(`/groups/${groupId}`)        
     }
 
     return(allGroups && (

@@ -14,8 +14,11 @@ import Footer from "./component/Footer";
 import "./index.css"
 import { GroupsForm } from "./component/Groups";
 import GetAllGroups from "./component/GetAllGroups";
-import GetAGroup from "./component/GetAGroup";
+import Group from "./component/Group";
 import UserGroups from "./component/UserGroups";
+
+import AboutGroup from "./component/AboutGroup";
+import UpdateGroup from "./component/UpdateGroup";
 
 
 function App() {
@@ -62,12 +65,16 @@ function App() {
             <Route path="/allGroups">
               <GetAllGroups/>
             </Route>
-            <Route path="/singleGroup/:groupId">
-              <GetAGroup sessionUser={sessionUser}/>
+            <Route path="/groups/:groupId/update">
+              <UpdateGroup />
+            </Route> 
+            <Route path="/groups/:groupId">
+              <Group sessionUser={sessionUser}/>
             </Route>
             <Route path="/userGroup">
              <UserGroups sessionUser={sessionUser}/>
             </Route>
+                       
           </Switch>
           )}
           
