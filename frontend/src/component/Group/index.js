@@ -5,7 +5,7 @@ import styles from "./Group.module.css"
 import Divider from "../Divider/Divider";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getGroupByIdThunk } from "../../store/groups";
+import { getGroupByIdThunk,deleteGroupThunk } from "../../store/groups";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleDown} from '@fortawesome/free-solid-svg-icons'
 import AboutGroup from "../AboutGroup";
@@ -15,6 +15,7 @@ export default function Group({sessionUser}){
 
     const [showJoinGroup,setShowJoinGroup] = useState(false);
     const [showManageGroup,setShowManageGroup] = useState(false);
+    const [errors, setErrors] = useState([]);
 
     const history = useHistory();
     const params = useParams();
@@ -40,9 +41,24 @@ export default function Group({sessionUser}){
     },[dispatch, groupId, sessionUser]);
 
    
-    
+    function handleDelete(){
+        dispatch(deleteGroupThunk(groupId))
+        .then((res)=>{history.push("/userGroup")})
+        .catch(async (res)=>{
+            const data = await res.json();
+            if (data && data.errors) {
+                console.log("errors from response are",data.errors)
+                setErrors(Object.values(data.errors))            
+            }
+        })
+    }
     return( group &&(
         <div className={styles.main}>
+            <div className={styles.innerDiv}>
+                    <ul>
+                        {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
+                    </ul>
+                </div>
             <div className={styles.mainDiv}> 
                 <div className={styles.groupDetail}>
                     <div className={styles.imageDiv}>
@@ -82,7 +98,7 @@ export default function Group({sessionUser}){
                         <div className={styles.tabs}>
                             <div >
                                     <NavLink to={`/groups/${groupId}/update`} className={styles.update}>Update</NavLink> 
-                                    <NavLink to={`/groups/${groupId}/delete`} className={styles.update}>Delete</NavLink>                                
+                                    <NavLink to="#" onClick={()=>handleDelete()} className={styles.update}>Delete</NavLink>                                
                                 
                             </div>
                             <div>
