@@ -23,7 +23,7 @@ export function GroupsForm(){
     
     function handleSubmit(e){ 
         e.preventDefault();
-        console.log("type in handle submit", type)
+      
         const group = {
             name:groupName, 
             about:about,
@@ -39,7 +39,6 @@ export function GroupsForm(){
       }).catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            console.log("errors from response are",data.errors)
             setErrors(Object.values(data.errors))            
           }
         });     

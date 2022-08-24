@@ -10,14 +10,14 @@ module.exports = {
     let groups = [];
     let events = [];
 
-    let email = "demo@aa.com";
-    let userName = "demouser";
+    let email = "demo123@aa.com";
+    let userName = "demouser123";
     users.push({
-      firstName: "Demo",
-      lastName: "User",
+      firstName: "Demo123",
+      lastName: "User123",
       email: email,
       username: userName,
-      hashedPassword: bcrypt.hashSync("demouser")
+      hashedPassword: bcrypt.hashSync("demouser123")
     });
     
     users.push({
@@ -47,7 +47,6 @@ module.exports = {
     });
   
     let groupName = faker.random.words(3);
-    console.log(user.id)
     groups.push({
       name: groupName,
       organizerId: user.id,
@@ -108,7 +107,7 @@ module.exports = {
       },
     });
   
-    console.log("group's id is ", group.id)
+   
         
     events.push({
       groupId: group.id,

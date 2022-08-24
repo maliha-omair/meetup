@@ -23,8 +23,8 @@ export default function LoginFormPage(){
         let user={}
         if(demoUser){
              user = {
-                credential:"demo@aa.com",
-                password:"demouser"
+                credential:"demo123@aa.com",
+                password:"demouser123"
             }
         }else{
             user = {
