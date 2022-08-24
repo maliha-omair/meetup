@@ -26,7 +26,7 @@ export default function ListEvents({events, currentUser}){
     function handleClick(eventId){      
         history.push(`/events/${eventId}`)        
     }
-
+    if(!events) return null;
     return (events &&(
         <>
             {events.map((event,index)=>{
@@ -38,7 +38,7 @@ export default function ListEvents({events, currentUser}){
                         <div className={styles.listEvents}>     
                             <div className={styles.date}>{formatMemberSinceDate(event.createdAt)}</div>                      
                             <div className={styles.name}>{event.name}</div>
-                            <div className={styles.discription}>{event.description.substring(0,100)} ...</div>
+                            <div className={styles.discription}>{event.description} ...</div>
                             <div className={styles.numAttending}>{event.numAttending} attendee</div>
                         </div>
                         <div>

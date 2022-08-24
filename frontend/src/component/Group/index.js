@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import image from "../../assets/groupDisplayHd.jpeg"
 import styles from "./Group.module.css"
 import Divider from "../Divider/Divider";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
+
 import { getGroupByIdThunk,deleteGroupThunk } from "../../store/groups";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleDown} from '@fortawesome/free-solid-svg-icons'
@@ -28,7 +28,10 @@ export default function Group({sessionUser}){
     
     useEffect(()=>{
            
-        dispatch(getGroupByIdThunk(groupId));
+        dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(Object.values(data.errors));
+        });
 
         if(!sessionUser){
             setShowManageGroup(false);        

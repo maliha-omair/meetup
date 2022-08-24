@@ -80,7 +80,7 @@ function App() {
               <Group sessionUser={sessionUser}/>
             </Route>
             <Route path="/events/:eventId">
-              <Event />
+              <Event sessionUser={sessionUser}/>
             </Route>
             <Route path="/userGroup">
              <UserGroups sessionUser={sessionUser}/>
