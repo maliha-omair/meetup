@@ -1,22 +1,28 @@
-import { NavLink, useParams } from "react-router-dom"
-import { useSelector } from 'react-redux';
+import { NavLink, useParams, useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux';
 import image from "../../assets/groupDisplayHd.jpeg"
 import styles from "../GetAGroup/GetAGroup.module.css"
 import Divider from "../Divider/Divider";
 import { useState } from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
+import { getGroupByIdThunk } from "../../store/groups";
+
 export default function GetAGroup(){
     const [showAbout, setShowAbout] = useState(false)
     const [showEvents, setShowEvents] = useState(false)
     const params = useParams();
     let groupId = params.groupId;
-    const group  = useSelector(state => state.group.allGroups[groupId]);
+    const group  = useSelector(state => state.group.currentGroup);
+    const sessionUser  = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
+    const history = useHistory();
     
+    useEffect(()=>{
+        console.log(groupId)
+        groupId = params.groupId;
+        dispatch(getGroupByIdThunk(groupId));
+    },[dispatch]);
 
-    // useEffect(()=>{
-    //     console.log(groupId)
-    //     groupId = params.groupId;
-    // })
     function aboutClick(){
         setShowAbout(true)
         setShowEvents(false)
@@ -26,10 +32,8 @@ export default function GetAGroup(){
         setShowAbout(false)
         setShowEvents(true)
     }
-
-    if(!group) return null
-    if(group){
-        console.log("group is ",group)
+    if(!sessionUser){
+        history.push("/")
     }
     
     return( group &&(

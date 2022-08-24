@@ -1,4 +1,6 @@
 import { csrfFetch } from './csrf';
+import { useDispatch} from 'react-redux';
+import {removerUserGroups} from "../store/groups"
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -16,8 +18,6 @@ const removeUser = () => {
     type: REMOVE_USER,
   };
 };
-
-
 
 //login check authenticity
 export const login = (loginRequest) => async (dispatch) => {
@@ -38,11 +38,16 @@ export const login = (loginRequest) => async (dispatch) => {
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
-    console.log("found data",data)
-    if(response.ok) dispatch(setUser(data));
-    else dispatch(setUser(null));
 
-    return response;
+    if(response.ok) {
+      dispatch(setUser(data));
+      return response;
+    }  
+    else{
+      dispatch(setUser(null));
+    } 
+
+   
 };
 
 
@@ -73,6 +78,7 @@ export const logout = () => async (dispatch) => {
       method: 'DELETE',
     });
     dispatch(removeUser());
+    dispatch(removerUserGroups())
     
     return response;
 };
