@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
       <div className="profile-dropdown-main">
         <div className="login-elements">
           <div>
-          <NavLink to="/createGroup" className='login-elements'>Start a new group</NavLink>
+          <NavLink to="/createGroup" className='start-a-group'>Start a new group</NavLink>
           </div>
           <div className="nav-dropdown" onClick={openMenu}>
             {user.firstName.charAt(0).toUpperCase()}

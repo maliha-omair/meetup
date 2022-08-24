@@ -10,14 +10,11 @@
 .subMain{
     display: flex;
     flex-direction: column;
-    
     justify-content: center;
     align-items: center;
     height: 750px;
-    /* width: 25%; */
     padding:0px 50px 0px 50px;
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
-    
     border-radius: 8px;
     background-color: white;
 
@@ -37,6 +34,27 @@
 .login{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 24px;
+}
+
+.textArea{    
+    height: 100px;
+    resize: none;
+    width:250px;
+    vertical-align: baseline;
+    border-radius: 0.5rem;
+    border-color: rgba(44,42,42,0.2);
+    justify-content: center;
+}
+
+.textArea:focus{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+    height: 100px;
+    resize: none;
+    width:250px;
+    vertical-align: baseline;
+    border-radius: 0.5rem;
+    justify-content: center;
 }
 
 .input{

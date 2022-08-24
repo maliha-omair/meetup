@@ -27,9 +27,7 @@ export default function GetAllGroups(){
     }else{
         groupsArr = Object.values(allGroups);
     }
-    function handleClick(groupId){
-        
-        console.log("value from div",groupId);
+    function handleClick(groupId){      
         history.push(`/groups/${groupId}`)        
     }
 
@@ -58,7 +56,7 @@ export default function GetAllGroups(){
                                             {group.city}, {group.state}
                                         </div>
                                         <div className={styles.about}>
-                                            {group.about.substring(1,200)}...
+                                            {group.about.substring(0,200)}...
                                         </div>
                                         <div className={styles.members}>
                                             {group.numMembers} members - {group.private ? `Private`: `Public`}

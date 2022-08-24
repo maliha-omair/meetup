@@ -18,8 +18,10 @@
     grid-template-columns: 2fr 1fr;
     justify-content: center;
     padding-bottom: 40px;
-    
-    
+}
+
+.divider{
+    width:100%;
 }
 
 .groupImage{

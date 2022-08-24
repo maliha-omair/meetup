@@ -10,6 +10,7 @@ export function GroupsForm(){
     const [groupName,setGroupName] = useState("")
     const [about,setAbout] = useState("")
     const [isPrivate,setIsPrivate] = useState(false)
+    
     const [city,setCity] = useState("")
     const [state,setState] = useState("")
     const [type,setType] = useState("In person")
@@ -62,7 +63,7 @@ export function GroupsForm(){
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>about</label>
-                    <input type="textarea" className={styles.input} value={about} onChange={((e)=>setAbout(e.target.value))}></input>   
+                    <textarea className={styles.textArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>type</label>
@@ -75,6 +76,7 @@ export function GroupsForm(){
                     <label className={styles.createGroupLabel}>private</label>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
                 </div>
+                
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>City</label>
                     <input type="text" className={styles.input} value={city} onChange={((e)=>setCity(e.target.value))}></input>   

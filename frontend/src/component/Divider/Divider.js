@@ -6,7 +6,7 @@ const Divider = ({ children }) => {
       <div className={styles.container}>
         <div className={styles.border} />
         <span className={styles.content}>
-          {children}
+          {children}   
         </span>
         <div className={styles.border} />
       </div>

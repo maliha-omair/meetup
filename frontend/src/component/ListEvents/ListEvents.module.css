@@ -1,0 +1,49 @@
+.mainDiv{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    justify-content: center;
+}
+
+.displayImage{
+    width:200px;
+    height:200px;
+}
+
+.listEvents{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    
+}
+
+.date{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 12px;
+}
+
+.name{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.discription{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 12px;
+    color:#757575;
+}
+
+.numAttending{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 12px;
+    padding-top:20px;
+    color:#757575;
+}
+
+.loginUserFeatures{
+    font-family: Helvetica, Arial, Sans-Serif;
+    
+}

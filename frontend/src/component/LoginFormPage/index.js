@@ -36,7 +36,7 @@ export default function LoginFormPage(){
 
         return dispatch(sessionActions.login(user))
                 .then((res)=>{
-                    console.log(res.user)
+                 
                 })
                 .catch(async (res) => {
                     const data = await res.json();

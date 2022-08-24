@@ -79,7 +79,7 @@ export default function UpdateGroup(){
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>about</label>
-                    <input type="textarea" className={styles.input} value={about} onChange={((e)=>setAbout(e.target.value))}></input>   
+                    <textarea className={styles.textArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>type</label>

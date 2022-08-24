@@ -26,7 +26,7 @@ function SignupFormPage() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            console.log("errors from response are",res.errors)
+            
             setErrors(Object.values(data.errors))            
           }
         });
@@ -109,7 +109,7 @@ function SignupFormPage() {
               required
           />          
         </div>
-
+        
         <div className="login-button-div-signup">
           <button type="submit" className="login-button">Sign Up</button>
         </div>

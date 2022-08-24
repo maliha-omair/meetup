@@ -16,10 +16,11 @@ import { GroupsForm } from "./component/Groups";
 import GetAllGroups from "./component/GetAllGroups";
 import Group from "./component/Group";
 import UserGroups from "./component/UserGroups";
-
-import AboutGroup from "./component/AboutGroup";
 import UpdateGroup from "./component/UpdateGroup";
 import AboutMeetup from "./component/AboutMeetup";
+import GroupPhotos from "./component/GroupPhotos";
+import GroupEvents from "./component/GroupEvents";
+import Event from "./component/Event"
 
 
 function App() {
@@ -69,8 +70,17 @@ function App() {
             <Route path="/groups/:groupId/update">
               <UpdateGroup />
             </Route> 
+            <Route path="/groups/:groupId/events">
+              <GroupEvents />
+            </Route> 
+            <Route path="/groups/:groupId/photos">
+              <GroupPhotos />
+            </Route> 
             <Route path="/groups/:groupId">
               <Group sessionUser={sessionUser}/>
+            </Route>
+            <Route path="/events/:eventId">
+              <Event />
             </Route>
             <Route path="/userGroup">
              <UserGroups sessionUser={sessionUser}/>

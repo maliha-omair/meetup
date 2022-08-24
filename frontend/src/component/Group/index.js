@@ -13,7 +13,7 @@ import GroupEvents from "../GroupEvents";
 
 export default function Group({sessionUser}){
 
-    const [showJoinGroup,setShowJoinGroup] = useState(false);
+    
     const [showManageGroup,setShowManageGroup] = useState(false);
     const [errors, setErrors] = useState([]);
 
@@ -31,10 +31,9 @@ export default function Group({sessionUser}){
         dispatch(getGroupByIdThunk(groupId));
 
         if(!sessionUser){
-            setShowJoinGroup(true);
             setShowManageGroup(false);        
         }else{
-            setShowJoinGroup(false);
+           
             setShowManageGroup(true);
         }
     },[dispatch, groupId, sessionUser]);
@@ -51,17 +50,23 @@ export default function Group({sessionUser}){
         })
     }
     return( group &&(
+        
         <div className={styles.main}>
+            <div>
             <div>
                     <ul>
                         {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
                     </ul>
             </div>
+            
             <div className={styles.mainDiv}> 
+            
+                
                 <div className={styles.groupDetail}>
                     <div className={styles.imageDiv}>
                         <img src={image} className={styles.groupImage} alt="display"></img>
                     </div>
+                    
                     <div>
                         <div className={styles.groupName}>
                             {group.name}
@@ -75,42 +80,35 @@ export default function Group({sessionUser}){
                         <div className={styles.organizedBy}>
                             Organized by {group.organizerId}
                         </div>
-                    </div>
-                </div>                
-                <Divider><span><div></div></span></Divider>
-                <div className={styles.innerMenu}>
                         
-                            
-                    {/* <div className={styles.tabs}> */}
+                    </div>                    
+                </div>               
+                
+                <div>
+                </div>  
+               
+
+                <div className={styles.innerMenu}>
+               
                      <div>
                         <nav className={styles.aboutEvent}>
                         <NavLink to={`/groups/${groupId}/about`} className={styles.about}>About</NavLink> 
                         <NavLink to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink> 
+                        <NavLink to={`/groups/${groupId}/photos`} className={styles.event} >Photos</NavLink> 
+                        
                         </nav>
                     </div>
-                    {/* </div> */}
-                    {showJoinGroup && 
-                                // <div className={styles.tabs}>
-                                <div>
-                                    <button className={styles.joinGroup}>Join group <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
-                                
-                                </div>
-                    }
                     {showManageGroup && 
-                        // <div>
                             <div >
                                     <NavLink to={`/groups/${groupId}/update`} className={styles.update}> Update</NavLink> 
                                     <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>                                
                                     <button className={styles.createEvent}>Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
 
                             </div>
-                            // <div>
-                                
-                            // </div>
-            
-                        // </div>                 
                     } 
+                        
                 </div>
+                </div>               
                 <div>
                     <Switch>
                         <Route path="/groups/:groupId/about">
@@ -120,8 +118,11 @@ export default function Group({sessionUser}){
                             <GroupEvents group={group}/>
                         </Route>
                     </Switch>
-                </div>                   
+                </div>   
+                                               
             </div>
+ 
         </div>
+        
     ))
 }
