@@ -1,3 +1,45 @@
 .main{
     background-color: rgb(78,10,33,30);
+    color: white;
+}
+
+.subDiv{
+    width:50%;
+    height: 500px;
+    padding-left: 90px;
+}
+
+.heading{
+    font-size: 62px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    padding-top: 50px;
+    
+}
+
+.paragraph{
+    font-size: 22px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.button{
+    align-items: center;
+    justify-content: center; 
+    
+    width:200px;
+    height:35px;
+    border-radius: 8px;
+    background-color:#f65858;
+    font-family: Helvetica, Arial, Sans-Serif;
+    cursor: pointer;
+    color:white;
+    font-size:20px;
+    border:none;
+}
+
+.button:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    cursor: pointer;
 }
