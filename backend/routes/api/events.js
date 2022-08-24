@@ -169,9 +169,9 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
         e.startDate =startDate;
         e.endDate =endDate;
         await e.save();
-        
         res.status(200);
-        res.json(e);      
+        res.json(e);
+
     } else {
         return notAuthorizedErr(req, res, next)
     }
