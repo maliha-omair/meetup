@@ -1,0 +1,167 @@
+.main{
+    display:flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.groupDetail{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: center;
+    padding-bottom: 40px;
+    
+    
+}
+
+.groupImage{
+    display:flex;
+    width: 600px;
+    height: 376px;
+    border-radius: 10px
+}
+
+.imageDiv{
+   display: flex;
+   flex-direction: row;
+   padding-right:20px;
+   justify-content: right;  
+}
+
+.groupName{
+    font-size: 32px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-weight: bold;
+}
+
+.cityState{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    font-weight: 400px;
+}
+
+.members{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    font-weight: 400px;
+}
+
+.organizedB{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 14px;
+    
+}
+
+.groupMenu{
+    display:flex;
+    flex-direction: row;
+    justify-content:safe;
+    align-items: left;   
+}
+
+.event{
+    padding-left: 20px;
+    padding-top:20px;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color:black
+}
+
+.event:hover{
+    color: rgb(151, 202, 209);
+}
+
+.about{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.about:hover{
+   color: rgb(151, 202, 209);
+}
+.update{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.update:hover{
+   color: rgb(151, 202, 209);
+}
+.edit{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+}
+
+.edit:hover{
+   color: rgb(151, 202, 209);
+}
+.innerMenu{
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    padding-top: 10px;
+    justify-content: space-around;
+    
+}
+
+.tabs{
+    display:flex;
+    flex-direction: row;   
+}
+
+
+.joinGroup{
+    color: white;
+    background-color:#f65858;  
+    font-family: Helvetica, Arial, Sans-Serif;  
+}
+
+.joinGroup:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:white;
+    cursor: pointer;
+}
+
+.createEvent{
+    color: white;
+    font-family: Helvetica, Arial, Sans-Serif;
+    background-color:#f65858;    
+    padding-left:10px;
+}
+
+.createEvent:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:white;
+    cursor: pointer;
+}
+
+.dropDown{
+    
+    font-family: Helvetica, Arial, Sans-Serif;
+    cursor: pointer;
+   
+    /* z-index: 52; */
+    /* border: 1px solid white; */
+   
+   
+   
+    
+    
+  }

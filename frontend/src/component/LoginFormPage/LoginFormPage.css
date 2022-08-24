@@ -64,6 +64,7 @@
     height:35px;
     border-radius: 8px;
     background-color:#f65858;
+    font-family: Helvetica, Arial, Sans-Serif;
     cursor: pointer;
     color:white;
     font-size:20px;
@@ -71,6 +72,7 @@
 }
 .login-button:hover{
     background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
     cursor: pointer;
 }
 .login-button-div{

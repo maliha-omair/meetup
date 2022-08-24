@@ -1,4 +1,4 @@
-import GetAllGroups from "../component/GetAllGroups/GetAllGroups";
+// import GetAllGroups from "../component/GetAllGroups";
 import { csrfFetch } from "./csrf";
 
 
@@ -6,7 +6,7 @@ const SET_CURRENT_GROUP = 'group/setCurrentGroup';
 const GET_GROUPS = 'group/getGroups';
 const USER_GROUPS = 'group/userGroups';
 const REMOVE_USER_GROUPS = 'group/removeUserGroups';
-
+const UPDATE_GROUP = 'group/updateGroup';
 
 const setCurrentGroup = (group) => {
   return {
@@ -35,9 +35,17 @@ export function removerUserGroups (){
   }
 }
 
+export function updateGroup(id){
+  return{
+    type: UPDATE_GROUP,
+    payload: id
+  }
+}
+
 //create new group
 export const createGroup = (group) => async dispatch =>{
     const {name, about, type, isPrivate, city, state } = group;
+    console.log("type is",type);
     const response = await csrfFetch("/api/groups",{
       method: 'POST',
       body:JSON.stringify({
@@ -51,6 +59,30 @@ export const createGroup = (group) => async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
+        dispatch(setCurrentGroup(data))
+        return response;
+    }    
+  }
+
+  //update a group
+  export const updateGroupThunk = (group,groupId) => async dispatch =>{
+    const {name, about, type, isPrivate, city, state } = group;
+    console.log("type is",type);
+    const response = await csrfFetch(`/api/groups/${groupId}`,{
+      method: 'PUT',
+      body:JSON.stringify({
+        name,
+        about,
+        type,
+        private:isPrivate,
+        city,
+        state,
+      }),
+    })
+    if(response.ok){
+        
+        const data = await response.json();
+        console.log(data)
         dispatch(setCurrentGroup(data))
         return response;
     }    
@@ -105,6 +137,7 @@ export const createGroup = (group) => async dispatch =>{
         newState = Object.assign({}, state);
         newState.currentGroup = action.payload;
         return newState;
+     
       case GET_GROUPS:
         newState = {...state};
         newState.allGroups = action.payload.Groups;
@@ -117,12 +150,6 @@ export const createGroup = (group) => async dispatch =>{
         newState = {...state};
         newState.userGroups = null;
         return newState;
-    //   case REMOVE_USER:
-    //     newState = Object.assign({}, state);
-    //     newState.user = null;
-    //     return newState;
-      case GET_GROUPS:
-
       default:
         return state;
     }
