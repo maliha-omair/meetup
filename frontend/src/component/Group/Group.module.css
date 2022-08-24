@@ -68,12 +68,12 @@
 }
 
 .event{
-    padding-left: 20px;
-    padding-top:20px;
+  
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 13px;
     text-decoration: none;
-    color:black
+    color:black;
+    padding-right:20px;
 }
 
 .event:hover{
@@ -85,21 +85,44 @@
     font-size: 13px;
     text-decoration: none;
     color: black;
+    padding-right:20px;
 }
 
 .about:hover{
    color: rgb(151, 202, 209);
 }
+.delete{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+    padding-left:20px;
+    padding-right:20px; 
+    
+}
+
+.delete:hover{
+   color: rgb(151, 202, 209);
+}
+
 .update{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 13px;
     text-decoration: none;
     color: black;
+   
+    
+}
+.update:hover{
+    color: rgb(151, 202, 209);
+ }
+ 
+
+.navLinkDeleteUpdate{
+    padding-left:10px;
 }
 
-.update:hover{
-   color: rgb(151, 202, 209);
-}
+
 .edit{
     font-family: Helvetica, Arial, Sans-Serif;
     font-size: 13px;
@@ -114,21 +137,24 @@
     display: flex;
     flex-direction: row; 
     align-items: center;
-    padding-top: 10px;
-    justify-content: space-around;
+   
     
 }
 
 .tabs{
     display:flex;
     flex-direction: row;   
+    padding-left: 20px;
+    padding-right: 20px;
+    
 }
 
 
 .joinGroup{
     color: white;
     background-color:#f65858;  
-    font-family: Helvetica, Arial, Sans-Serif;  
+    font-family: Helvetica, Arial, Sans-Serif; 
+  
 }
 
 .joinGroup:hover{

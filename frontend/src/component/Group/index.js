@@ -52,11 +52,11 @@ export default function Group({sessionUser}){
     }
     return( group &&(
         <div className={styles.main}>
-            <div className={styles.innerDiv}>
+            <div>
                     <ul>
                         {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
                     </ul>
-                </div>
+            </div>
             <div className={styles.mainDiv}> 
                 <div className={styles.groupDetail}>
                     <div className={styles.imageDiv}>
@@ -77,33 +77,38 @@ export default function Group({sessionUser}){
                         </div>
                     </div>
                 </div>                
-                <Divider></Divider>
+                <Divider><span><div></div></span></Divider>
                 <div className={styles.innerMenu}>
                         
                             
-                    <div>
-                        <nav>
+                    {/* <div className={styles.tabs}> */}
+                     <div>
+                        <nav className={styles.aboutEvent}>
                         <NavLink to={`/groups/${groupId}/about`} className={styles.about}>About</NavLink> 
                         <NavLink to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink> 
                         </nav>
                     </div>
+                    {/* </div> */}
                     {showJoinGroup && 
-                                <div className={styles.tabs}>
+                                // <div className={styles.tabs}>
+                                <div>
                                     <button className={styles.joinGroup}>Join group <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                
                                 </div>
                     }
                     {showManageGroup && 
-                        <div className={styles.tabs}>
+                        // <div>
                             <div >
-                                    <NavLink to={`/groups/${groupId}/update`} className={styles.update}>Update</NavLink> 
-                                    <NavLink to="#" onClick={()=>handleDelete()} className={styles.update}>Delete</NavLink>                                
+                                    <NavLink to={`/groups/${groupId}/update`} className={styles.update}> Update</NavLink> 
+                                    <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>                                
+                                    <button className={styles.createEvent}>Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+
+                            </div>
+                            // <div>
                                 
-                            </div>
-                            <div>
-                                <button className={styles.createEvent}>Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
-                            </div>
+                            // </div>
             
-                        </div>                 
+                        // </div>                 
                     } 
                 </div>
                 <div>
