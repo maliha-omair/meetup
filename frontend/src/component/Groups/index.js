@@ -12,7 +12,7 @@ export function GroupsForm(){
     const [isPrivate,setIsPrivate] = useState(false)
     const [city,setCity] = useState("")
     const [state,setState] = useState("")
-    const [type,setType] = useState("")
+    const [type,setType] = useState("In person")
     const [errors, setErrors] = useState([]);
     const sessionUser = useSelector(state => state.session.user)
     const history = useHistory()
@@ -67,14 +67,14 @@ export function GroupsForm(){
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>type</label>
-                    <select  className={styles.inputOption}>
-                        <option value={type} onChange={(e)=>setType(e.target.value)} className={styles.inputOption}>In person</option>
-                        <option value={type} onChange={(e)=>setType(e.target.value)} className={styles.inputOption}>Online</option>
+                    <select  className={styles.inputOption} value={type} onChange={(e)=>setType(e.target.value)}>
+                        <option value="In person" className={styles.inputOption}>In person</option>
+                        <option value="Online"  className={styles.inputOption}>Online</option>
                     </select>                    
                 </div>
                 <div className={styles.innerDivPrivate}>
                     <label className={styles.createGroupLabel}>private</label>
-                    <input type="checkbox" className={styles.inputPrivate} value={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
+                    <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
                 </div>
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>City</label>
