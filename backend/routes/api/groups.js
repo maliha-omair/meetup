@@ -172,7 +172,7 @@ router.get("/current", requireAuth, async (req, res) => {
     res.json(result)
 });
 
-router.get("/:groupId", requireAuth, async (req, res, next) => {
+router.get("/:groupId", async (req, res, next) => {
     const groupId = req.params.groupId;
     if (!await (isGroup(groupId))) return groupNotFoundError(req, res, next)
 

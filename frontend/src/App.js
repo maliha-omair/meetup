@@ -12,27 +12,30 @@ import Profile from "./component/Profile";
 import { useSelector } from 'react-redux';
 import Footer from "./component/Footer";
 import "./index.css"
-import { GroupsForm } from "./component/Groups/GroupsForm";
-import GetAllGroups from "./component/GetAllGroups/GetAllGroups";
-import GetAGroup from "./component/GetAGroup/GetAGroup";
-import UserGroups from "./component/UserGroups/UserGroups";
-import HomeUser from "./component/HomeUser";
-import HomeGuest from "./component/HomeGuest";
+import { GroupsForm } from "./component/Groups";
+import GetAllGroups from "./component/GetAllGroups";
+import GetAGroup from "./component/GetAGroup";
+import UserGroups from "./component/UserGroups";
+
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
+
+
+  useEffect(() => {   
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true);
+    
     }).catch((res)=>{
       setIsLoaded(true);
+    
     });
-  }, [dispatch]);
+  }, []);
   
   return (isLoaded && (
-   
+    
       <div className="page-container">
         <div className = "content-wrap">
           <Navigation isLoaded={isLoaded}/>          
@@ -57,13 +60,13 @@ function App() {
               <GroupsForm />
             </Route>
             <Route path="/allGroups">
-              <GetAllGroups />
+              <GetAllGroups/>
             </Route>
             <Route path="/singleGroup/:groupId">
-              <GetAGroup />
+              <GetAGroup sessionUser={sessionUser}/>
             </Route>
             <Route path="/userGroup">
-             <UserGroups />
+             <UserGroups sessionUser={sessionUser}/>
             </Route>
           </Switch>
           )}

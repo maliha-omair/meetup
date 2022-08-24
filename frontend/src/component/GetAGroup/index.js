@@ -6,34 +6,45 @@ import Divider from "../Divider/Divider";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getGroupByIdThunk } from "../../store/groups";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faAngleDown} from '@fortawesome/free-solid-svg-icons'
 
-export default function GetAGroup(){
-    const [showAbout, setShowAbout] = useState(false)
-    const [showEvents, setShowEvents] = useState(false)
+export default function GetAGroup({sessionUser}){
+    const [showAbout, setShowAbout] = useState(false);
+    const [showEvents, setShowEvents] = useState(false);
+    const [showJoinGroup,setShowJoinGroup] = useState(false);
+    const [showManageGroup,setShowManageGroup] = useState(false);
     const params = useParams();
     let groupId = params.groupId;
+    
     const group  = useSelector(state => state.group.currentGroup);
-    const sessionUser  = useSelector(state => state.session.user);
+    // const sessionUser  = useSelector(state => state.session.user);
+    
     const dispatch = useDispatch();
-    const history = useHistory();
+    
     
     useEffect(()=>{
         console.log(groupId)
-        groupId = params.groupId;
+        
         dispatch(getGroupByIdThunk(groupId));
-    },[dispatch]);
+
+        if(!sessionUser){
+            setShowJoinGroup(true);
+            setShowManageGroup(false);        
+        }else{
+            setShowJoinGroup(false);
+            setShowManageGroup(true);
+        }
+    },[dispatch, groupId, sessionUser]);
 
     function aboutClick(){
-        setShowAbout(true)
-        setShowEvents(false)
+        setShowAbout(true);
+        setShowEvents(false);
     }
 
     function eventsClick(){
-        setShowAbout(false)
-        setShowEvents(true)
-    }
-    if(!sessionUser){
-        history.push("/")
+        setShowAbout(false);
+        setShowEvents(true);
     }
     
     return( group &&(
@@ -42,7 +53,7 @@ export default function GetAGroup(){
 
                 <div className={styles.groupDetail}>
                     <div className={styles.imageDiv}>
-                        <img src={image} className={styles.groupImage}></img>
+                        <img src={image} className={styles.groupImage} alt="display"></img>
                     </div>
                     <div>
                         <div className={styles.groupName}>
@@ -73,18 +84,33 @@ export default function GetAGroup(){
                     </div>
                     <div >               
                         <div >
-                            {showAbout && (
+                            {showAbout && 
                                 <div className={styles.tabs}>
                                     {group.about}
                                 </div>
 
-                            )}                                        
-                            {showEvents && (
+                            }                                        
+                            {showEvents && 
                                     <div className={styles.tabs}>
                                         Events
                                     </div>
 
-                            )}
+                            }
+                            {showJoinGroup && 
+                                <div className={styles.tabs}>
+                                    <button className={styles.joinGroup}>Join group <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                </div>
+                           }
+                            {showManageGroup && 
+                                <>
+                                <div className={styles.tabs}>
+                                    <button className={styles.manageGroup}>Manage group <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                </div>
+                                <div className={styles.tabs}>
+                                     <button className={styles.createEvent}>Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                </div>
+                                </>                 
+                            }       
                         </div>                
                     </div>
                 </div>

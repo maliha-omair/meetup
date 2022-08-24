@@ -81,3 +81,30 @@
     width:80%;
 
 }
+
+.joinGroup{
+    color: white;
+    background-color:#f65858;  
+    font-family: Helvetica, Arial, Sans-Serif;  
+}
+
+.joinGroup:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:white;
+    cursor: pointer;
+}
+
+.createEvent{
+    color: white;
+    font-family: Helvetica, Arial, Sans-Serif;
+    background-color:#f65858;    
+}
+
+.createEvent:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    color:white;
+    cursor: pointer;
+}
+

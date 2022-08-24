@@ -1,4 +1,4 @@
-import GetAllGroups from "../component/GetAllGroups/GetAllGroups";
+// import GetAllGroups from "../component/GetAllGroups";
 import { csrfFetch } from "./csrf";
 
 

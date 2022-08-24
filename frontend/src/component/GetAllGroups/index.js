@@ -1,54 +1,39 @@
-import React, { useState, useEffect, useInsertionEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import {useHistory, Redirect} from "react-router-dom"
-import * as groupActions from "../../store/groups";
-import styles from "../UserGroups/UserGroups.module.css"
+import { useDispatch,useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import image from "../../assets/groupDisplayImage.jpg"
+import * as groupActions from "../../store/groups";
+import Divider from "../Divider/Divider";
+import styles from "../GetAllGroups/GetAllGroups.module.css"
 
-export default function UserGroups(){
-    const sessionUser = useSelector(state => state.session.user);
-    const userGroups = useSelector(state => state.group.userGroups);
-    const [errors, setErrors] = useState([]);
+export default function GetAllGroups(){
     const dispatch = useDispatch();
-    const history= useHistory();
-
-    useEffect(()=>{
-        if(!sessionUser){
-            history.push("/")
-        }   
-    },[sessionUser]);
-
+    const [errors, setErrors] = useState([]);
+    const allGroups = useSelector(state => state.group.allGroups);
+    const history = useHistory();
+    
     let groupsArr = [];
     
     useEffect(()=>{
-        dispatch(groupActions.getUserGroups())
-        .then((res)=>{
-            console.log("response from geting current users groups",res)
-        })
+        dispatch(groupActions.getGroups())        
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
-        });       
-    },[dispatch])
+        });
+    },[dispatch])   
 
-    // useEffect(()=>{
-    //         groupsArr = Object.values(userGroups);
-    //         console.log("array of groups are ",groupsArr)
-        
-    // },[userGroups])
-    
+    if(!allGroups){
+        return null; 
+    }else{
+        groupsArr = Object.values(allGroups);
+    }
     function handleClick(groupId){
+        
         console.log("value from div",groupId);
         history.push(`/singleGroup/${groupId}`)        
     }
 
-    if(!userGroups){
-        return null; 
-    } else{
-        groupsArr = Object.values(userGroups);
-    }
-
-    return (groupsArr && (
+    return(allGroups && (
         <>            
             <div className={styles.heading}>
                 <h1>Groups</h1>            
@@ -86,4 +71,5 @@ export default function UserGroups(){
             })}
         </>
     ));
+
 }
