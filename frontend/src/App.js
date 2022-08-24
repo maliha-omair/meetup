@@ -9,27 +9,29 @@ import Logout from "./component/Logout";
 import Navigation from "./component/Navigation";
 import * as sessionActions from "./store/session";
 import Profile from "./component/Profile";
+import { useSelector } from 'react-redux';
 import Footer from "./component/Footer";
 import "./index.css"
 import { GroupsForm } from "./component/Groups/GroupsForm";
 import GetAllGroups from "./component/GetAllGroups/GetAllGroups";
 import GetAGroup from "./component/GetAGroup/GetAGroup";
-import UserGroup from "./component/UserGroups/UserGroups";
 import UserGroups from "./component/UserGroups/UserGroups";
+import HomeUser from "./component/HomeUser";
+import HomeGuest from "./component/HomeGuest";
 
 function App() {
+  const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true);
-    }).catch(()=>{
+    }).catch((res)=>{
       setIsLoaded(true);
     });
-    // setIsLoaded(true);
   }, [dispatch]);
   
-  return (
+  return (isLoaded && (
    
       <div className="page-container">
         <div className = "content-wrap">
@@ -73,7 +75,7 @@ function App() {
         </div>
       </div>
     
-  );
+  ));
 }
 
 export default App;

@@ -1,12 +1,10 @@
 import {useState} from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink} from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
 import smallLogo from "../../assets/meetup-logo.png"
 import * as sessionActions from '../../store/session';
 import { Redirect } from 'react-router-dom';
 import "./LoginFormPage.css"
-
-
 
 export default function LoginFormPage(){
     const [email,setEmail] = useState("");
@@ -15,9 +13,10 @@ export default function LoginFormPage(){
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory();
    
     if (sessionUser) return (
-        <Redirect to="/" />
+        history.push("/")
     );
     function handleSubmit(e){
         e.preventDefault();
@@ -33,12 +32,16 @@ export default function LoginFormPage(){
                 password:password
             }
         }
-        setErrors([]);        
+        setErrors([]);       
+
         return dispatch(sessionActions.login(user))
-        .catch(async (res) => {
-            const data = await res.json();
-            if (data && data.errors) setErrors(Object.values(data.errors));
-        });
+                .then((res)=>{
+                    console.log(res.user)
+                })
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(Object.values(data.errors));
+                });
     }
     
 
