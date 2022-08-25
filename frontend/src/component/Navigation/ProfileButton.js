@@ -47,9 +47,10 @@ function ProfileButton({ user }) {
         </div>
         {showMenu && (
           <div className="div-dropdown">
-            <NavLink to="/userGroup" className="dropdown-link">Your groups</NavLink>
-            <NavLink to="/userGroup" className="dropdown-link">Your events</NavLink>
-            <hr></hr>
+            
+            <NavLink to="/userGroup" className="dropdown-link">Your groups</NavLink>            
+            <NavLink to="/userEvent" className="dropdown-link">Your events</NavLink>         
+            
             <NavLink to="/profile" className="dropdown-link">View profile</NavLink>
             <NavLink onClick={logout} to="#" className="dropdown-link">Log out</NavLink> 
           </div>

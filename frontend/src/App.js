@@ -24,6 +24,7 @@ import Event from "./component/Event"
 import CreateEvent from "./component/CreateEvent";
 import CreateVenue from "./component/CreateVenue";
 import UpdateEvent from "./component/UpdateEvent";
+import UserEvents from "./component/UserEvents";
 
 
 function App() {
@@ -96,6 +97,9 @@ function App() {
             </Route>
             <Route path="/userGroup">
              <UserGroups sessionUser={sessionUser}/>
+            </Route>
+            <Route path="/userEvent">
+              <UserEvents sessionUser={sessionUser}/>              
             </Route>
             <Route path="/aboutMeetup">
              <AboutMeetup/>

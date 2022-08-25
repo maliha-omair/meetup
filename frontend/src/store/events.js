@@ -2,12 +2,20 @@ import { csrfFetch } from "./csrf"
 
 const SET_CURRENT_EVENT = "events/setCurrentEvent"
 const SET_GROUP_EVENTS = "events/getGroupEvents"
+const SET_USER_EVENTS = "events/getUserEvents"
 const DELETE_EVENT = "event/deleteEvent"
 const UPDATE_EVENT = 'event/updateEvent';
 
 const setGroupEvents=(events)=>{
     return{
         type: SET_GROUP_EVENTS,
+        payload: events
+    }
+}
+
+const setUserEvents=(events)=>{
+    return{
+        type: SET_USER_EVENTS,
         payload: events
     }
 }
@@ -39,6 +47,19 @@ export const getGroupEventsThunk = (groupId) => async dispatch => {
     if(response.ok){
         const data = await response.json();
         dispatch(setGroupEvents(data));
+        return response;
+    }
+}
+
+
+export const getUserEventsThunk = () => async dispatch => {
+    const response = await csrfFetch(`/api/user/events`,{
+        method: "GET"
+    });
+
+    if(response.ok){
+        const data = await response.json();
+        dispatch(setUserEvents(data));
         return response;
     }
 }
@@ -126,6 +147,10 @@ const eventReducer = (state = initialState, action) => {
             newState = {...state};
             newState.events = action.payload.Events;
             return newState;
+        case SET_USER_EVENTS:
+                newState = {...state};
+                newState.events = action.payload.Events;
+                return newState;
         case DELETE_EVENT:
             newState = {...state};
             newState.currentEvent = null;
