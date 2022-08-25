@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf"
 const SET_CURRENT_EVENT = "events/setCurrentEvent"
 const SET_GROUP_EVENTS = "events/getGroupEvents"
 const DELETE_EVENT = "event/deleteEvent"
+const UPDATE_EVENT = 'event/updateEvent';
 
 const setGroupEvents=(events)=>{
     return{
@@ -21,7 +22,15 @@ const deleteEvent = () =>{
     return {
       type: DELETE_EVENT
     }
-  }
+}
+
+export function updateEvent(id){
+    return{
+      type: UPDATE_EVENT,
+      payload: id
+    }
+}
+
 export const getGroupEventsThunk = (groupId) => async dispatch => {
     const response = await csrfFetch(`/api/groups/${groupId}/events`,{
         method: "GET"
@@ -45,6 +54,30 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
         return response;
     }
 } 
+
+  //update an event
+  export const updateEventThunk = (event,eventId) => async dispatch =>{
+    const {venueId, name, description, type, capacity, price, startDate, endDate } = event;
+   
+    const response = await csrfFetch(`/api/events/${eventId}`,{
+      method: 'PUT',
+      body:JSON.stringify({
+        venueId,
+        name,
+        description,
+        type,
+        capacity,
+        price,
+        startDate,
+        endDate
+      }),
+    })
+    if(response.ok){
+        const data = await response.json();
+        dispatch(setCurrentEvent(data))
+        return response;
+    }    
+  }
 
 //delete an event 
 export const deleteEventThunk = (eventId)=> async dispatch =>{
@@ -80,6 +113,7 @@ export const createNewEventThunk = (event) => async dispatch => {
     }    
 }
 
+
 const initialState = {};
 const eventReducer = (state = initialState, action) => {
     let newState;
@@ -87,8 +121,7 @@ const eventReducer = (state = initialState, action) => {
         case SET_CURRENT_EVENT:
             newState = {...state};
             newState.currentEvent = action.payload;
-            return newState;
-     
+            return newState;     
         case SET_GROUP_EVENTS:
             newState = {...state};
             newState.events = action.payload.Events;

@@ -66,7 +66,7 @@ export default function UpdateGroup(){
             <div className={styles.subMain}>
                 <div className={styles.signup}>
                     <img src={smallLogo} alt="logo" className={styles.logo} />
-                    <h1 className="login-title-signup">Create New Group</h1>    
+                    <h1 className="login-title-signup">Update Group</h1>    
                 </div>
                 <div className={styles.innerDiv}>
                     <ul>
