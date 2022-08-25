@@ -9,6 +9,7 @@ const REMOVE_USER_GROUPS = 'group/removeUserGroups';
 const UPDATE_GROUP = 'group/updateGroup';
 const DELETE_GROUP = "group/deleteGroup"
 
+
 const setCurrentGroup = (group) => {
   return {
     type: SET_CURRENT_GROUP,
@@ -115,14 +116,25 @@ export const createGroup = (group) => async dispatch =>{
     }
   }
 
-
+ 
   //get user groups
   export const getUserGroups = () => async dispatch => {
     const response = await csrfFetch(`/api/groups/current`,{
       method: 'GET'
     });
+    
     if(response.ok){
       const data = await response.json();
+      // const userId = data.organizerId;
+      // const userResponse = await csrfFetch(`/api/user`,
+      // {
+      //     method:"GET", 
+      //     body:JSON.stringify({
+      //       userId: userId,
+      //     }),
+      // })
+      // if(userResponse.ok) data.organizer = await userResponse.json()
+     
       dispatch(userGroups(data));
       return response;
     }
@@ -151,7 +163,7 @@ export const createGroup = (group) => async dispatch =>{
         newState = Object.assign({}, state);
         newState.currentGroup = action.payload;
         return newState;
-     
+      
       case GET_GROUPS:
         newState = {...state};
         newState.allGroups = action.payload.Groups;

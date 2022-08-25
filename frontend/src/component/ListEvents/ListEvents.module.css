@@ -1,8 +1,10 @@
 .mainDiv{
     display: flex;
     flex-direction: row;
-    width: 80%;
+    max-width: 80%;
+    margin: auto;
     justify-content: center;
+    cursor: pointer;
 }
 
 .displayImage{

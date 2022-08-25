@@ -109,7 +109,15 @@ router.get("/", validateQueryParams, async (req, res, next) => {
             },
             {
                 model: Group,
-                attributes:['id','name','city','state']
+                attributes:['id','name','city','state','organizerId','private'],
+                nested:true,
+                include: [
+                    {
+                        model:User, 
+                        as: 'Organizer',
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                ]
             },
             {
                 model: Venue,
@@ -182,7 +190,7 @@ router.get("/:eventId", async (req, res, next) => {
     const eventId = req.params.eventId;
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
 
-    const event = await Event.findAll({
+    const event = await Event.findOne({
         where :{
             id : eventId
         },      
@@ -199,7 +207,15 @@ router.get("/:eventId", async (req, res, next) => {
              
             {
                 model: Group,
-                attributes:['id','name','city','state']
+                attributes:['id','name','city','state','organizerId','private'],
+                nested:true,
+                include: [
+                    {
+                        model:User, 
+                        as: 'Organizer',
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                ]
             },
             {
                 model: Venue,

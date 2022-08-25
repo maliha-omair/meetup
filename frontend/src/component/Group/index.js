@@ -41,7 +41,9 @@ export default function Group({sessionUser}){
         }
     },[dispatch, groupId, sessionUser]);
 
-   
+    function handleNewEventClick(){     
+        history.push(`/event/new`, sessionUser={sessionUser}, groupId={groupId})
+    }
     function handleDelete(){
         dispatch(deleteGroupThunk(groupId))
         .then((res)=>{history.push("/userGroup")})
@@ -104,8 +106,13 @@ export default function Group({sessionUser}){
                     {showManageGroup && 
                             <div >
                                     <NavLink to={`/groups/${groupId}/update`} className={styles.update}> Update</NavLink> 
-                                    <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>                                
-                                    <button className={styles.createEvent}>Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                    <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
+                                    <NavLink to="/event/new" >                                
+                                        <button className={styles.createVenue} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                    </NavLink>
+                                    <NavLink to={`/${groupId}/venue`} >                                
+                                        <button className={styles.createEvent} >Create Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                                    </NavLink>
 
                             </div>
                     } 

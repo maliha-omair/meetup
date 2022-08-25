@@ -41,14 +41,8 @@ export default function ListEvents({events, currentUser}){
                             <div className={styles.discription}>{event.description} ...</div>
                             <div className={styles.numAttending}>{event.numAttending} attendee</div>
                         </div>
-                        <div>
-                            {(currentUser !== null && currentUser.id === event.Group.organizerId) &&
-                                <div className={styles.loginUserFeatures}>
-                                    <div>Edit</div>
-                                    <div>Delete</div>
-                                </div>
-                            } 
-                        </div>
+                        
+                           
                     </div>
                 )
             })}

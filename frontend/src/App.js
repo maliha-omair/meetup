@@ -21,6 +21,8 @@ import AboutMeetup from "./component/AboutMeetup";
 import GroupPhotos from "./component/GroupPhotos";
 import GroupEvents from "./component/GroupEvents";
 import Event from "./component/Event"
+import CreateEvent from "./component/CreateEvent";
+import CreateVenue from "./component/CreateVenue";
 
 
 function App() {
@@ -63,6 +65,12 @@ function App() {
             </Route>
             <Route path="/createGroup">
               <GroupsForm />
+            </Route>
+            <Route path="/event/new">
+              <CreateEvent sessionUser={sessionUser}/>
+            </Route>
+            <Route path="/:groupId/venue">
+              <CreateVenue sessionUser={sessionUser} />              
             </Route>
             <Route path="/allGroups">
               <GetAllGroups/>

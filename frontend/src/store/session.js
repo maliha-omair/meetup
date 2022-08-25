@@ -48,10 +48,6 @@ export const restoreUser = () => async dispatch => {
     }    
 };
 
-export const getUserByIdThunk = () => async dispatch =>{
-  // const response = await csrfFetch()
-}
-
 //signup new user
 export const signup = (user) => async dispatch => {
     const {firstName, lastName, email, password, username } = user;

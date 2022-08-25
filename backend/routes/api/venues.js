@@ -42,7 +42,7 @@ router.put("/:venueId", requireAuth,validateNewVenue, async (req, res, next) => 
         venue.city = city;
         venue.state = state;
         venue.lat = lat;
-        venue. lng = lng;
+        venue.lng = lng;
         venue.save();
         res.status(200)
         res.json(venue)

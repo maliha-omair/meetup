@@ -1,0 +1,107 @@
+.container{
+   
+    display: table;
+    max-width: 80%;
+    margin: auto;
+    
+}
+
+.mainDiv{
+    display:flex;
+    flex-direction: column;
+    vertical-align: middle;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.date{
+    color: #757575;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 12px;
+}
+.detailText{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.eventHeading{
+    color:black;
+    padding-top:-10px;
+    margin:0px;
+    letter-spacing: -2px;
+    position:sticky;
+    font-family: Helvetica, Arial, Sans-Serif;
+
+}
+.detail{
+    
+    width:55%;
+    padding-right: 20px;
+
+
+}
+
+.hostedBy{
+    color: #757575;
+    font-family: Helvetica, Arial, Sans-Serif;
+}
+
+.organizerName{
+    display: inline-block;
+    color:black;
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+    font-weight: 500   
+}
+
+.mainHeader{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    padding-bottom: 18px;
+    
+}
+
+.detailHeader{
+    display:flex;
+    flex-direction: row;
+    padding-bottom: 20px;
+}
+
+.solid{
+    border-top: 1px solid #bbb;
+  
+}
+
+.manageEvent{
+    display: flex;
+    flex-direction: row;
+    
+}
+.editEvent{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+}
+
+.deleteEvent{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 16px;
+}
+
+.delete{
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: 13px;
+    text-decoration: none;
+    color: black;
+    padding-left:20px;
+    padding-right:20px; 
+    
+}
+
+.delete:hover{
+   color: rgb(151, 202, 209);
+}
