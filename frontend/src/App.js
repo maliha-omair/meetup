@@ -23,6 +23,7 @@ import GroupEvents from "./component/GroupEvents";
 import Event from "./component/Event"
 import CreateEvent from "./component/CreateEvent";
 import CreateVenue from "./component/CreateVenue";
+import UpdateEvent from "./component/UpdateEvent";
 
 
 function App() {
@@ -74,6 +75,9 @@ function App() {
             </Route>
             <Route path="/allGroups">
               <GetAllGroups/>
+            </Route>
+            <Route path="/events/:eventId/update">
+                <UpdateEvent sessionUser={sessionUser}/>
             </Route>
             <Route path="/groups/:groupId/update">
               <UpdateGroup />

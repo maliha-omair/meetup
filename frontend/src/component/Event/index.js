@@ -16,7 +16,7 @@ export default function Event(){
     const dispatch = useDispatch();
     const history = useHistory();
    
-    console.log(event)
+    console.log("event.....................",event)
 
     useEffect(()=>{
         dispatch(eventActions.getEventByIdThunk(eventId))
@@ -25,6 +25,7 @@ export default function Event(){
             if (data && data.errors) setErrors(Object.values(data.errors));
         });
     },[dispatch])
+    
     
     function handleDelete(){
         dispatch(deleteEventThunk(eventId))
@@ -65,7 +66,7 @@ export default function Event(){
                             
                             {sessionUser.id === event.Group.organizerId &&
                                 <div className={styles.deleteEvent}>
-                                     <NavLink to="#" className={styles.delete}>Update</NavLink>
+                                     <NavLink to={`/events/${eventId}/update`} className={styles.update}>Update</NavLink>
                                      <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
                                      
                                 </div>

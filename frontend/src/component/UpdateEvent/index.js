@@ -1,44 +1,77 @@
 import {useState} from "react"
 import { NavLink, useParams, useHistory, Route, Switch } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import {createNewEventThunk} from "../../store/events"
-import styles from "../CreateEvent/CreateEvent.module.css"
+import {updateEventThunk} from "../../store/events"
+import * as eventActions from "../../store/events";
+import * as groupActions from "../../store/groups";
+
+
+import styles from "../UpdateEvent/UpdateEvent.module.css"
 
 import { useEffect } from "react";
 
-export default function CreateEvent({ sessionUser}){
+export default function UpdateEvent({ sessionUser }){
+
+
     const [name,setName] = useState("")
     const [type,setType] = useState("In person")
     const [startDate,setStartDate] = useState("")
-   
-    const [endDate,setEndDate] = useState("")
-   
-    const [description,setDescription] = useState("")
-    const [venue,setVenue] = useState(null)
+    const [startTime,setStartTime] = useState("");
+    const [endDate,setEndDate] = useState("");
+    const [endTime,setEndTime] = useState("");
+    const [description,setDescription] = useState("");
+    const [venue,setVenue] = useState("");
     const [errors, setErrors] = useState([]);
     
     const [capacity,setCapacity] = useState(0)
     const [price,setPrice] = useState(0)
-    const currentGroup = useSelector(state => state.group.currentGroup);
-    
+   
+    const event  = useSelector(state => state.event.currentEvent);
+    const currentGroup  = useSelector(state => state.group.currentGroup);
     
     const history = useHistory()
     const dispatch = useDispatch();   
-    const venues = Object.values(currentGroup.Venues);
+    const params = useParams();
+    
+    if(sessionUser === undefined || sessionUser === null) {history.push("/")}
+      
+   
+    useEffect(()=>{
+        dispatch(eventActions.getEventByIdThunk(eventId));
+    },[dispatch])
+
+    useEffect(()=>{
+        if(event){
+            dispatch(groupActions.getGroupByIdThunk(event.Group.id));
+        }
+    },[event])
 
 
-    if(!sessionUser || !currentGroup){
-        console.log(sessionUser,currentGroup)
-        history.push("/")
+    if(event && event.Group){
+        if(sessionUser.id !== event.Group.organizerId) {history.push(`/events/${eventId}`)}
     }
+    let eventId = params.eventId;
+    
+    
+    useEffect(()=>{
+        if(event){
+            setName(event.name);
+            setType(event.type);
+            setStartDate(event.startDate);
+            setEndDate(event.endDate);
+            setCapacity(event.capacity)
+            setPrice(event.price)
+            setDescription(event.description);
+            setVenue(event.venueId)
+        }
+    },[event]);
 
     function handleSubmit(e){ 
         e.preventDefault();
 
-        
+       
         const groupId = currentGroup.id;
         const event ={
-            groupId,
             venueId:parseInt(venue),
             name,
             type,
@@ -49,7 +82,10 @@ export default function CreateEvent({ sessionUser}){
             endDate
         }
         setErrors([]);
-        return dispatch(createNewEventThunk(event))
+        if(!venue) {
+            return setErrors(["Please create venue for the group"])
+        }
+        return dispatch(updateEventThunk(event))
         .then((res)=>{
             history.push(`/groups/${groupId}`)
         })
@@ -62,12 +98,23 @@ export default function CreateEvent({ sessionUser}){
 
     }  
     
-    return (currentGroup && (
+    function handleEndDate(e){
+        console.log(e)
+        setEndDate(e.target.value)
+    }
+
+    function handleStartDate(e){
+        console.log(e)
+        setStartDate(e.target.value)
+    }
+
+
+    return (currentGroup && event && (
         <form onSubmit={handleSubmit}>
             <div className={styles.body}>
                 <div className={styles.centerBody}>
                     <div className={styles.heading}>
-                        Create an event
+                        Update event
                         <div className={styles.subHeading}>{currentGroup.name}</div>
                         <hr></hr>
                     </div>
@@ -82,9 +129,11 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>Start Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" className={styles.date}  value={startDate} onChange={(e)=>setStartDate(e.target.value)}/>
+                                <input type="datetime-local" className={styles.date}  defaultValue ={startDate} onChange={(e)=>handleStartDate(e)}/>
                             </div>
-                            
+                            {/* <div >
+                                <input type="time" className={styles.time} value={startTime} onChange={(e)=>setStartTime(e.target.value)}/>
+                            </div> */}
                         </div>                        
                     </div>
                     
@@ -92,10 +141,11 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>End Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" className={styles.date} value={endDate} onChange={(e)=>setEndDate(e.target.value)}/>
+                                <input type="datetime-local" className={styles.date} defaultValue={endDate} onChange={(e)=>handleEndDate(e)}/>
                             </div>
-                            
-                            
+                            {/* <div >
+                                <input type="time" className={styles.time} value={endTime} onChange={(e)=>setEndTime(e.target.value)}/>
+                            </div> */}
                         </div>                        
                     </div>
 
@@ -124,19 +174,18 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>Event Fee</label>
                         <input type="text" className={styles.amountDiv} value={price} onChange={(e)=>setPrice(e.target.value)} />
                     </div>
-                    {(currentGroup.Venues &&
+                   
                     <select className={styles.inputDiv} value={venue} onChange={(e)=>setVenue(e.target.value)}>
                         {(
-                            venues.map((ele,index)=>{
+                            Object.values(currentGroup.Venues).map((ele,index)=>{
                                 return(
                                     <option key={index} value={ele.id} className={styles.inputOption}>{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
                                 )
                             })
                         )}
-                    </select>                        
-                    )}
+                    </select>                                          
                     <div className={styles.inputDiv}>
-                        <button type="submit"  className={styles.publishEvent}>Publish</button>
+                        <button type="submit"  className={styles.publishEvent}>Update</button>
                     </div>
                     <br></br>
                 </div>

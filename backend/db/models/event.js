@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER
     },
     venueId: {
-      type:DataTypes.INTEGER
+      type:DataTypes.INTEGER,
     },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
