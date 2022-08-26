@@ -52,7 +52,7 @@
 .titleTextArea{
     font-family: Roboto,Helvetica,Arial,sans-serif;
     border-radius: 8px;
-    border-color: rgba(230,230,230,.1);
+    border-color: rgba(230,230,230,.5);
     font-size: 14px;
 }
 
@@ -96,12 +96,12 @@
     vertical-align: baseline;
     font-family: Roboto,Helvetica,Arial,sans-serif;
     border-radius: 8px;
-    border-color: rgba(230,230,230);
+    border-color: rgba(230,230,230,0.5);
 }
 
 .description:focus{
     outline: none !important;
-    border-color:rgba(59,130,246,.5);
+    border-color:rgba(59,130,246,0.5);
 }
 
 

@@ -102,6 +102,13 @@
     
 }
 
+.displayImage{
+    display: flex;
+    width:600px;
+    height:376px;
+    border-radius: 10PX;
+}
+
 .delete:hover{
    color: rgb(151, 202, 209);
 }

@@ -24,6 +24,7 @@ export default function ListEvents({events, currentUser}){
     }
     
     function handleClick(eventId){      
+
         history.push(`/events/${eventId}`)        
     }
     if(!events) return null;
@@ -38,9 +39,17 @@ export default function ListEvents({events, currentUser}){
             {events.map((event,index)=>{
                 return(
                     <div className={styles.middleDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
+                    
+                    {(!event.Images || !event.Images.length >0) &&( 
                         <div >
                             <img src={image} className={styles.displayImage}></img>
                         </div>
+                    )}  
+                    {(event.Images && event.Images.length>0) &&( 
+                        <div >
+                            <img src={event.Images[0].url} className={styles.displayImage}></img>
+                        </div>
+                    )}  
                         <div className={styles.listEvents}>     
                             <div className={styles.date}>{formatMemberSinceDate(event.createdAt)}</div>                      
                             <div className={styles.name}>{event.name}</div>
