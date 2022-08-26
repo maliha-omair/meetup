@@ -78,7 +78,7 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
 
   //update an event
   export const updateEventThunk = (event) => async dispatch =>{
-    const {venueId, name, description, type, capacity, price, startDate, endDate } = event;
+    const {venueId, name, description, type, capacity, price, startDate, endDate, imageUrl } = event;
    
     const response = await csrfFetch(`/api/events/${event.id}`,{
       method: 'PUT',
@@ -90,7 +90,8 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
         capacity,
         price,
         startDate,
-        endDate
+        endDate,
+        imageUrl
       }),
     })
     if(response.ok){
@@ -112,7 +113,7 @@ export const deleteEventThunk = (eventId)=> async dispatch =>{
     }
   }
 export const createNewEventThunk = (event) => async dispatch => {
-    const {groupId, venueId, name, type, description, capacity, price, startDate, endDate } = event;
+    const {groupId, venueId, name, type, description, capacity, price, startDate, endDate, imageUrl } = event;
   
     const response = await csrfFetch(`/api/groups/${groupId}/events`,{
       method: 'POST',
@@ -124,7 +125,8 @@ export const createNewEventThunk = (event) => async dispatch => {
         price,
         description,
         startDate,
-        endDate
+        endDate,
+        imageUrl
       }),
     })
     if(response.ok){

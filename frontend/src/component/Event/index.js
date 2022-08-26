@@ -61,7 +61,16 @@ export default function Event(){
                 
                 <div className={styles.detailHeader}>
                     <div className={styles.detail}>
-                        <img src={image}></img>
+                        {(!event.Images || !event.Images.length >0) &&( 
+                            <div >
+                                <img src={image} className={styles.displayImage}></img>
+                            </div>
+                        )}  
+                        {(event.Images && event.Images.length>0) &&( 
+                            <div >
+                                <img src={event.Images[0].url} className={styles.displayImage}></img>
+                            </div>
+                        )}  
                         <div className={styles.manageEvent}>
                             
                             {sessionUser.id === event.Group.organizerId &&

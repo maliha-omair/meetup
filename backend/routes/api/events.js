@@ -168,7 +168,7 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
 
 router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
     const eventId = parseInt(req.params.eventId);
-    const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
+    const {venueId,name,type,capacity,price,description,startDate,endDate,imageUrl} = req.body
     const e = await Event.findByPk(eventId);
     if(!e) return eventNotFoundError(req, res, next);
     const group = await e.getGroup();
@@ -181,10 +181,25 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
         e.price =price;
         e.startDate =startDate;
         e.endDate =endDate;
+        if(imageUrl){
+            const image = await Image.findOne({
+                where:{
+                    eventId:eventId
+                },
+                limit:1
+            });
+            if(image){ const newImage = await Image.update({ url:imageUrl })}
+            else {
+                const newImage = await Image.create({
+                    url:imageUrl,
+                    eventId:eventId,
+                    userId:req.user.id
+                })
+            }
+        }
         await e.save();
-        res.status(200);
-        res.json(e);
-
+        res.status(200)
+        res.json(getEventById(eventId))      
     } else {
         return notAuthorizedErr(req, res, next)
     }
@@ -193,49 +208,12 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
 
 router.get("/:eventId", async (req, res, next) => {
     const eventId = req.params.eventId;
-    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
+    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next);
 
-    const event = await Event.findOne({
-        where :{
-            id : eventId
-        },      
-        attributes: {
-                include: [
-                    [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
-                ]
-            },
-        include: [
-            {
-                model: Attendee,
-                attributes: []
-            },
-             
-            {
-                model: Group,
-                attributes:['id','name','city','state','organizerId','private'],
-                nested:true,
-                include: [
-                    {
-                        model:User, 
-                        as: 'Organizer',
-                        attributes: ['id', 'firstName', 'lastName']
-                    }
-                ]
-            },
-            {
-                model: Venue,
-                attributes:['id','city','state']
-            },
-            {
-                model: Image,
-                attributes: ['id', 'groupId', 'url']
-            }
-        ],
-        group: ['Event.id','Images.id','Group.id','Venue.id']
-    })
-    res.status(200)
-    res.json(event)
+    const event =  await getEventById(eventId);
 
+    res.status(200);
+    res.json(event);
 });
 
 router.get("/:eventId/attendees", async (req,res,next)=>{
@@ -396,6 +374,49 @@ router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
     })   
     
 });
+
+async function getEventById(eventId){
+    const event = await Event.findOne({
+        where :{
+            id : eventId
+        },      
+        attributes: {
+                include: [
+                    [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+                ]
+            },
+        include: [
+            {
+                model: Attendee,
+                attributes: []
+            },
+             
+            {
+                model: Group,
+                attributes:['id','name','city','state','organizerId','private'],
+                nested:true,
+                include: [
+                    {
+                        model:User, 
+                        as: 'Organizer',
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                ],
+                group:['Organizer.id']
+            },
+            {
+                model: Venue,
+                attributes:['id','city','state']
+            },
+            {
+                model: Image,
+                attributes: ['id', 'groupId', 'url']
+            }
+        ],
+        group: ['Event.id','Images.id','Group.id','Venue.id']
+    });
+    return event;
+}
 
 function notUserOrOrganizerErr(req, _res, next) {
     const err = new Error("Only the User or organizer may delete an Attendance");

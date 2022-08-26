@@ -22,9 +22,9 @@ export default function UpdateEvent({ sessionUser }){
     const [description,setDescription] = useState("");
     const [venueId,setVenueId] = useState("");
     const [errors, setErrors] = useState([]);
-    
-    const [capacity,setCapacity] = useState(0)
-    const [price,setPrice] = useState(0)
+    const[imageUrl, setImageUrl] = useState("");    
+    const [capacity,setCapacity] = useState(0);
+    const [price,setPrice] = useState(0);
    
     const event  = useSelector(state => state.event.currentEvent);
     const currentGroup  = useSelector(state => state.group.currentGroup);
@@ -80,7 +80,8 @@ export default function UpdateEvent({ sessionUser }){
             capacity,
             price,
             startDate,
-            endDate
+            endDate,
+            imageUrl
         }
         setErrors([]);
         if(!venueId) {
@@ -179,7 +180,12 @@ export default function UpdateEvent({ sessionUser }){
                                 )
                             })
                         )}
-                    </select>                                          
+                    </select> 
+                    <div className={styles.inputDiv}>
+                        <label className={styles.label}>Image url </label>
+                        <input type="text" className={styles.titleTextArea}  value={imageUrl} onChange={(e)=>setImageUrl(e.target.value)} />
+                    </div>
+
                     <div className={styles.inputDiv}>
                         <button type="submit"  className={styles.publishEvent}>Update</button>
                     </div>

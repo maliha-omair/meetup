@@ -10,12 +10,11 @@ export default function CreateEvent({ sessionUser}){
     const [name,setName] = useState("");
     const [type,setType] = useState("In person");
     const [startDate,setStartDate] = useState("");
-   
     const [endDate,setEndDate] = useState("");
-   
     const [description,setDescription] = useState("");
     const [venueId,setVenueId] = useState(1);
     const [errors, setErrors] = useState([]);
+    const [imageUrl, setImageUrl] = useState("");
     
     const [capacity,setCapacity] = useState("");
     const [price,setPrice] = useState("");
@@ -54,7 +53,8 @@ export default function CreateEvent({ sessionUser}){
             capacity,
             price,
             startDate,
-            endDate
+            endDate,
+            imageUrl
         }
 
         console.log("submitted")
@@ -146,7 +146,7 @@ export default function CreateEvent({ sessionUser}){
                     
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Image Url</label>
-                        <input type="text" className={styles.titleTextArea}  value={name} onChange={(e)=>setName(e.target.value)} />
+                        <input type="text" className={styles.titleTextArea}  value={imageUrl} onChange={(e)=>setImageUrl(e.target.value)} />
                     </div>
 
                     <div className={styles.inputDiv}>
