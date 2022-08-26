@@ -53,7 +53,8 @@ router.get("/events", requireAuth, async (req, res, next) => {
                             as: 'Organizer',
                             attributes: ['id', 'firstName', 'lastName']
                         }
-                    ]
+                    ],
+                    group: 'Organizer.id'
                 },
                 {
                     model: Venue,
