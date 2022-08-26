@@ -215,8 +215,6 @@ router.get("/:groupId", async (req, res, next) => {
     });
     res.status(200)
     res.json(group)
-
-
 });
 
 router.post("/:groupId/images", requireAuth, validateNewImage, async (req, res, next) => {
@@ -578,7 +576,7 @@ router.get("/:groupId/events", async (req, res, next) => {
 
 router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,next)=>{
     const groupId = parseInt(req.params.groupId);
-    const {venueId,name,type,capacity,price,description,startDate,endDate} = req.body
+    const {venueId,name,type,capacity,price,description,startDate,endDate, imageUrl} = req.body
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
         const newEvent = await Event.create({
@@ -592,15 +590,61 @@ router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,nex
             startDate,
             endDate
         });
+        if(imageUrl) await Image.create({
+            url:imageUrl,
+            eventId:newEvent.id,
+            userId: req.user.id
+        })
+
         res.status(200);
-        res.json(newEvent);      
+        res.json(getEventById(newEvent.id))        
     } else {
         return notAuthorizedErr(req, res, next)
-    }
-    
+    }    
 });
 
-
+async function getEventById(eventId){
+    const event = await Event.findOne({
+        where :{
+            id : eventId
+        },      
+        attributes: {
+                include: [
+                    [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+                ]
+            },
+        include: [
+            {
+                model: Attendee,
+                attributes: []
+            },
+             
+            {
+                model: Group,
+                attributes:['id','name','city','state','organizerId','private'],
+                nested:true,
+                include: [
+                    {
+                        model:User, 
+                        as: 'Organizer',
+                        attributes: ['id', 'firstName', 'lastName']
+                    }
+                ],
+                group:['Organizer.id']
+            },
+            {
+                model: Venue,
+                attributes:['id','city','state']
+            },
+            {
+                model: Image,
+                attributes: ['id', 'eventId', 'url']
+            }
+        ],
+        group: ['Event.id','Images.id','Group.id','Venue.id']
+    });
+    return event;
+}
 
 function membershipNotExistsErr(req, _res, next) {
     const err = new Error("Membership does not exist for this User");
