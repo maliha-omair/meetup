@@ -28,10 +28,16 @@ export default function ListEvents({events, currentUser}){
     }
     if(!events) return null;
     return (events &&(
-        <>
+        <div className={styles.main}>
+            <div>
+                <div className={styles.eventsHeading}>
+                    Events
+                </div>
+            </div>
+            <div className={styles.subDiv}>
             {events.map((event,index)=>{
                 return(
-                    <div className={styles.mainDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
+                    <div className={styles.middleDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
                         <div >
                             <img src={image} className={styles.displayImage}></img>
                         </div>
@@ -46,6 +52,8 @@ export default function ListEvents({events, currentUser}){
                     </div>
                 )
             })}
-        </>
+            </div>
+        </div>
+        
     ))
 }

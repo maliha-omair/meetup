@@ -42,7 +42,7 @@
 }
 
 .login-title{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 20px;
 }
 
@@ -64,7 +64,7 @@
     height:35px;
     border-radius: 8px;
     background-color:#f65858;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
     color:white;
     font-size:20px;
@@ -72,7 +72,7 @@
 }
 .login-button:hover{
     background-color:rgba(246, 88, 88,0.8);
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
 }
 .login-button-div{
@@ -81,14 +81,14 @@
 }
 
 .not-a-amember-login{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
 }
 .login-label{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-weight: 500;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     text-align: left;
 }
 .login-sub-div{
@@ -104,6 +104,6 @@
 }
 .signup-link{
     text-decoration: none; 
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     color:#0070f3;
 }

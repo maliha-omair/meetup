@@ -77,10 +77,10 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
 } 
 
   //update an event
-  export const updateEventThunk = (event,eventId) => async dispatch =>{
+  export const updateEventThunk = (event) => async dispatch =>{
     const {venueId, name, description, type, capacity, price, startDate, endDate } = event;
    
-    const response = await csrfFetch(`/api/events/${eventId}`,{
+    const response = await csrfFetch(`/api/events/${event.id}`,{
       method: 'PUT',
       body:JSON.stringify({
         venueId,
@@ -95,7 +95,7 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentEvent(data))
+        dispatch(setCurrentEvent(null));
         return response;
     }    
   }
@@ -107,7 +107,7 @@ export const deleteEventThunk = (eventId)=> async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(deleteEvent())
+        dispatch(deleteEvent());
         return response;
     }
   }
@@ -129,7 +129,7 @@ export const createNewEventThunk = (event) => async dispatch => {
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentEvent(data))
+        dispatch(setCurrentEvent(null));
         return response;
     }    
 }

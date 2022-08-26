@@ -16,7 +16,6 @@ export default function Event(){
     const dispatch = useDispatch();
     const history = useHistory();
    
-    console.log("event.....................",event)
 
     useEffect(()=>{
         dispatch(eventActions.getEventByIdThunk(eventId))
@@ -37,6 +36,7 @@ export default function Event(){
             }
         })
     }
+    
     return (event &&(
           <div className={styles.container}>
             <ul>

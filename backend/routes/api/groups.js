@@ -108,7 +108,7 @@ const validateNewEvent = [
 ];
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
    
-    const { name, about, type, private, city, state } = req.body;
+    const { name, about, type, private, city, state, imageUrl } = req.body;
     const newGroup = await Group.create({
         organizerId: req.user.id,
         name,    
@@ -118,9 +118,15 @@ router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
         city,
         state,    
     });
-    
-    res.status(201)
-    res.json(newGroup)
+    // if(imageUrl){
+    //     newImage = await Image.create({
+    //         ..,
+    //         ..
+    //     });
+    // };
+    // const group = getGroupById(req.params.groupId);
+    res.status(201);
+    res.json(newGroup);
 });
 
 router.get("/", async (req, res, next) => {
@@ -177,7 +183,6 @@ router.get("/current", requireAuth, async (req, res) => {
 router.get("/:groupId", async (req, res, next) => {
     const groupId = req.params.groupId;
     if (!await (isGroup(groupId))) return groupNotFoundError(req, res, next)
-
     const group = await Group.findOne({
         where: {
             id: req.params.groupId
@@ -250,6 +255,8 @@ router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) =>
             organizerId: req.user.id
         }
     });
+    // if(!group) return groupNotFoundError(req, res, next);
+    
     if (group) {
         const updatedGroup = await group.update({
             name,
@@ -263,6 +270,18 @@ router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) =>
                 id: groupId
             }
         });
+        // get image url from body
+        // if null don't do anything just return updateGroup (after loading from database by using new getGroupById function)
+        // if image is not null.
+        // get all images where groupId = groupId
+        // limit to 1 so we only get top image
+        // if we don't get anything back then there is no image, just return as usual (using getGroupById)
+        // if we get an image back then update that image to new image value from body
+        // now again load group using getGroupById and return that group
+        // if(req.body.image){
+
+        // }
+
         res.status(200);
         res.json(updatedGroup)
     } else {
@@ -582,5 +601,34 @@ function groupNotFoundError(req, _res, next) {
     return next(err);
 }
 
+// function getGroupById(groupId){
+//     const group = await Group.findOne({
+//         where: {
+//             id: groupId
+//         },
+//         attributes: {
+//             include: [
+
+//                 [Sequelize.fn('COUNT', Sequelize.col('Memberships.groupId')), 'numMembers']
+//             ]
+//         },
+//         include: [{
+//             model: Membership,
+//             attributes: []
+//         }, {
+//             model: Image,
+//             attributes: ['id', 'url', 'groupId']
+//         }, {
+//             model: User,
+//             as: 'Organizer',
+//             attributes: ['id', 'firstName', 'lastName']
+//         }, {
+//             model: Venue,
+//             attributes: ['id', 'groupId', 'address', 'city', 'state','lat','lng']
+//         }],
+//         group: ['Group.id','Images.id','Venues.id','Organizer.id']
+//     });
+//     return group;
+// }
 
 module.exports = router;

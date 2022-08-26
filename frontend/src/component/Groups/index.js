@@ -62,18 +62,18 @@ export function GroupsForm(){
                     <input type="text" className={styles.input} value={groupName} onChange={((e)=>setGroupName(e.target.value))}></input>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>about</label>
+                    <label className={styles.createGroupLabel}>About</label>
                     <textarea className={styles.textArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>type</label>
+                    <label className={styles.createGroupLabel}>Type</label>
                     <select  className={styles.inputOption} value={type} onChange={(e)=>setType(e.target.value)}>
                         <option value="In person" className={styles.inputOption}>In person</option>
                         <option value="Online"  className={styles.inputOption}>Online</option>
                     </select>                    
                 </div>
                 <div className={styles.innerDivPrivate}>
-                    <label className={styles.createGroupLabel}>private</label>
+                    <label className={styles.createGroupLabel}>Private</label>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
                 </div>
                 
@@ -82,7 +82,7 @@ export function GroupsForm(){
                     <input type="text" className={styles.input} value={city} onChange={((e)=>setCity(e.target.value))}></input>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>state</label>
+                    <label className={styles.createGroupLabel}>State</label>
                     <input type="text" className={styles.input} value={state} onChange={((e)=>setState(e.target.value))}></input>   
                 </div>
                 <div className={styles.buttonDiv}>

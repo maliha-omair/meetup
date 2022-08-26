@@ -63,6 +63,7 @@ export default function CreateVenue({ sessionUser}){
                         {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
                     </ul>
                     </div>
+                    
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Address</label>
                         <input type="text" className={styles.titleTextArea}  value={address} onChange={(e)=>setAddress(e.target.value)} />
@@ -75,10 +76,7 @@ export default function CreateVenue({ sessionUser}){
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>State</label>
                         <input type="text" className={styles.titleTextArea}  value={state} onChange={(e)=>setState(e.target.value)} />
-                    </div>
-
-                    
-                    
+                    </div>               
 
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Latitude</label>
@@ -95,6 +93,7 @@ export default function CreateVenue({ sessionUser}){
                         <button type="submit"  className={styles.publishEvent}>Submit</button>
                     </div>
                     <br></br>
+                
                 </div>
                         
                 

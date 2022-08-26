@@ -23,12 +23,12 @@
   width: 80%;
 }
 h1{
-  font-family: Helvetica, Arial, Sans-Serif; 
+  font-family: Roboto,Helvetica,Arial,sans-serif;
   font-size: 2.625rem;
   font-weight: 700;
 }
 h3{
-  font-family: Helvetica, Arial, Sans-Serif; 
+  font-family: Roboto,Helvetica,Arial,sans-serif; 
 }
 .profile-pic-large{
   display: flex;

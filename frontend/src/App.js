@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import SignupFormPage from "./component/SignupFormPage"
 import LoginFormPage from './component/LoginFormPage';
 import Home from './component/Home'
@@ -69,7 +69,7 @@ function App() {
               <GroupsForm />
             </Route>
             <Route path="/event/new">
-              <CreateEvent sessionUser={sessionUser}/>
+              {sessionUser ?  <CreateEvent sessionUser={sessionUser}></CreateEvent> : <Redirect to="/" />  }
             </Route>
             <Route path="/:groupId/venue">
               <CreateVenue sessionUser={sessionUser} />              

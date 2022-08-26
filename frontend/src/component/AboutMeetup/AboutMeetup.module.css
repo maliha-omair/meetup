@@ -11,14 +11,14 @@
 
 .heading{
     font-size: 62px;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     padding-top: 50px;
     
 }
 
 .paragraph{
     font-size: 22px;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     padding-top:20px;
     padding-bottom: 20px;
 }
@@ -31,7 +31,7 @@
     height:35px;
     border-radius: 8px;
     background-color:#f65858;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
     color:white;
     font-size:20px;
@@ -40,6 +40,6 @@
 
 .button:hover{
     background-color:rgba(246, 88, 88,0.8);
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
 }

@@ -32,6 +32,7 @@ export default function UserEvents({}){
    
     return(allEvents && (
         <div className={styles.main}>
+            
            <ul>
                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
             </ul>
