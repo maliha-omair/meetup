@@ -16,11 +16,11 @@
 
 .date{
     color: #757575;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
 .detailText{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
     font-weight: bold;
     padding-top:10px;
@@ -33,7 +33,7 @@
     margin:0px;
     letter-spacing: -2px;
     position:sticky;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
 
 }
 .detail{
@@ -46,13 +46,13 @@
 
 .hostedBy{
     color: #757575;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
 }
 
 .organizerName{
     display: inline-block;
     color:black;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
     font-weight: 500   
 }
@@ -83,17 +83,17 @@
     
 }
 .editEvent{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
 }
 
 .deleteEvent{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
 }
 
 .delete{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color: black;

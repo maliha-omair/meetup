@@ -7,39 +7,47 @@ import styles from "../CreateEvent/CreateEvent.module.css"
 import { useEffect } from "react";
 
 export default function CreateEvent({ sessionUser}){
-    const [name,setName] = useState("")
-    const [type,setType] = useState("In person")
-    const [startDate,setStartDate] = useState("")
+    const [name,setName] = useState("");
+    const [type,setType] = useState("In person");
+    const [startDate,setStartDate] = useState("");
    
-    const [endDate,setEndDate] = useState("")
+    const [endDate,setEndDate] = useState("");
    
-    const [description,setDescription] = useState("")
-    const [venue,setVenue] = useState(null)
+    const [description,setDescription] = useState("");
+    const [venueId,setVenueId] = useState(1);
     const [errors, setErrors] = useState([]);
     
-    const [capacity,setCapacity] = useState(0)
-    const [price,setPrice] = useState(0)
+    const [capacity,setCapacity] = useState("");
+    const [price,setPrice] = useState("");
     const currentGroup = useSelector(state => state.group.currentGroup);
     
     
     const history = useHistory()
     const dispatch = useDispatch();   
-    const venues = Object.values(currentGroup.Venues);
-
-
-    if(!sessionUser || !currentGroup){
-        console.log(sessionUser,currentGroup)
-        history.push("/")
-    }
+  
+    // if(!sessionUser || !currentGroup){
+    //     console.log(sessionUser,currentGroup)
+    //     history.push("/")
+    // }
 
     function handleSubmit(e){ 
         e.preventDefault();
+        setErrors([]);
+        // let error = [];
+        // if(!capacity || !Number.isInteger(capacity) )
+        // {   
+        //     error.push("Capacity must be an integer")
+        // }
+        // if(!price || !isNaN(price)){
+        //     error.push("Price is invalid")
+        // }
+        // if(!description)error.push("Description is required")
+        // if(error.length > 0) return setErrors(error)
 
-        
         const groupId = currentGroup.id;
         const event ={
             groupId,
-            venueId:parseInt(venue),
+            venueId:parseInt(venueId),
             name,
             type,
             description,
@@ -48,7 +56,8 @@ export default function CreateEvent({ sessionUser}){
             startDate,
             endDate
         }
-        setErrors([]);
+
+        console.log("submitted")
         return dispatch(createNewEventThunk(event))
         .then((res)=>{
             history.push(`/groups/${groupId}`)
@@ -114,9 +123,9 @@ export default function CreateEvent({ sessionUser}){
 
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Capacity</label>
-                        <div className={styles.attendeeTextAndInput}>
-                            <input type="text" key={capacity} className={styles.attendeeInput} value={capacity} onChange={(e)=>setCapacity(e.target.value)}/>                                                    
-                            <span className={styles.attendeeText}>Set the total number of attendees for this event. Members will see how many spots are available</span>
+                        <div className={styles.capacityDiv}>
+                            <input type="text" className={styles.capacity} value={capacity} onChange={(e)=>setCapacity(e.target.value)}/>                                                    
+                            <span className={styles.capacityText}>Set the total number of attendees for this event. Members will see how many spots are available</span>
                         </div>
                     </div>
 
@@ -124,17 +133,18 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>Event Fee</label>
                         <input type="text" className={styles.amountDiv} value={price} onChange={(e)=>setPrice(e.target.value)} />
                     </div>
-                    {(currentGroup.Venues &&
-                    <select className={styles.inputDiv} value={venue} onChange={(e)=>setVenue(e.target.value)}>
+
+                    <select className={styles.inputDiv} value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
                         {(
-                            venues.map((ele,index)=>{
+                            Object.values(currentGroup.Venues).map((ele,index)=>{
                                 return(
                                     <option key={index} value={ele.id} className={styles.inputOption}>{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
                                 )
                             })
                         )}
-                    </select>                        
-                    )}
+                    </select>                         
+                 
+
                     <div className={styles.inputDiv}>
                         <button type="submit"  className={styles.publishEvent}>Publish</button>
                     </div>

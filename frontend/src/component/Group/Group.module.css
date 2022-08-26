@@ -3,13 +3,16 @@
     width: 80%;
     justify-content: center;
     align-items: center;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: stretch;
 }
 
 .mainDiv{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     
 }
 
@@ -40,24 +43,24 @@
 
 .groupName{
     font-size: 32px;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-weight: bold;
 }
 
 .cityState{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-weight: 400px;
 }
 
 .members{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-weight: 400px;
 }
 
 .organizedB{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     
 }
@@ -71,7 +74,7 @@
 
 .event{
   
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color:black;
@@ -83,7 +86,7 @@
 }
 
 .about{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color: black;
@@ -94,7 +97,7 @@
    color: rgb(151, 202, 209);
 }
 .delete{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color: black;
@@ -108,7 +111,7 @@
 }
 
 .update{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color: black;
@@ -126,7 +129,7 @@
 
 
 .edit{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 13px;
     text-decoration: none;
     color: black;
@@ -138,7 +141,7 @@
 .innerMenu{
     display: flex;
     flex-direction: row; 
-    align-items: center;
+    /* align-items: left; */
    
     
 }
@@ -155,34 +158,49 @@
 .joinGroup{
     color: white;
     background-color:#f65858;  
-    font-family: Helvetica, Arial, Sans-Serif; 
+    font-family: Roboto,Helvetica,Arial,sans-serif; 
   
 }
 
 .joinGroup:hover{
     background-color:rgba(246, 88, 88,0.8);
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     color:white;
     cursor: pointer;
 }
 
 .createEvent{
     color: white;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     background-color:#f65858;    
     padding-left:10px;
 }
 
 .createEvent:hover{
     background-color:rgba(246, 88, 88,0.8);
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:white;
+    cursor: pointer;
+}
+
+.createVenue{
+    color: white;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    background-color:#f65858;    
+    padding-left:10px;
+    margin-left: 10px;;
+}
+
+.createVenue:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     color:white;
     cursor: pointer;
 }
 
 .dropDown{
     
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
    
     /* z-index: 52; */

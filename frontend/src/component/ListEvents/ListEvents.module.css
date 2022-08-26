@@ -1,12 +1,31 @@
-.mainDiv{
-    display: flex;
-    flex-direction: row;
-    max-width: 80%;
-    margin: auto;
+.main{
+    display:flex;
+    flex-direction: column;
+
     justify-content: center;
-    cursor: pointer;
+    align-items: center;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: stretch;
+    max-width:80%;
+    margin: 0 auto;
 }
 
+.subDiv{
+    display:flex;
+    flex-direction: column;
+}
+
+.middleDiv{
+    display:flex;
+    flex-direction: row;
+}
+.eventsHeading{
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+
+}
 .displayImage{
     width:200px;
     height:200px;
@@ -17,35 +36,38 @@
     flex-direction: column;
     padding-left: 20px;
     padding-bottom: 20px;
+    max-width:60%;
+    margin: 0 ;
+    
     
 }
 
 .date{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 12px;
 }
 
 .name{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family:Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
     font-weight: bold;
     padding-bottom: 20px;
 }
 
 .discription{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 12px;
     color:#757575;
 }
 
 .numAttending{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 12px;
     padding-top:20px;
     color:#757575;
 }
 
 .loginUserFeatures{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     
 }

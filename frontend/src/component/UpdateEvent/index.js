@@ -20,7 +20,7 @@ export default function UpdateEvent({ sessionUser }){
     const [endDate,setEndDate] = useState("");
     const [endTime,setEndTime] = useState("");
     const [description,setDescription] = useState("");
-    const [venue,setVenue] = useState("");
+    const [venueId,setVenueId] = useState("");
     const [errors, setErrors] = useState([]);
     
     const [capacity,setCapacity] = useState(0)
@@ -50,7 +50,7 @@ export default function UpdateEvent({ sessionUser }){
     if(event && event.Group){
         if(sessionUser.id !== event.Group.organizerId) {history.push(`/events/${eventId}`)}
     }
-    let eventId = params.eventId;
+    const eventId = params.eventId;
     
     
     useEffect(()=>{
@@ -62,7 +62,7 @@ export default function UpdateEvent({ sessionUser }){
             setCapacity(event.capacity)
             setPrice(event.price)
             setDescription(event.description);
-            setVenue(event.venueId)
+            setVenueId(event.venueId)
         }
     },[event]);
 
@@ -71,8 +71,9 @@ export default function UpdateEvent({ sessionUser }){
 
        
         const groupId = currentGroup.id;
-        const event ={
-            venueId:parseInt(venue),
+        const eventToUpdate ={
+            id: eventId, 
+            venueId:parseInt(venueId),
             name,
             type,
             description,
@@ -82,10 +83,10 @@ export default function UpdateEvent({ sessionUser }){
             endDate
         }
         setErrors([]);
-        if(!venue) {
+        if(!venueId) {
             return setErrors(["Please create venue for the group"])
         }
-        return dispatch(updateEventThunk(event))
+        return dispatch(updateEventThunk(eventToUpdate))
         .then((res)=>{
             history.push(`/groups/${groupId}`)
         })
@@ -131,9 +132,6 @@ export default function UpdateEvent({ sessionUser }){
                             <div >
                                 <input type="datetime-local" className={styles.date}  defaultValue ={startDate} onChange={(e)=>handleStartDate(e)}/>
                             </div>
-                            {/* <div >
-                                <input type="time" className={styles.time} value={startTime} onChange={(e)=>setStartTime(e.target.value)}/>
-                            </div> */}
                         </div>                        
                     </div>
                     
@@ -143,9 +141,7 @@ export default function UpdateEvent({ sessionUser }){
                             <div >
                                 <input type="datetime-local" className={styles.date} defaultValue={endDate} onChange={(e)=>handleEndDate(e)}/>
                             </div>
-                            {/* <div >
-                                <input type="time" className={styles.time} value={endTime} onChange={(e)=>setEndTime(e.target.value)}/>
-                            </div> */}
+                        
                         </div>                        
                     </div>
 
@@ -175,7 +171,7 @@ export default function UpdateEvent({ sessionUser }){
                         <input type="text" className={styles.amountDiv} value={price} onChange={(e)=>setPrice(e.target.value)} />
                     </div>
                    
-                    <select className={styles.inputDiv} value={venue} onChange={(e)=>setVenue(e.target.value)}>
+                    <select className={styles.inputDiv} value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
                         {(
                             Object.values(currentGroup.Venues).map((ele,index)=>{
                                 return(

@@ -32,7 +32,7 @@
     border-radius: 130px;
 }
 .login{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 24px;
 }
 
@@ -79,10 +79,10 @@
 }
 
 .createGroupLabel{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-weight: 700;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     text-align: left;
 }
 
@@ -93,7 +93,7 @@
     height:35px;
     border-radius: 8px;
     background-color:#f65858;    
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     color:white;
     font-size:20px;    
     border:none;

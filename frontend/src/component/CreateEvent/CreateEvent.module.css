@@ -51,9 +51,9 @@
 
 .titleTextArea{
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    border-radius: 8px;
-    border-color: rgba(230,230,230,.1);
-    font-size: 14px;
+    border-radius:8px;
+    height: 22px;    
+    border-color: rgba(230,230,230,.5);
 }
 
 .titleTextArea:focus{
@@ -85,7 +85,18 @@
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
-.time:focus{
+
+.select{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    border-radius: 8px;
+    margin-right: 10px;
+    max-width:180px;
+    height: 22px;
+    border-color: rgba(230,230,230,.5);
+    padding-top: 20px;
+}
+
+.select:focus{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
@@ -112,7 +123,7 @@
 }
 
 
-.attendeeInput{
+.capacity{
     font-family: Roboto,Helvetica,Arial,sans-serif;
     border-radius:8px;
     width: 90px;
@@ -120,17 +131,17 @@
     border-color: rgba(230,230,230,.5);
 }
 
-.attendeeInput:focus{
+.capacity:focus{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
 
-.attendeeTextAndInput{
+.capacityDiv{
     display: flex;
     flex-direction: row;
 }
 
-.attendeeText{
+.capacityText{
     
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 12px;
@@ -146,9 +157,10 @@
 }
 
 .amountDiv:hover{
-    outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
+
+
 
 .type{
     font-family: Roboto,Helvetica,Arial,sans-serif;
@@ -159,7 +171,6 @@
 }
 
 .type:hover{
-    outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
 
@@ -178,7 +189,7 @@
 }
 .publishEvent:hover{
     background-color:rgba(246, 88, 88,0.8);
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     cursor: pointer;
    
 }

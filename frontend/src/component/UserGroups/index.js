@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useInsertionEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import {useHistory, Redirect} from "react-router-dom"
+import {useHistory, Redirect, NavLink} from "react-router-dom"
 import * as groupActions from "../../store/groups";
 import styles from "../UserGroups/UserGroups.module.css"
 import image from "../../assets/groupDisplayImage.jpg"
@@ -50,9 +50,11 @@ export default function UserGroups({sessionUser}){
     }
 
     return (groupsArr && (
-        <>            
+        <div>          
             <div className={styles.heading}>
-                <h1>Groups</h1>            
+                <div className={styles.divHeading}>
+                     Your Groups         
+                </div>
             </div>
             {groupsArr.map((group,idx)=>{
                 return(
@@ -85,6 +87,6 @@ export default function UserGroups({sessionUser}){
                         </div>
                 )
             })}
-        </>
+        </div>
     ));
 }

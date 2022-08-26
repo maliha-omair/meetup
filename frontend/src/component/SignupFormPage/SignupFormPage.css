@@ -35,7 +35,7 @@
     border-radius: 130px;
 }
 .login-title-signup{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 24px;
 }
 
@@ -80,10 +80,10 @@
     justify-content: left;  
 }
 .signup-label{
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;;
     font-size: 14px;
     font-weight: 500;
-    font-family: Helvetica, Arial, Sans-Serif;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     text-align: left;
 }
 .sub-div-signup{
