@@ -2,17 +2,17 @@
     display:flex;
     width: 80%;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     justify-content: flex-end;
-    align-items: center;
-    align-content: stretch;
+    /* align-items: center; */
+    /* align-content: stretch; */
 }
 
 .mainDiv{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     
 }
 
@@ -138,12 +138,11 @@
 .edit:hover{
    color: rgb(151, 202, 209);
 }
+
 .innerMenu{
     display: flex;
     flex-direction: row; 
-    /* align-items: left; */
-   
-    
+    /* align-items: left; */    
 }
 
 .tabs{

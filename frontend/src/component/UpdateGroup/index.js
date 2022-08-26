@@ -14,6 +14,7 @@ export default function UpdateGroup(){
     const [state,setState] = useState("")
     const [type,setType] = useState("")
     const [errors, setErrors] = useState([]);
+    const [imageUrl,setImageUrl] = useState("")
     const sessionUser = useSelector(state => state.session.user)
     const history = useHistory()
     const params = useParams();
@@ -31,6 +32,7 @@ export default function UpdateGroup(){
             setCity(group.city);
             setState(group.state);
             setType(group.type);
+            if(group.Images) setImageUrl(group.Images[0])
         }
     },[group]);
 
@@ -47,7 +49,8 @@ export default function UpdateGroup(){
             isPrivate:isPrivate,
             city:city,
             type:type,
-            state:state
+            state:state,
+            imageUrl: imageUrl
         }
         
         setErrors([]);
@@ -78,11 +81,11 @@ export default function UpdateGroup(){
                     <input type="text" className={styles.input} value={groupName} onChange={((e)=>setGroupName(e.target.value))}></input>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>about</label>
+                    <label className={styles.createGroupLabel}>About</label>
                     <textarea className={styles.textArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>type</label>
+                    <label className={styles.createGroupLabel}>Type</label>
                     <select  className={styles.inputOption} value={type} onChange={(e)=>setType(e.target.value)}>
                         {
                             groupTypeOptions.map((opt, index) =>(
@@ -92,7 +95,7 @@ export default function UpdateGroup(){
                     </select>                    
                 </div>
                 <div className={styles.innerDivPrivate}>
-                    <label className={styles.createGroupLabel}>private</label>
+                    <label className={styles.createGroupLabel}>Private</label>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
                 </div>
                 <div className={styles.innerDiv}>
@@ -100,9 +103,15 @@ export default function UpdateGroup(){
                     <input type="text" className={styles.input} value={city}  onChange={((e)=>setCity(e.target.value))}></input>   
                 </div>
                 <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>state</label>
+                    <label className={styles.createGroupLabel}>State</label>
                     <input type="text" className={styles.input} value={state} onChange={((e)=>setState(e.target.value))}></input>   
                 </div>
+
+                <div className={styles.innerDiv}>
+                    <label className={styles.createGroupLabel}>Image Url</label>
+                    <input type="text" className={styles.input} value={imageUrl} onChange={((e)=>setImageUrl(e.target.value))}></input>   
+                </div>
+
                 <div className={styles.buttonDiv}>
                     <button type="submit" className={styles.formButton}>Update</button>
                 </div>

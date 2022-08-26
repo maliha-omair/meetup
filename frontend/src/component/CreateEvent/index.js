@@ -142,8 +142,12 @@ export default function CreateEvent({ sessionUser}){
                                 )
                             })
                         )}
-                    </select>                         
-                 
+                    </select>
+                    
+                    <div className={styles.inputDiv}>
+                        <label className={styles.label}>Image Url</label>
+                        <input type="text" className={styles.titleTextArea}  value={name} onChange={(e)=>setName(e.target.value)} />
+                    </div>
 
                     <div className={styles.inputDiv}>
                         <button type="submit"  className={styles.publishEvent}>Publish</button>

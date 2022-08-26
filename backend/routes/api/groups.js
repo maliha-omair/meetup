@@ -106,6 +106,7 @@ const validateNewEvent = [
         
     handleValidationErrors
 ];
+
 router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
    
     const { name, about, type, private, city, state, imageUrl } = req.body;
@@ -118,15 +119,18 @@ router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
         city,
         state,    
     });
-    // if(imageUrl){
-    //     newImage = await Image.create({
-    //         ..,
-    //         ..
-    //     });
-    // };
-    // const group = getGroupById(req.params.groupId);
-    res.status(201);
-    res.json(newGroup);
+    
+    if(imageUrl){
+       const newImage = await Image.create({
+            url:imageUrl,
+            userId: req.user.id,
+            groupId: newGroup.id
+        })
+    }
+
+    res.status(201)
+    res.json(getGroupById(newGroup.id))
+
 });
 
 router.get("/", async (req, res, next) => {
@@ -245,48 +249,50 @@ router.post("/:groupId/images", requireAuth, validateNewImage, async (req, res, 
 });
 
 router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) => {
+
     const { groupId } = req.params;
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if(!await isOrganizer(groupId,req.user)) return notAuthorizedErr(req,res,next);
-    const { name, about, type, private, city, state } = req.body;
+    const { name, about, type, private, city, state, imageUrl } = req.body;
     const group = await Group.findOne({
         where: {
             id: req.params.groupId,
             organizerId: req.user.id
         }
     });
-    // if(!group) return groupNotFoundError(req, res, next);
+    if(!group) return groupNotFoundError(req, res, next);
     
-    if (group) {
-        const updatedGroup = await group.update({
-            name,
-            about,
-            type,
-            private,
-            city,
-            state
-        }, {
-            where: {
-                id: groupId
-            }
-        });
-        // get image url from body
-        // if null don't do anything just return updateGroup (after loading from database by using new getGroupById function)
-        // if image is not null.
-        // get all images where groupId = groupId
-        // limit to 1 so we only get top image
-        // if we don't get anything back then there is no image, just return as usual (using getGroupById)
-        // if we get an image back then update that image to new image value from body
-        // now again load group using getGroupById and return that group
-        // if(req.body.image){
-
-        // }
-
-        res.status(200);
-        res.json(updatedGroup)
-    } else {
-        groupNotFoundError(req, res, next);
+    const updatedGroup = await group.update({
+        name,
+        about,
+        type,
+        private,
+        city,
+        state
+    }, {
+        where: {
+            id: groupId
+        }
+    });
+    if(imageUrl){
+        const image = await Image.findOne({
+            where:{
+                groupId:groupId
+            },
+            limit:1
+        })
+        if(image){
+            const newImage = await image.update({ url:imageUrl })
+        }else{
+            const newImage = await Image.create({
+                url:imageUrl,
+                userId: req.user.id,
+                groupId: updatedGroup.id
+            })
+        }
     }
+    res.status(200);
+    res.json(getGroupById(groupId))
 });
 
 router.delete("/:groupId", requireAuth, async (req, res, next) => {
@@ -298,8 +304,44 @@ router.delete("/:groupId", requireAuth, async (req, res, next) => {
     });
 
     if (!group) groupNotFoundError(req, res, next);
+    
+    await Image.destroy({
+        where: {
+            groupId: req.params.groupId
+        }
+    });
+    
+    await Event.destroy({
+        where: {
+            groupId: req.params.groupId
+        }
+    });    
 
+
+    const allVenues = await Venue.findAll({
+        where: {
+            groupId: req.params.groupId
+        }
+    });
+
+    for(let i=0;i<allVenues.length;i++){
+        await Event.destroy({
+            where: {
+                venueId: allVenues[i].id
+            }
+        });    
+    }
+
+
+
+    await Venue.destroy({
+        where: {
+            groupId: req.params.groupId
+        }
+    });
+    
     await group.destroy();
+    
     res.json({
         "message": "Successfully deleted",
         "statusCode": 200
@@ -601,34 +643,34 @@ function groupNotFoundError(req, _res, next) {
     return next(err);
 }
 
-// function getGroupById(groupId){
-//     const group = await Group.findOne({
-//         where: {
-//             id: groupId
-//         },
-//         attributes: {
-//             include: [
+async function getGroupById(groupId){
+    const group = await Group.findOne({
+        where: {
+            id: groupId
+        },
+        attributes: {
+            include: [
 
-//                 [Sequelize.fn('COUNT', Sequelize.col('Memberships.groupId')), 'numMembers']
-//             ]
-//         },
-//         include: [{
-//             model: Membership,
-//             attributes: []
-//         }, {
-//             model: Image,
-//             attributes: ['id', 'url', 'groupId']
-//         }, {
-//             model: User,
-//             as: 'Organizer',
-//             attributes: ['id', 'firstName', 'lastName']
-//         }, {
-//             model: Venue,
-//             attributes: ['id', 'groupId', 'address', 'city', 'state','lat','lng']
-//         }],
-//         group: ['Group.id','Images.id','Venues.id','Organizer.id']
-//     });
-//     return group;
-// }
+                [Sequelize.fn('COUNT', Sequelize.col('Memberships.groupId')), 'numMembers']
+            ]
+        },
+        include: [{
+            model: Membership,
+            attributes: []
+        }, {
+            model: Image,
+            attributes: ['id', 'url', 'groupId']
+        }, {
+            model: User,
+            as: 'Organizer',
+            attributes: ['id', 'firstName', 'lastName']
+        }, {
+            model: Venue,
+            attributes: ['id', 'groupId', 'address', 'city', 'state','lat','lng']
+        }],
+        group: ['Group.id','Images.id','Venues.id','Organizer.id']
+    });
+    return group;
+}
 
 module.exports = router;

@@ -51,7 +51,7 @@ export function updateGroup(id){
 
 //create new group
 export const createGroup = (group) => async dispatch =>{
-    const {name, about, type, isPrivate, city, state } = group;
+    const {name, about, type, isPrivate, city, state, imageUrl } = group;
   
     const response = await csrfFetch("/api/groups",{
       method: 'POST',
@@ -62,6 +62,7 @@ export const createGroup = (group) => async dispatch =>{
         private:isPrivate,
         city,
         state,
+        imageUrl
       }),
     })
     if(response.ok){
@@ -73,7 +74,7 @@ export const createGroup = (group) => async dispatch =>{
 
   //update a group
   export const updateGroupThunk = (group,groupId) => async dispatch =>{
-    const {name, about, type, isPrivate, city, state } = group;
+    const {name, about, type, isPrivate, city, state, imageUrl } = group;
    
     const response = await csrfFetch(`/api/groups/${groupId}`,{
       method: 'PUT',
@@ -84,6 +85,7 @@ export const createGroup = (group) => async dispatch =>{
         private:isPrivate,
         city,
         state,
+        imageUrl
       }),
     })
     if(response.ok){
