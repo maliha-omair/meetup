@@ -82,8 +82,7 @@ const validateUpdateEvent = [
 
 router.get("/", validateQueryParams, async (req, res, next) => {
    
-    let { page, size, name, type, startDate} = req.query;
-    
+    let { page, size, name, type, startDate} = req.query; 
     
     
     if(!page) page =0
@@ -151,6 +150,13 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
 
     const event = await Event.findByPk(eventId)
+    
+    await Image.destroy({
+        where: {
+            eventId: req.params.eventId
+        }
+    });   
+
     if(event){
         event.destroy();
         res.status(200);
@@ -159,7 +165,6 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
         });
     }
 });
-
 
 router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
     const eventId = parseInt(req.params.eventId);

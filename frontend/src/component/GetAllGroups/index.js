@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import image from "../../assets/groupDisplayImage.jpg"
 import * as groupActions from "../../store/groups";
-import Divider from "../Divider/Divider";
 import styles from "../GetAllGroups/GetAllGroups.module.css"
 
 export default function GetAllGroups(){
@@ -44,9 +43,17 @@ export default function GetAllGroups(){
                                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
                             </ul>
                             <div className={styles.subDiv}>                           
-                                <div>
-                                    <img src={image} className={styles.image}/>
-                                </div>
+                                { (group.Images && group.Images.length > 0) && ( 
+                                    <div>
+                                        <img src={group.Images[0].url} className={styles.image} alt="The image alt"/>
+                                    </div>
+                                )}
+                                { (!group.Images || group.Images.length===0)&&  ( 
+                                    <div>
+                                         <img src={image} className={styles.image}/>
+                                    </div>
+                                )}
+                                
                                 <div className={styles.groubDetailDiv}>
                                 
                                         <div className={styles.groupName}>

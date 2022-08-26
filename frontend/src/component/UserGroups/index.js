@@ -64,9 +64,18 @@ export default function UserGroups({sessionUser}){
                                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
                             </ul>
                             <div className={styles.subDiv}>                           
-                                <div>
+                               
+                                {(group.Images && group.Images.length > 0)&&(
+                                     <div>
+                                    <img src={group.Images[0].url} className={styles.image}/>
+                                    </div>
+                                )}
+                                 {(!group.Images || !group.Images.length > 0)&&(
+                                    <div>
                                     <img src={image} className={styles.image}/>
-                                </div>
+                                    </div>
+                                )}
+                                
                                 <div className={styles.groubDetailDiv}>
                                 
                                         <div className={styles.groupName}>
@@ -76,7 +85,7 @@ export default function UserGroups({sessionUser}){
                                             {group.city}, {group.state}
                                         </div>
                                         <div className={styles.about}>
-                                            {group.about.substring(1,200)}...
+                                            {group.about.substring(0,200)}...
                                         </div>
                                         <div className={styles.members}>
                                             {group.numMembers} members - {group.private ? `Private`: `Public`}

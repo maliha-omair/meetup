@@ -10,11 +10,9 @@
 .subDiv{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    padding:20px;
-    
-    
+    padding: 20px;   
 }
 
 .groubDetailDiv{
@@ -60,6 +58,6 @@
 }
 
 .image{
-    width: 178;
-    height: 100;
+    width: 178px;
+    height: 100px;
 }

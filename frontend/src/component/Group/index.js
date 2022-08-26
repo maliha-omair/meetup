@@ -59,9 +59,9 @@ export default function Group({sessionUser}){
         <div className={styles.main}>
             <div>
             <div>
-                    <ul>
-                        {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
-                    </ul>
+                <ul>
+                    {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
+                </ul>
             </div>
             
             <div className={styles.mainDiv}> 
@@ -69,7 +69,13 @@ export default function Group({sessionUser}){
                 
                 <div className={styles.groupDetail}>
                     <div className={styles.imageDiv}>
-                        <img src={image} className={styles.groupImage} alt="display"></img>
+                        {(group.Images && group.Images.length > 0)&&(
+                              <img src={group.Images[0].url} className={styles.groupImage} alt="display"></img>
+                        )}
+                         {(!group.Images || !group.Images.length > 0)&&(
+                              <img src={image} className={styles.groupImage} alt="display"></img>
+                        )}
+                      
                     </div>
                     
                     <div>
@@ -98,9 +104,7 @@ export default function Group({sessionUser}){
                      <div>
                         <nav className={styles.aboutEvent}>
                         <NavLink to={`/groups/${groupId}/about`} className={styles.about}>About</NavLink> 
-                        <NavLink to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink> 
-                        <NavLink to={`/groups/${groupId}/photos`} className={styles.event} >Photos</NavLink> 
-                        
+                        <NavLink to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink>                         
                         </nav>
                     </div>
                     {showManageGroup && 

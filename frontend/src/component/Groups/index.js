@@ -10,10 +10,11 @@ export function GroupsForm(){
     const [groupName,setGroupName] = useState("")
     const [about,setAbout] = useState("")
     const [isPrivate,setIsPrivate] = useState(false)
-    
     const [city,setCity] = useState("")
     const [state,setState] = useState("")
     const [type,setType] = useState("In person")
+    const [imageUrl,setImageUrl] = useState("")
+
     const [errors, setErrors] = useState([]);
     const sessionUser = useSelector(state => state.session.user)
     const history = useHistory()
@@ -31,9 +32,10 @@ export function GroupsForm(){
             isPrivate:isPrivate,
             city:city,
             type:type,
-            state:state
+            state:state,
+            imageUrl: imageUrl
         }
-        
+   
       setErrors([]);
       return dispatch(groupActions.createGroup(group)).then((res)=>{
         history.push("/profile");
@@ -84,6 +86,11 @@ export function GroupsForm(){
                 <div className={styles.innerDiv}>
                     <label className={styles.createGroupLabel}>State</label>
                     <input type="text" className={styles.input} value={state} onChange={((e)=>setState(e.target.value))}></input>   
+                </div>
+
+                <div className={styles.innerDiv}>
+                    <label className={styles.createGroupLabel}>Image Url</label>
+                    <input type="text" className={styles.input} value={imageUrl} onChange={((e)=>setImageUrl(e.target.value))}></input>   
                 </div>
                 <div className={styles.buttonDiv}>
                     <button type="submit" className={styles.formButton}>Continue</button>
