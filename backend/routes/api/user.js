@@ -54,7 +54,7 @@ router.get("/events", requireAuth, async (req, res, next) => {
                             attributes: ['id', 'firstName', 'lastName']
                         }
                     ],
-                    group: 'Organizer.id'
+                    group: 'organizerId'
                 },
                 {
                     model: Venue,
