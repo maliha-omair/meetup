@@ -16,9 +16,7 @@ export default function UpdateEvent({ sessionUser }){
     const [name,setName] = useState("")
     const [type,setType] = useState("In person")
     const [startDate,setStartDate] = useState("")
-    const [startTime,setStartTime] = useState("");
     const [endDate,setEndDate] = useState("");
-    const [endTime,setEndTime] = useState("");
     const [description,setDescription] = useState("");
     const [venueId,setVenueId] = useState("");
     const [errors, setErrors] = useState([]);
@@ -63,6 +61,8 @@ export default function UpdateEvent({ sessionUser }){
             setPrice(event.price)
             setDescription(event.description);
             setVenueId(event.venueId)
+            if(event.Images) setImageUrl(event.Images[0])
+           
         }
     },[event]);
 
