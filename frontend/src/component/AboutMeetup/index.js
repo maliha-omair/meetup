@@ -12,7 +12,7 @@ export default function AboutMeetup(){
                 <div className={styles.paragraph}>
                     Meetup is a platform for finding and building local communities. People use Meetup to meet new people, learn new things, find support, get out of their comfort zones, and pursue their passions, together.
                 </div>
-                <button className={styles.button} onClick={()=>history.push("/login")}> Join Meetup</button>
+                <button className={styles.button} onClick={()=>history.push("/signup")}> Join Meetup</button>
             </div>
             <div style={{ backgroundImage: `url(${image})` }}>
                 <img src={image}></img>
