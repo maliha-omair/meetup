@@ -91,7 +91,9 @@ const validateNewEvent = [
         .withMessage("Price is invalid"),
     check('description')
         .exists({ checkFalsy: false })
-        .withMessage("Description is required"),
+        .withMessage("Description is required")
+        .isLength({min:5, max:255})
+        .withMessage('Description must be beteen 5 and 255 characters'),
     check('startDate')
         .isISO8601()
         .isAfter()
@@ -642,7 +644,7 @@ async function getEventById(eventId){
                 attributes: ['id', 'eventId', 'url']
             }
         ],
-        group: ['Event.id','Images.id','Group.id','Venue.id']
+        group: ['Event.id','Images.id','Group.id','Venue.id','Group->Organizer.id']
     });
     return event;
 }
