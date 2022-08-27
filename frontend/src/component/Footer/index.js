@@ -28,30 +28,39 @@ export default function Footer({isLoaded}){
     }
 
     return(
+  
         <div className={styles.mainFooter}>
-            <div className={styles.container}>
-            <div className={styles.col}>
-                        <hr className={styles.divider}></hr>
+            
+            <div className={styles.footerHeader}>
+                Create your own Meetup group. <NavLink to="/createGroup"></NavLink>
+            </div>
+           
+            <div >
+                <div className={styles.container}>
+                <div className={styles.col}>
+                            <hr className={styles.divider}></hr>
+                        </div>
+                    <div className={styles.row}>
+                        
+                        {isLoaded && sessionLinks}
+                        
+                        <div className={styles.col}>
+                            <h3>Discover</h3>
+                            <NavLink to="/allGroups" className={styles.footerLink}>Groups</NavLink>                                     
+                        </div>
+                        
+                        <div className={styles.col}> 
+                            <h3>Meetup</h3>
+                            <NavLink to="/aboutMeetup" className={styles.footerLink}>About</NavLink>                                     
+                        </div>                   
                     </div>
-                <div className={styles.row}>
-                    
-                      {isLoaded && sessionLinks}
-                    
-                    <div className={styles.col}>
-                         <h3>Discover</h3>
-                        <NavLink to="/allGroups" className={styles.footerLink}>Groups</NavLink>                                     
+                    <div className={styles.copyright}>
+                        <div>
+                            @ 2022 Meetup 
+                        </div>
                     </div>
-                    
-                    <div className={styles.col}> 
-                        <h3>Meetup</h3>
-                        <NavLink to="/aboutMeetup" className={styles.footerLink}>About</NavLink>                                     
-                    </div>                   
                 </div>
-                <div className={styles.copyright}>
-                    <div>
-                        @ 2022 Meetup 
-                    </div>
-                </div>
+           
             </div>
         </div>
     )

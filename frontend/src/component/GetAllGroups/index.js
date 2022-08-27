@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import image from "../../assets/groupDisplayImage.jpg"
 import * as groupActions from "../../store/groups";
 import styles from "../GetAllGroups/GetAllGroups.module.css"
+import ListControl from '../ListControl';
 
 export default function GetAllGroups(){
     const dispatch = useDispatch();
@@ -31,17 +32,18 @@ export default function GetAllGroups(){
     }
 
     return(allGroups && (
-        <>            
-            <div className={styles.heading}>
-                <h1>Groups</h1>            
-            </div>
+        <>
+        <div className={styles.heading}>
+            <h1>Groups</h1>            
+        </div>
+        <ul>
+            {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
+        </ul>
+        <ListControl altMessage="Create group" elements={allGroups}>            
             {groupsArr.map((group,idx)=>{
                 return(
                     
                         <div className={styles.mainDiv} key={idx} value={group.id} onClick={()=>{handleClick(group.id)}}>  
-                            <ul>
-                                {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-                            </ul>
                             <div className={styles.subDiv}>                           
                                 { (group.Images && group.Images.length > 0) && ( 
                                     <div>
@@ -74,6 +76,7 @@ export default function GetAllGroups(){
                         </div>
                 )
             })}
+        </ListControl>
         </>
     ));
 

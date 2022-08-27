@@ -5,8 +5,10 @@
     padding-bottom: 40px;
     margin-top: 40px;
     bottom: 0;
+    max-width: 100%;
     position: relative;
     width:100%;
+
 }
 
 .footerLink{
@@ -17,7 +19,12 @@
     cursor: pointer;
     font-family: Roboto,Helvetica,Arial,sans-serif;
 }
-
+.footerHeader{
+    color:white;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+    
+}
 .container{
     display:flex;
     flex-direction: column;
@@ -47,3 +54,4 @@
     font-size: 13px;
 
 }
+

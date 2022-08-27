@@ -53,15 +53,15 @@ router.get("/events", requireAuth, async (req, res, next) => {
                             as: 'Organizer',
                             attributes: ['id', 'firstName', 'lastName']
                         }
-                    ],
-                    group: 'organizerId'
+                    ]
+                  
                 },
                 {
                     model: Venue,
                     attributes:['id','city','state']
                 }
             ],
-            group: ['Event.id','Images.id','Group.id','Venue.id']
+            group: ['Event.id','Images.id','Group.id','Venue.id','Group->Organizer.id']
         })
         res.status(200)
         res.json({Events: event})

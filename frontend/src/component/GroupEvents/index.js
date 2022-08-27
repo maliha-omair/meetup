@@ -4,6 +4,7 @@ import { useEffect, useInsertionEffect, useState } from "react";
 import * as eventActions from "../../store/events";                                               
 import { useDispatch,useSelector } from 'react-redux';
 import ListEvents from "../ListEvents";
+import ListControl from "../ListControl";
 
 export default function GroupEvents(){
     const dispatch = useDispatch()
@@ -27,12 +28,17 @@ export default function GroupEvents(){
 
     console.log(allEvents)
    
-    return(allEvents && (
-        <div className={styles.main}>
-           <ul>
-                {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-            </ul>
-            <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />
-        </div>
-    ))
+    return(
+        <ListControl altMessage="No events found" elements={allEvents}>
+            {
+            allEvents && (
+            <div className={styles.main}>
+            <ul>
+                    {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
+                </ul>
+                <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />
+            </div>
+            )}
+        </ListControl>
+    )
 }

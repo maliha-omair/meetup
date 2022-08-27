@@ -107,7 +107,7 @@ function App() {
           </Switch>
           )}
           
-          <div>
+          <div className="footer">
           <Footer isLoaded={isLoaded} />
           </div>
 

@@ -6,166 +6,175 @@ const {User,Group} = require('../models');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    let users = [];
-    let groups = [];
-    let events = [];
 
-    let email = "demo123@aa.com";
-    let userName = "demouser123";
-    users.push({
-      firstName: "Demo123",
-      lastName: "User123",
-      email: email,
-      username: userName,
-      hashedPassword: bcrypt.hashSync("demouser123")
-    });
     
-    users.push({
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      email: faker.internet.email(),
-      username: faker.internet.userName(),
-      hashedPassword: bcrypt.hashSync("secret1")
-    })
+    const t = await queryInterface.sequelize.transaction({autocommit:false});
+    try{
+      let users = [];
+      let groups = [];
+      let events = [];
 
-    users.push({
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      email: faker.internet.email(),
-      username: faker.internet.userName(),
-      hashedPassword: bcrypt.hashSync("secret1")
-    })
+      let email = "demo123@aa.com";
+      let username = "demouser123";
+      users.push({
+        firstName: "Demo123",
+        lastName: "User123",
+        email: email,
+        username: username,
+        hashedPassword: bcrypt.hashSync("demouser123")
+      });
+      
+      users.push({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        hashedPassword: bcrypt.hashSync("secret1")
+      })
 
-    await queryInterface.bulkInsert('Users',
-      users, {});
+      users.push({
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        email: faker.internet.email(),
+        username: faker.internet.userName(),
+        hashedPassword: bcrypt.hashSync("secret1")
+      })
 
-    const user = await User.findOne({
-      where: {
-          userName: userName,
-          email: email
-      },
-    });
-  
-    let groupName = faker.random.words(3);
-    groups.push({
-      name: groupName,
-      organizerId: user.id,
-      about: faker.lorem.words(70),
-      type: "In person",
-      private: true,
-      city: faker.address.cityName(),
-      state: faker.address.state()
-    })
+      await queryInterface.bulkInsert('Users',
+        users, { transaction: t });
 
-    groups.push({
-      name: faker.random.words(3),
-      organizerId: user.id,
-      about: faker.lorem.words(70),
-      type: "Online",
-      private: false,
-      city: faker.address.cityName(),
-      state: faker.address.state()
-    })
+      const user = await User.findOne({
+        where: {
+            username: username,
+            email: email
+        },  transaction: t
+      } );
     
-    groups.push({
-      name: faker.random.words(3),
-      organizerId: user.id,
-      about: faker.lorem.words(70),
-      type: "In person",
-      private: false,
-      city: faker.address.cityName(),
-      state: faker.address.state()
-    })
+      let groupName = faker.random.words(3);
+      groups.push({
+        name: groupName,
+        organizerId: user.id,
+        about: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        private: true,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
 
-    groups.push({
-      name: faker.random.words(3),
-      organizerId: user.id,
-      about: faker.lorem.words(70),
-      type: "Online",
-      private: true,
-      city: faker.address.cityName(),
-      state: faker.address.state()
-    })
+      groups.push({
+        name: faker.random.words(3),
+        organizerId: user.id,
+        about: faker.lorem.words(70).substring(0,254),
+        type: "Online",
+        private: false,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
+      
+      groups.push({
+        name: faker.random.words(3),
+        organizerId: user.id,
+        about: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        private: false,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
 
-    groups.push({
-      name: faker.random.words(3),
-      organizerId: user.id,
-      about: faker.lorem.words(70),
-      type: "Online",
-      private: false,
-      city: faker.address.cityName(),
-      state: faker.address.state()
-    })
+      groups.push({
+        name: faker.random.words(3),
+        organizerId: user.id,
+        about: faker.lorem.words(70).substring(0,254),
+        type: "Online",
+        private: true,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
+
+      groups.push({
+        name: faker.random.words(3),
+        organizerId: user.id,
+        about: faker.lorem.words(70).substring(0,254),
+        type: "Online",
+        private: false,
+        city: faker.address.cityName(),
+        state: faker.address.state()
+      })
 
 
-    await queryInterface.bulkInsert('Groups',
-      groups, {});
+      await queryInterface.bulkInsert('Groups',
+        groups, { transaction: t });
 
-    const group = await Group.findOne({
-      where: {
-          organizerId: user.id
-      },
-    });
-  
-   
-        
-    events.push({
-      groupId: group.id,
-      venueId: null,
-      name:  faker.random.words(3),
-      description: faker.lorem.words(70),
-      type: "In person",
-      capacity: 100,
-      price: 10.2,
-    })
+      const group = await Group.findOne({
+        where: {
+            organizerId: user.id
+        },  transaction: t 
+      });
+    
+    
+          
+      events.push({
+        groupId: group.id,
+        venueId: null,
+        name:  faker.random.words(3),
+        description: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        capacity: 100,
+        price: 10.2,
+      })
 
-    events.push({
-      groupId: group.id,
-      venueId: null,
-      name:  faker.random.words(3),
-      description: faker.lorem.words(70),
-      type: "In person",
-      capacity: 100,
-      price: 10.2,
-    })
+      events.push({
+        groupId: group.id,
+        venueId: null,
+        name:  faker.random.words(3),
+        description: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        capacity: 100,
+        price: 10.2,
+      })
 
-    events.push({
-      groupId: group.id,
-      venueId: null,
-      name:  faker.random.words(3),
-      description: faker.lorem.words(70),
-      type: "In person",
-      capacity: 100,
-      price: 10.2,
-    })
+      events.push({
+        groupId: group.id,
+        venueId: null,
+        name:  faker.random.words(3),
+        description: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        capacity: 100,
+        price: 10.2,
+      })
 
-    events.push({
-      groupId: group.id,
-      venueId: null,
-      name:  faker.random.words(3),
-      description: faker.lorem.words(70),
-      type: "In person",
-      capacity: 100,
-      price: 10.2,
-    })
+      events.push({
+        groupId: group.id,
+        venueId: null,
+        name:  faker.random.words(3),
+        description: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        capacity: 100,
+        price: 10.2,
+      })
 
-    events.push({
-      groupId: group.id,
-      venueId: null,
-      name:  faker.random.words(3),
-      description: faker.lorem.words(70),
-      type: "In person",
-      capacity: 100,
-      price: 10.2,
-    })
+      events.push({
+        groupId: group.id,
+        venueId: null,
+        name:  faker.random.words(3),
+        description: faker.lorem.words(70).substring(0,254),
+        type: "In person",
+        capacity: 100,
+        price: 10.2,
+      })
 
-    await queryInterface.bulkInsert('Events',
-      events, {});
+      await queryInterface.bulkInsert('Events',
+        events, { transaction: t });
+      await t.commit();
+    }catch(error){
+      await t.rollback();
+      throw error;
+    }
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Users', null, {});
-    await queryInterface.bulkDelete('Groups', null, {});
     await queryInterface.bulkDelete('Events', null, {});
+    await queryInterface.bulkDelete('Groups', null, {});
+    await queryInterface.bulkDelete('Users', null, {});
   }
 };

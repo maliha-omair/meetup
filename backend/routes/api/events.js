@@ -413,7 +413,7 @@ async function getEventById(eventId){
                 attributes: ['id', 'groupId', 'url']
             }
         ],
-        group: ['Event.id','Images.id','Group.id','Venue.id']
+        group: ['Event.id','Images.id','Group.id','Venue.id','Group->Organizer.id']
     });
     return event;
 }

@@ -1,6 +1,7 @@
 /* TODO Add site wide styles */
 body{
     margin: 0px;
+    max-width:100%;
 }
 
 .page-container{
@@ -11,5 +12,13 @@ body{
 
 .content-wrap{
     flex:1
+}
+
+.footer{
+    display:flex;
+    flex-direction: row;
+    max-width: 100%;
+    min-height: 30vh;
+    background-color: black;
 }
 

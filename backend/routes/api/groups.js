@@ -565,7 +565,7 @@ router.get("/:groupId/events", async (req, res, next) => {
                 attributes:['id','city','state']
             }
         ],
-        group: ['Event.id','Images.id','Group.id','Venue.id','Oraganizer.Id']
+        group: ['Event.id','Images.id','Group.id','Venue.id','Group->Organizer.id']
     })
     res.status(200)
     res.json({Events: event})

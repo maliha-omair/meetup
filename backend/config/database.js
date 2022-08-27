@@ -20,5 +20,13 @@ module.exports = {
         rejectUnauthorized: false
       }
     }
+  },
+  devpostgres: {
+    use_env_variable: 'DATABASE_URL',
+    dialect: 'postgres',
+    seederStorage: 'sequelize',
+    dialectOptions: {
+    },
+    logging: console.log
   }
 };
