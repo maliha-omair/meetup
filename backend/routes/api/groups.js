@@ -303,41 +303,6 @@ router.delete("/:groupId", requireAuth, async (req, res, next) => {
 
     if (!group) groupNotFoundError(req, res, next);
     
-    await Image.destroy({
-        where: {
-            groupId: req.params.groupId
-        }
-    });
-    
-    await Event.destroy({
-        where: {
-            groupId: req.params.groupId
-        }
-    });    
-
-
-    const allVenues = await Venue.findAll({
-        where: {
-            groupId: req.params.groupId
-        }
-    });
-
-    for(let i=0;i<allVenues.length;i++){
-        await Event.destroy({
-            where: {
-                venueId: allVenues[i].id
-            }
-        });    
-    }
-
-
-
-    await Venue.destroy({
-        where: {
-            groupId: req.params.groupId
-        }
-    });
-    
     await group.destroy();
     
     res.json({

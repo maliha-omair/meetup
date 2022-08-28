@@ -16,6 +16,7 @@ module.exports = {
           },
           key: 'id'
         },
+        onDelete: 'CASCADE',
       },
       venueId: {
         type: Sequelize.INTEGER,
@@ -25,6 +26,7 @@ module.exports = {
           },
           key: 'id'
         },
+        onDelete: 'SET NULL',
       },
       name: {
         type: Sequelize.STRING
