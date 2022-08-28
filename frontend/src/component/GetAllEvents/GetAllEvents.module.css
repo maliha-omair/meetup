@@ -19,17 +19,16 @@
 .event{
     padding-right:30px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 20px;
-    color: #757575;
-    text-decoration: none;
+    color:#008294;
+    border-bottom: 3px solid ;
 }
 
 .group{
-    color:#008294;
-    border-bottom: 3px solid ;
+
 }
 
 .links{
     text-decoration: none;
     color: #757575;
+
 }

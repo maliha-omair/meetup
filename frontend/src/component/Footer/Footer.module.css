@@ -1,4 +1,156 @@
-.mainFooter{
+.mainDiv{
+    color:white;
+    max-width:80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.top{
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    min-width: 100%;
+    padding-top:15px;
+}
+
+.topButton{
+    padding-left:10px;
+}
+.button{
+    text-decoration: none;
+    color: white;
+    border: 2px solid;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size:14px;
+    font-weight: bold;
+    margin:2px;
+    padding:7px;
+    border-radius: 3px;;
+}
+.middle{
+    display: flex;
+    flex-direction: row;
+    padding-top:35px;
+    padding-bottom:35px;
+        
+}
+
+.hr{
+    max-width:100%;
+    min-width: 100%;
+    border-top:0;
+    border-left:0;
+    border-right:0;
+    padding-top: 15px;
+}
+
+.social{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.discover{
+    padding-left:400px;
+    padding-right: 400px;
+}
+
+.bottom{
+    display:flex;
+    flex-direction: column;
+    min-width:100%
+    
+}
+
+
+
+.fb{
+    padding-right:10px;
+}
+.twitter{
+    padding-right:10px;
+}
+.youtube{
+    padding-right:10px;
+}
+.instagram{
+    padding-right:10px;
+}
+.topText{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+.copyright{
+    display:flex;
+    flex-direction: column;
+    min-width:100%;
+    padding-top:30px;
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+}
+
+.footerLink{
+    text-decoration: none;
+    color:#C5C4C4;
+    cursor: pointer;
+    padding-top:5px;    
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size:12px;
+}
+.footerLink:hover{
+    color: grey;
+}
+
+.linkHeading{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.discoverText{
+
+}
+
+.groupDiv{
+    padding-top: 7px;
+}
+
+
+
+.yourAccount{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+.subNavLink{
+    display:flex;
+    flex-direction: column;
+
+}
+
+.icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left;
+    padding-top:10px;
+}
+.faicon{
+    color:white;
+    text-decoration: none;
+    
+}
+/* .mainFooter{
     color: white;
     background-color: black;
     padding-top: 40px;
@@ -54,4 +206,4 @@
     font-size: 13px;
 
 }
-
+ */

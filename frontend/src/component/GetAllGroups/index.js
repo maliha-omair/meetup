@@ -1,10 +1,12 @@
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import image from "../../assets/groupDisplayImage.jpg"
 import * as groupActions from "../../store/groups";
 import styles from "../GetAllGroups/GetAllGroups.module.css"
 import ListControl from '../ListControl';
+import ListGroups from "../ListGroups"
+import Divider from '../Divider/Divider';
 
 export default function GetAllGroups(){
     const dispatch = useDispatch();
@@ -32,52 +34,24 @@ export default function GetAllGroups(){
     }
 
     return(allGroups && (
+      
         <>
-        <div className={styles.heading}>
-            <h1>Groups</h1>            
-        </div>
-        <ul>
-            {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-        </ul>
-        <ListControl altMessage="Create group" elements={allGroups}>            
-            {groupsArr.map((group,idx)=>{
-                return(
-                    
-                        <div className={styles.mainDiv} key={idx} value={group.id} onClick={()=>{handleClick(group.id)}}>  
-                            <div className={styles.subDiv}>                           
-                                { (group.Images && group.Images.length > 0) && ( 
-                                    <div>
-                                        <img src={group.Images[0].url} className={styles.image} alt="The image alt"/>
-                                    </div>
-                                )}
-                                { (!group.Images || group.Images.length===0)&&  ( 
-                                    <div>
-                                         <img src={image} className={styles.image}/>
-                                    </div>
-                                )}
-                                
-                                <div className={styles.groubDetailDiv}>
-                                
-                                        <div className={styles.groupName}>
-                                            {group.name}
-                                        </div>
-                                        <div className={styles.city}>
-                                            {group.city}, {group.state}
-                                        </div>
-                                        <div className={styles.about}>
-                                            {group.about.substring(0,200)}...
-                                        </div>
-                                        <div className={styles.members}>
-                                            {group.numMembers} members - {group.private ? `Private`: `Public`}
-                                        </div>       
-                                </div>                                   
-                            </div>                           
-                    
-                        </div>
-                )
-            })}
-        </ListControl>
-        </>
+        <div className={styles.main}>
+            <div>
+            <ul>
+                {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
+            </ul>
+            </div>
+            <div className={styles.pageHeading}>
+                    <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events</NavLink></div><div className={styles.group}>Groups</div>
+            </div>
+            <ListControl altMessage="Create group" elements={allGroups}>            
+                  <ListGroups groups={allGroups}/>
+            </ListControl>    
+            </div>
+            </>
+
+      
     ));
 
 }

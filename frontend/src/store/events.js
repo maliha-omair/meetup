@@ -2,9 +2,9 @@ import { csrfFetch } from "./csrf"
 
 const SET_CURRENT_EVENT = "events/setCurrentEvent"
 const SET_GROUP_EVENTS = "events/getGroupEvents"
-const SET_USER_EVENTS = "events/getUserEvents"
+const SET_EVENTS = "events/setEvents"
 const DELETE_EVENT = "event/deleteEvent"
-const UPDATE_EVENT = 'event/updateEvent';
+// const UPDATE_EVENT = 'event/updateEvent';
 
 const setGroupEvents=(events)=>{
     return{
@@ -13,12 +13,13 @@ const setGroupEvents=(events)=>{
     }
 }
 
-const setUserEvents=(events)=>{
+const setEvents=(events)=>{
     return{
-        type: SET_USER_EVENTS,
+        type: SET_EVENTS,
         payload: events
     }
 }
+
 
 const setCurrentEvent=(curr_event)=>{
     return{
@@ -32,12 +33,25 @@ const deleteEvent = () =>{
     }
 }
 
-export function updateEvent(id){
-    return{
-      type: UPDATE_EVENT,
-      payload: id
+// export function updateEvent(id){
+//     return{
+//       type: UPDATE_EVENT,
+//       payload: id
+//     }
+// }
+
+ //get all events
+ export const getAllPublicEventsThunk = () => async dispatch => { 
+    const response = await csrfFetch("/api/events",{
+      method:'GET'
+    })
+    
+    if(response.ok){
+      const data = await response.json();
+      dispatch(setEvents(data));
+      return response;
     }
-}
+  }
 
 export const getGroupEventsThunk = (groupId) => async dispatch => {
     const response = await csrfFetch(`/api/groups/${groupId}/events`,{
@@ -59,7 +73,7 @@ export const getUserEventsThunk = () => async dispatch => {
 
     if(response.ok){
         const data = await response.json();
-        dispatch(setUserEvents(data));
+        dispatch(setEvents(data));
         return response;
     }
 }
@@ -149,7 +163,7 @@ const eventReducer = (state = initialState, action) => {
             newState = {...state};
             newState.events = action.payload.Events;
             return newState;
-        case SET_USER_EVENTS:
+        case SET_EVENTS:
                 newState = {...state};
                 newState.events = action.payload.Events;
                 return newState;

@@ -1,82 +1,30 @@
-.mainDiv{
-    display:flex;
-    flex-direction: row;
+
+.main{
+   
     max-width:80%;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-.heading{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-width:80%;
-}
-
-.divHeading{
-    display:flex;
-    flex-direction: row;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 40px;
-    padding-bottom: 60px;
-    font-weight: bold;;
-}
-    
-
-
-.eventHeading{
-    display:flex;
-    flex-direction: row;
-    max-width: 80%;
-    
-}
-
-.subDiv{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: stretch;
-    padding: 20px;
-    align-content: space-between;  
-}
-
-.groubDetailDiv{
     display: flex;
     flex-direction: column;
-    padding-left:20px;
-    padding-right:20px;
-    width: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageHeading{
+    display: flex;
+    flex-direction: row;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    min-width: 640px;
+    font-size: 20px;
+    font-weight: bold; 
     
 }
-
-.groupName{
+.event{
+    padding-right:30px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 20px;
-    font-weight: bold;
+    color: #757575;
 }
 
-.city{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 14px;
-}
-
-.about{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding-top:20px;
-}
-
-.members{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding-top:20px;
-}
-
-
-.image{
-    width: 178px;
-    height: 100px;
+.group{
+    color:#008294;
+    border-bottom: 3px solid ;
 }

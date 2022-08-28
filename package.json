@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/maliha-omair/API-project/issues"
   },
-  "homepage": "https://github.com/maliha-omair/API-project#readme"
+  "homepage": "https://github.com/maliha-omair/API-project#readme",
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.1.2"
+  }
 }

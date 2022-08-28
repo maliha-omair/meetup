@@ -5,6 +5,7 @@ import * as groupActions from "../../store/groups";
 import styles from "../UserGroups/UserGroups.module.css"
 import image from "../../assets/groupDisplayImage.jpg"
 import ListControl from "../ListControl";
+import ListGroups from "../ListGroups";
 
 export default function UserGroups({sessionUser}){
     // const sessionUser = useSelector(state => state.session.user);
@@ -19,8 +20,6 @@ export default function UserGroups({sessionUser}){
             history.push("/")
         }   
     },[]);
-
-    let groupsArr = [];
     
     useEffect(()=>{
         dispatch(groupActions.getUserGroups())
@@ -33,11 +32,7 @@ export default function UserGroups({sessionUser}){
         });       
     },[dispatch])
 
-    function handleClick(groupId){
-        console.log("value from div",groupId);
-        history.push(`/groups/${groupId}`)        
-    }
-
+  
 
     return (
         <>
@@ -48,13 +43,14 @@ export default function UserGroups({sessionUser}){
         <ListControl altMessage="No group found" elements={userGroups? Object.values(userGroups): null}>
             {
                 userGroups && (
-                <div>          
-                    <div className={styles.heading}>
-                        <div className={styles.divHeading}>
+                <div className={styles.main}>          
+                    <div className={styles.pageHeading}>
+                        <div className={styles.group}>
                             Your Groups         
                         </div>
                     </div>
-                    {Object.values(userGroups).map((group,idx)=>{
+                    <ListGroups groups={userGroups}/>
+                    {/* {Object.values(userGroups).map((group,idx)=>{
                         return(
                                 <div className={styles.mainDiv} key={idx} value={group.id} onClick={()=>{handleClick(group.id)}}>  
                                     <div className={styles.subDiv}>                           
@@ -89,7 +85,7 @@ export default function UserGroups({sessionUser}){
                             
                                 </div>
                         )
-                    })}
+                    })} */}
                 </div>
             )}
             </ListControl>

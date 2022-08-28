@@ -1,11 +1,180 @@
 .main{
+    display: flex;
+    flex-direction: column;
+    max-width:90%;
+    justify-content: center;
+    align-items: center;
+}
+
+.groupDetail{
+    display: flex;
+    flex: row;  
+    padding-left: 200px; 
+    
+}
+
+.title{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 24px;
+    color: #212121;
+    font-weight: bold;
+}
+
+.navItems{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left;
+   
+}
+
+.navigationMenu{
+    display:flex;
+    flex-direction: row;
+    align-items: left;
+    
+   /* / max-width: 100%; */
+    /* min-width: 80%; */
+}
+
+.cityState{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: #212121;
+    font-size: 14px;
+}
+
+.groupImage{
+    display:flex;
+    width: 600px;
+    height: 376px;
+    border-radius: 10px
+}
+
+.organized{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: #212121;
+    font-size: 14px;
+}
+
+.members{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: #212121;
+    font-size: 14px;
+}
+
+.detailText{
+    display: flex;
+    flex-direction: column;
+    padding-left:20px;
+}
+
+.divider{
+    min-width: 100%;
+    color: rgb(128, 128, 128,0.1);
+}
+
+.about{
+    text-decoration: none;    
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding: 0px 40px 0px 0px;
+    font-size: 16px;
+    color: #2E3E48;
+    cursor: pointer;    
+}
+
+.about:focus{
+    color: #007aff;
+}
+
+.about:hover{
+    color: rgb(151, 202, 209);
+ }
+
+
+.event{
+    text-decoration: none;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding: 0px 40px 0px 0px;
+    font-size: 16px;
+    color: #2E3E48;
+    cursor: pointer;
+}
+
+.event:hover{
+    color: rgb(151, 202, 209);
+ }
+
+.update{
+    text-decoration: none;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding: 0px 40px 0px 0px;
+    font-size: 16px;
+    color: #2E3E48;
+    cursor: pointer;
+}
+.update:hover{
+    color: rgb(151, 202, 209);
+ }
+
+.delete{
+    text-decoration: none;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding: 0px 40px 0px 0px;
+    font-size: 16px;
+    color: #2E3E48;
+    cursor: pointer;
+}
+
+.delete:hover{
+    color: rgb(151, 202, 209);
+ }
+
+.groupDesc{
+    max-width: 800px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:#212121;
+    font-size: 16px;
+    padding-bottom: 45px;
+}
+
+.createEvent{
+    color: white;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    background-color:#f65858;  
+    margin-right: 20px;  
+    padding-left:10px;
+}
+
+.createEvent:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:white;
+    cursor: pointer;
+}
+
+.createVenue{
+    color: white;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    background-color:#f65858;    
+    padding-left:10px;
+}
+
+.createVenue:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:white;
+    cursor: pointer;
+}
+
+
+/* .main{
     display:flex;
     width: 80%;
     justify-content: center;
-    /* align-items: center; */
+
     justify-content: flex-end;
-    /* align-items: center; */
-    /* align-content: stretch; */
+
+
 }
 
 .mainDiv{
@@ -142,7 +311,7 @@
 .innerMenu{
     display: flex;
     flex-direction: row; 
-    /* align-items: left; */    
+
 }
 
 .tabs{
@@ -200,13 +369,6 @@
 .dropDown{
     
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    cursor: pointer;
-   
-    /* z-index: 52; */
-    /* border: 1px solid white; */
-   
-   
-   
+    cursor: pointer; 
     
-    
-  }
+  } */
