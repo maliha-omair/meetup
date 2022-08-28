@@ -150,12 +150,6 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
     if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
 
     const event = await Event.findByPk(eventId)
-    
-    await Image.destroy({
-        where: {
-            eventId: req.params.eventId
-        }
-    });   
 
     if(event){
         event.destroy();
@@ -163,6 +157,8 @@ router.delete("/:eventId", requireAuth, async (req,res,next)=>{
         res.json({
             "message": "Successfully deleted"
         });
+    }else{
+        return eventNotFoundError(req,res,next)
     }
 });
 

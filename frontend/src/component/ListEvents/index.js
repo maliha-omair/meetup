@@ -55,9 +55,7 @@ export default function ListEvents({events, currentUser}){
                             <div className={styles.name}>{event.name}</div>
                             <div className={styles.discription}>{event.description} ...</div>
                             <div className={styles.numAttending}>{event.numAttending} attendee</div>
-                        </div>
-                        
-                           
+                        </div>                       
                     </div>
                 )
             })}

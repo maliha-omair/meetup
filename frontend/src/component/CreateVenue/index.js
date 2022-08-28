@@ -10,8 +10,8 @@ export default function CreateVenue({ sessionUser}){
     const [address,setAddress] = useState("")
     const [city,setCity] = useState("")
     const [state,setState] = useState("")
-    const [lat,setLat] = useState()
-    const [lng,setLng] = useState()
+    const [lat,setLat] = useState("")
+    const [lng,setLng] = useState("")
     const [errors, setErrors] = useState([]);
     
     const dispatch = useDispatch();   

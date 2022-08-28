@@ -25,6 +25,7 @@ import CreateEvent from "./component/CreateEvent";
 import CreateVenue from "./component/CreateVenue";
 import UpdateEvent from "./component/UpdateEvent";
 import UserEvents from "./component/UserEvents";
+import GetAllEvents from "./component/GetAllEvents";
 
 
 function App() {
@@ -77,6 +78,9 @@ function App() {
             <Route path="/allGroups">
               <GetAllGroups/>
             </Route>
+            <Route path="/allEvents">
+              <GetAllEvents />
+            </Route>
             <Route path="/events/:eventId/update">
                 <UpdateEvent sessionUser={sessionUser}/>
             </Route>
@@ -108,7 +112,7 @@ function App() {
           )}
           
           <div className="footer">
-          <Footer isLoaded={isLoaded} />
+          <Footer sessionUser={sessionUser} />
           </div>
 
         </div>
