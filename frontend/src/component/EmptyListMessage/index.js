@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import emptyGroups from '../../assets/EmptyGroups.svg';
-import emptyEvents from '../../assets/EmptyGroups.svg';
+// import emptyEvents from '../../assets/EmptyGroups.svg';
+import emptyEvents from '../../assets/NoAttending.svg';
 import styles from "../EmptyListMessage/EmptyListMessage.module.css"
 
 export default function EmptyListMessage({listType}){
