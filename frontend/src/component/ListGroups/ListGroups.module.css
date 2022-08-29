@@ -7,6 +7,13 @@
     max-width: 640px;
     margin-top: 0 auto;
 }
+
+.divider{
+    display: block; height: 1px;
+    border: 0; border-top: 1px solid rgba(177, 177, 177,0.6);
+    margin: 1em 0; padding: 0;
+}
+
 .imageDivList{
     margin-right: 40px;
     margin-top: 0 auto;

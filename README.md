@@ -1,17 +1,17 @@
-# Meetup Clone
+# Meetup Clone (Mulaqat)
 
-## API Guide
+# About Mulaqat
 
-Read [API Guide](./backend/API-docs-Meetup.md) 
+Mulaqat is a web application inspired by Meetup, that is a platform for finding and building local communities. 
 
-## Misc Commnas
+Read [Click here to view Mulaqat live site] (https://mo-meetup.herokuapp.com/)
 
-### Heroku
+## Please see below links to project Wiki:
 
-- see details about all postgres databases: `heroku pg:info`
-- to drop and recreate database: `heroku pg:reset`
-- run migrations on heroku `heroku run npm run sequelize db:migrate`
-- run seed on heroku `heroku run npm run sequelize db:seed:all` 
+[Feature List](https://github.com/maliha-omair/meetup/wiki/Features/_edit) 
 
-### Run tests
-- `npx dotenv npm test`
+[Database Schema](https://github.com/maliha-omair/meetup/wiki/Database-schema-image.) 
+
+[API Routes](https://github.com/maliha-omair/meetup/wiki/API-Documentation) 
+
+[Redux Store State Shape](https://github.com/maliha-omair/meetup/wiki/Redux-State-Shape---meetup) 

@@ -51,7 +51,7 @@ export default function LoginFormPage(){
                     <div className="login-top">                            
                         <img src={smallLogo} alt="logo" className="logo-login"/>
                         <h1 className="login-title">Log in</h1>
-                        <div className="not-a-member-login">Not a member yet? <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div>
+                        <div className="not-a-member-login"><span className="notMember">Not a member yet?</span> <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div>
                     </div>
                     <ul>
                         {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}

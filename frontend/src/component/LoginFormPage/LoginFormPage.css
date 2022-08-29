@@ -26,6 +26,11 @@
     border-radius: 130px;
 }
 
+.notMember{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 16px;
+}
+
 .li-login{
     color:red;
     text-align: left;

@@ -33,6 +33,7 @@ export default function ListEvents({events, currentUser}){
            
             {events.map((event,index)=>{
                 return(
+                    <>
                     <div className={styles.middleDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
                     
                     {(!event.Images || !event.Images.length >0) &&( 
@@ -50,10 +51,13 @@ export default function ListEvents({events, currentUser}){
                             <div className={styles.name}>{event.name}</div>
                             <div className={styles.discription}>{event.description} ...</div>
                             <div className={styles.numAttending}>{event.numAttending} attendee</div>
-                        </div>
-                        
-                           
+                        </div>                       
+                          
                     </div>
+                    <div>
+                    <hr className={styles.divider}></hr>
+                    </div>
+                    </>
                 )
             })}
         </div>

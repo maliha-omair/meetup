@@ -52,6 +52,11 @@ export default function ListGroups({groups}){
                         </div>
                         <div className={styles.membersList}> {group.numMembers} members - {group.private ? `Private`: `Public`} </div>
                     </div>
+                    
+
+                </div>
+                <div>
+                    <hr className={styles.divider}></hr>
                 </div>
             </div>        
                 )

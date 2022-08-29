@@ -17,8 +17,9 @@
     display:flex; 
     justify-content: center;
     align-items: center;
-    height:100px;
-    width:100px;   
+    padding-top: 10px;
+    height:35px;
+    width:95px;   
 }
 .container-image{
     background-color: white;
@@ -38,7 +39,8 @@
     text-decoration: none;     
     font-family: Roboto,Helvetica,Arial,sans-serif;
     color:black;
-    font-size: .875rem;
+    font-size: 16px;
+    color:#212121;
     font-style:normal;
     font-weight: 550;
  }

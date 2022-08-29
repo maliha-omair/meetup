@@ -61,22 +61,6 @@ export default function Footer({sessionUser}){
             </div>
 
             
-            <div className={styles.bottom}>
-                <div>
-                    <div className={styles.social}>
-                        FollowUs             
-                    </div>    
-                    <div className={styles.icons}>
-                        <div className={styles.fb}><NavLink  className={styles.faicon} to="https://www.facebook.com/meetup/"><FontAwesomeIcon icon={faFacebook}/></NavLink></div>
-                        <div className={styles.twitter}><NavLink  className={styles.faicon} to="https://twitter.com/Meetup/"><FontAwesomeIcon  icon={faTwitter}/></NavLink></div>
-                        <div className={styles.youtube}><NavLink  className={styles.faicon} to="https://www.youtube.com/meetup"><FontAwesomeIcon  icon={faYoutube}/></NavLink></div>
-                        <div className={styles.instagram}><NavLink className={styles.faicon} to="https://www.instagram.com/meetup/"><FontAwesomeIcon  icon={faInstagram}/></NavLink></div>
-                        <div className={styles.tiktok}><NavLink  className={styles.faicon} to="https://www.tiktok.com/@meetup"><FontAwesomeIcon  icon={faTiktok}/></NavLink></div>
-                    </div>
-                </div>
-                
-            </div>
-
             <div className={styles.copyright}>
                 <div className="">@  2022  Meetup </div>                                
             </div>
