@@ -85,7 +85,7 @@ export default function Event(){
                     <nav>
                         <NavLink className={styles.about} to={`/events/${eventId}/about`} >About</NavLink> 
                     </nav>
-                   {(seesionUser && sessionUser.id === event.Group.organizerId) &&
+                   {(sessionUser && sessionUser.id === event.Group.organizerId) &&
                     <nav className={styles.deleteEvent}>
                         <NavLink to={`/events/${eventId}/update`} className={styles.update}>Update</NavLink>
                         <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
