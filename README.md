@@ -15,3 +15,5 @@ Read [Click here to view Mulaqat live site] (https://mo-meetup.herokuapp.com/)
 [API Routes](https://github.com/maliha-omair/meetup/wiki/API-Documentation) 
 
 [Redux Store State Shape](https://github.com/maliha-omair/meetup/wiki/Redux-State-Shape---meetup) 
+
+[Feature Directions](https://github.com/maliha-omair/meetup/wiki/Features-Directions) 
