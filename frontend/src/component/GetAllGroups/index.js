@@ -34,9 +34,11 @@ export default function GetAllGroups(){
                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
             </ul>
             </div>
-            <div className={styles.pageHeading}>
-                    <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events</NavLink></div><div className={styles.group}>Groups</div>
-            </div>
+             <div className={styles.pageHeading}>
+                <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events</NavLink></div><div className={styles.group}>Groups</div>
+             </div>
+           
+            
             <ListControl altChildren={<EmptyListMessage listType="groups"/>} elements={allGroups}>            
                   <ListGroups groups={allGroups}/>
             </ListControl>    
