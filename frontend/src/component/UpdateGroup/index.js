@@ -20,6 +20,8 @@ export default function UpdateGroup(){
     const params = useParams();
     const group  = useSelector(state => state.group.group);
     const groupTypeOptions = ["In person","Online"];
+    
+    
     useEffect(()=>{
         dispatch(groupActions.getGroupByIdThunk(groupId))
     },[dispatch])
@@ -65,57 +67,61 @@ export default function UpdateGroup(){
     }
 
     return (group && (
-        <form onSubmit={handleSubmit} className={styles.main}>
-            <div className={styles.subMain}>
-                <div className={styles.signup}>
-                    <img src={smallLogo} alt="logo" className={styles.logo} />
-                    <h1 className="login-title-signup">Update Group</h1>    
-                </div>
-                <div className={styles.innerDiv}>
+        <form onSubmit={handleSubmit} >
+            <div className={styles.body}>
+                <div className={styles.centerBody}>
+                    <div className={styles.heading}>
+                        Update Group
+                        <div className={styles.subHeading}>{group.name}</div>
+                        <hr></hr>
+                    </div>
                     <ul>
                         {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
                     </ul>
-                </div>
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>Name</label>
-                    <input type="text" className={styles.input} value={groupName} onChange={((e)=>setGroupName(e.target.value))}></input>   
-                </div>
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>About</label>
-                    <textarea className={styles.textArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
-                </div>
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>Type</label>
-                    <select  className={styles.inputOption} value={type} onChange={(e)=>setType(e.target.value)}>
-                        {
-                            groupTypeOptions.map((opt, index) =>(
-                                <option key={index} value={opt}   className={styles.inputOption} >{opt}</option>
-                            ))
-                        }
-                    </select>                    
-                </div>
-                <div className={styles.innerDivPrivate}>
-                    <label className={styles.createGroupLabel}>Private</label>
-                    <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
-                </div>
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>City</label>
-                    <input type="text" className={styles.input} value={city}  onChange={((e)=>setCity(e.target.value))}></input>   
-                </div>
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>State</label>
-                    <input type="text" className={styles.input} value={state} onChange={((e)=>setState(e.target.value))}></input>   
-                </div>
+                    
+                    <div className={styles.inputDiv}>
+                        <label className={styles.label}>Name</label>
+                        <input type="text" className={styles.titleTextArea}  value={groupName} onChange={(e)=>setGroupName(e.target.value)} />
+                    </div>
+                    <div className={styles.inputDiv}>
+                         <label className={styles.label}>About</label>
+                         <textarea className={styles.titleTextArea} rows="4" cols="33" value={about} onChange={((e)=>setAbout(e.target.value))}></textarea>   
+                     </div>
+                     <div className={styles.inputDiv}>
+                        <label className={styles.label}>Type</label>
+                        <select  className={styles.titleTextArea} value={type} onChange={(e)=>setType(e.target.value)}>
+                             {
+                                 groupTypeOptions.map((opt, index) =>(
+                                     <option key={index} value={opt}   className={styles.inputOption} >{opt}</option>
+                                ))
+                             }
+                        </select>                    
+                    </div>
+                    <div className={styles.inputPrivateDiv}>
+                        <input type="checkbox" className={styles.inputPrivate} checked={isPrivate} onChange={(e)=>setIsPrivate(!isPrivate)}></input>   
+                        &nbsp;<label className={styles.label}>Private</label>
+                        
+                     </div>
+                     <div className={styles.inputDiv}>
+                        <label className={styles.label}>City</label>
+                        <input type="text" className={styles.titleTextArea} value={city}  onChange={((e)=>setCity(e.target.value))}></input>   
+                    </div>
+                    <div className={styles.inputDiv}>
+                        <label className={styles.label}>State</label>
+                        <input type="text" className={styles.titleTextArea} value={state} onChange={((e)=>setState(e.target.value))}></input>   
+                    </div>
+                    <div className={styles.inputDiv}>
+                        <label className={styles.label}>Image Url</label>
+                        <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={((e)=>setImageUrl(e.target.value))}></input>   
+                    </div>
 
-                <div className={styles.innerDiv}>
-                    <label className={styles.createGroupLabel}>Image Url</label>
-                    <input type="text" className={styles.input} value={imageUrl} onChange={((e)=>setImageUrl(e.target.value))}></input>   
+                    <div className={styles.inputDiv}>
+                        <button type="submit"  className={styles.updateGroup}>Update</button>
+                    </div>
+                    <br></br>
                 </div>
-
-                <div className={styles.buttonDiv}>
-                    <button type="submit" className={styles.formButton}>Update</button>
-                </div>
-            </div>           
+            </div>
         </form>
+        
     ));
 }

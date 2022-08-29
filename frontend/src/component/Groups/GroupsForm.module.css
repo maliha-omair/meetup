@@ -1,169 +1,84 @@
-.main{
-    text-align: center;
-    justify-content: center;
-    display:flex;
+.body{
+
+    background-color: #F5F5F5;
+    margin-top:-50px;
     
-    /* padding: 20px 20px 20px 20px; */
-    background-color: white;
-    padding-bottom: 20px;
+    min-width: 100%
 }
-
-.subMain{
-    display: flex;
-    flex-direction: column;
-    
-    justify-content: center;
-    align-items: center;
-    height: 750px;
-    /* width: 25%; */
-    min-width: 350px;
-    padding:0px 50px 0px 50px;
-    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
-    
-    border-radius: 8px;
-    background-color: white;
-
-}
-
-.signup{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.logo{
-    height:50px;
-    width:50px;
-    border-radius: 130px;
-}
-.login{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 24px;
-}
-
-.textArea{    
-    height: 100px;
-    resize: none;
-    width:250px;
-    vertical-align: baseline;
-    border-radius: 0.5rem;
-    border-color: rgba(44,42,42,0.2);
-    justify-content: center;
-}
-
-.textArea:focus{
-    outline: none !important;
-    border-color:rgba(59,130,246,.5);
-    height: 100px;
-    resize: none;
-    width:250px;
-    vertical-align: baseline;
-    border-radius: 0.5rem;
-    justify-content: center;
-}
-
-.input{
-    width: 250px;
-    height: 30px;
-    border-radius: 0.5rem;
-    border-color: rgba(230,230,230,0.2);
-    justify-content: center;
-}
-
-.inputOption{
-    width: 250px;
-    height: 30px;
-    border-radius: 0.5rem;
-    border-color: rgba(0, 0, 0, 0.1);
-    justify-content: center;
-}
-
-.input:focus{
-    outline: none !important;
-    border-color:rgba(59,130,246,.5);
-}
-
-.createGroupLabel{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    text-align: left;
+.centerBody{
+    max-width:700px;
+    margin:0 auto;
+    vertical-align: middle;
     
 }
-
-.formButton{
-    align-items: center;
-    justify-content: center; 
-    width:255px;
-    height:35px;
-    border-radius: 8px;
-    background-color:#f65858;    
+.heading{
+    font-size: 25px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    color:white;
-    font-size:20px;    
-    border:none;
-}
-
-.formButton:hover{
-    background-color:rgba(246, 88, 88,0.8);    
-    cursor: pointer;
-}
-
-.buttonDiv{
-    display: flex;
-    padding-top: 20px;
-}
-
-.innerDiv{
-    display: grid;
-    grid-template-rows: auto;
-    margin: 8px;
-    text-align: left;
+    padding-top:20px;
+    font-weight: bold;
 }
 
 .errorMessageLi{
-    color:red;
-}
-
-.innerDivPrivate{
-    display:flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin: 8px;    
+    color: #f65858;
+    text-align:left;
 }
 
 
-
-/* .error-message-signup{
-    color:red;
+.label{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;;
 }
 
-.login-button-signup{
+.inputDiv{
+    display: flex;
+    flex-direction: column;
+    padding-top:20px;
+}
+
+.titleTextArea{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    border-radius: 8px;
+    border-color: rgba(230,230,230,.5);
+    font-size: 14px;
+}
+
+.titleTextArea:focus{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
+.titleTextArea:hover{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
+.updateGroup{
     align-items: center;
     justify-content: center; 
     width:255px;
-    height:35px;
+    height:45px;
     border-radius: 8px;
     background-color:#f65858;
-    
     color:white;
     font-size:20px;
-    
     border:none;
 }
-.login-button-div-signup{
-    display: flex;
-    padding-top: 20px;
-}
-.email-div-signup{
-    display:flex;
-    flex-direction: column;    
-    justify-content: left;  
+
+.updateGroup:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Helvetica, Arial, Sans-Serif;
+    cursor: pointer;
+   
 }
 
-.sub-div-signup{
-    display: grid;
-    grid-template-rows: auto;
-    margin: 8px;
-} */
+.inputPrivateDiv{
+    padding-top: 20px;
+   
+}
+
+.inputPrivate{
+    cursor: pointer;
+    align-items: left;
+    justify-content: left;
+    margin:0;
+}

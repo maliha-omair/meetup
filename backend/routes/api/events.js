@@ -182,7 +182,8 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
                 },
                 limit:1
             });
-            if(image){ const newImage = await Image.update({ url:imageUrl })}
+            if(image){ 
+                await image.update({ url:imageUrl })}
             else {
                 const newImage = await Image.create({
                     url:imageUrl,
@@ -193,7 +194,8 @@ router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
         }
         await e.save();
         res.status(200)
-        res.json(getEventById(eventId))      
+        const result = await getEventById(eventId);
+        res.json(result)      
     } else {
         return notAuthorizedErr(req, res, next)
     }

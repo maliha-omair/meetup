@@ -31,11 +31,11 @@ const validateNewGroup = [
         .isIn([true, false])
         .withMessage('Private must be a boolean'),
     check('city')
-        .exists({ checkFalsy: false })
-        .withMessage("City is required"),
+        .exists({ checkFalsy: true })
+        .withMessage("City is required"),        
     check('state')
-        .exists({ checkFalsy: false })
-        .withMessage("State is required"),
+        .exists({ checkFalsy: true })
+        .withMessage("state is required"),
     check('imageUrl')
         .optional({checkFalsy: true})
         .isURL()
@@ -46,13 +46,13 @@ const validateNewGroup = [
 
 const validateNewVenue = [
     check('address')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("Street address is required"),
     check('city')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("City is required"),
     check('state')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("State is required"),
     check('lat')
         .isFloat({ min: -90, max: 90 })
@@ -96,7 +96,7 @@ const validateNewEvent = [
         .isNumeric()
         .withMessage("Event fee is invalid"),
     check('description')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("Description is required")
         .isLength({min:5, max:255})
         .withMessage('Description must be beteen 5 and 255 characters'),
@@ -151,8 +151,9 @@ router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
     });
 
 
-    res.status(201)
-    res.json(getGroupById(newGroup.id))
+    res.status(201);
+    let result = await getGroupById(newGroup.id); 
+    res.json(result);
 
 });
 
@@ -313,7 +314,8 @@ router.put("/:groupId", validateNewGroup, requireAuth, async (req, res, next) =>
         }
     }
     res.status(200);
-    res.json(getGroupById(groupId))
+    var r = await getGroupById(groupId);
+    res.json(r)
 });
 
 router.delete("/:groupId", requireAuth, async (req, res, next) => {
@@ -586,7 +588,8 @@ router.post("/:groupId/events", requireAuth,validateNewEvent, async (req,res,nex
         })
 
         res.status(200);
-        res.json(getEventById(newEvent.id))        
+        const result = await getEventById(newEvent.id);
+        res.json(result);        
     } else {
         return notAuthorizedErr(req, res, next)
     }    
