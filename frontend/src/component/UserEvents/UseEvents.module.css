@@ -1,7 +1,0 @@
-.main{
-    display: grid;
-    grid-template-columns: 1fr;
-    padding-top: 20px;
-    width:80%;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-}

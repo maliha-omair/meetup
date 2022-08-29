@@ -32,7 +32,7 @@ export default function ListEvents({events, currentUser}){
         <div className={styles.main}>
             <div>
                 <div className={styles.eventsHeading}>
-                    Events
+                   Your events
                 </div>
             </div>
             <div className={styles.subDiv}>
@@ -41,13 +41,13 @@ export default function ListEvents({events, currentUser}){
                     <div className={styles.middleDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
                     
                     {(!event.Images || !event.Images.length >0) &&( 
-                        <div >
-                            <img src={image} className={styles.displayImage}></img>
+                        <div className={styles.displayImage}>
+                            <img src={image} className={styles.image}></img>
                         </div>
                     )}  
                     {(event.Images && event.Images.length>0) &&( 
-                        <div >
-                            <img src={event.Images[0].url} className={styles.displayImage}></img>
+                        <div className={styles.displayImage}>
+                            <img src={event.Images[0].url} className={styles.image}></img>
                         </div>
                     )}  
                         <div className={styles.listEvents}>     
@@ -55,7 +55,9 @@ export default function ListEvents({events, currentUser}){
                             <div className={styles.name}>{event.name}</div>
                             <div className={styles.discription}>{event.description} ...</div>
                             <div className={styles.numAttending}>{event.numAttending} attendee</div>
-                        </div>                       
+                        </div>
+                        
+                           
                     </div>
                 )
             })}

@@ -21,7 +21,7 @@ export default function Group({sessionUser}){
     const params = useParams();
     let groupId = params.groupId;
     
-    const group  = useSelector(state => state.group.currentGroup);
+    const group  = useSelector(state => state.group.group);
         
     const dispatch = useDispatch();
     
@@ -74,7 +74,7 @@ export default function Group({sessionUser}){
                 </div>
                 <div className={styles.detailText}>
                     <div className={styles.title}> {group.name}</div>
-                    <div className={styles.cityState}> <i class='fas fa-map-marker-alt'></i> {group.city}, {group.state}</div>
+                    <div className={styles.cityState}> <i className='fas fa-map-marker-alt'></i> {group.city}, {group.state}</div>
                     <div className={styles.members}> {group.numMembers} members - {group.private ? `Private`: `Public`}</div>
                     <div className={styles.organized}>Organized by <b> {group.Organizer.firstName}  {group.Organizer.lastName.charAt(0)}.</b></div>
                 </div>
@@ -85,15 +85,15 @@ export default function Group({sessionUser}){
             <div className={styles.navigationMenu}>
                 <div className={styles.navItems}>
                     <nav className={styles.aboutEvent}>
-                        <NavLink className={styles.about} to={`/groups/${groupId}/about`} className={styles.about}>About</NavLink> 
-                        <NavLink className={styles.event}  to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink>     
+                        <NavLink className={styles.about} to={`/groups/${groupId}/about`} classgit >About</NavLink> 
+                        <NavLink className={styles.event}  to={`/groups/${groupId}/events`} >Events</NavLink>     
                     </nav>
                 
                 
                 {showManageGroup && 
                    <nav>
-                        <NavLink className={styles.update} to={`/groups/${groupId}/update`} className={styles.update}> Update</NavLink> 
-                        <NavLink className={styles.delete} to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
+                        <NavLink className={styles.update} to={`/groups/${groupId}/update`} > Update</NavLink> 
+                        <NavLink className={styles.delete} to="#" onClick={()=>handleDelete()} >Delete</NavLink>
                         <NavLink to="/event/new" >                                
                             <button className={styles.createEvent} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                         </NavLink>

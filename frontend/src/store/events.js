@@ -1,17 +1,18 @@
 import { csrfFetch } from "./csrf"
 
-const SET_CURRENT_EVENT = "events/setCurrentEvent"
-const SET_GROUP_EVENTS = "events/getGroupEvents"
-const SET_EVENTS = "events/setEvents"
-const DELETE_EVENT = "event/deleteEvent"
-// const UPDATE_EVENT = 'event/updateEvent';
+const CLEAR_STATE = "event/clear"
+const SET_EVENT = "event/setEvent"
+const SET_EVENTS = "event/setEvents"
+const REMOVE_EVENT = "event/removeEvent"
+const REMOVE_EVENTS = "event/removeEvents"
 
-const setGroupEvents=(events)=>{
-    return{
-        type: SET_GROUP_EVENTS,
-        payload: events
-    }
+
+const clearState=(events)=>{
+  return{
+      type: CLEAR_STATE
+  }
 }
+
 
 const setEvents=(events)=>{
     return{
@@ -21,24 +22,25 @@ const setEvents=(events)=>{
 }
 
 
-const setCurrentEvent=(curr_event)=>{
+const setEvent=(curr_event)=>{
     return{
-        type: SET_CURRENT_EVENT,
+        type: SET_EVENT,
         payload: curr_event
     }
 }
-const deleteEvent = () =>{
+
+const removeEvent = () =>{
     return {
-      type: DELETE_EVENT
+      type: REMOVE_EVENT
     }
 }
 
-// export function updateEvent(id){
-//     return{
-//       type: UPDATE_EVENT,
-//       payload: id
-//     }
-// }
+const removeEvents = () =>{
+  return {
+    type: REMOVE_EVENTS
+  }
+}
+
 
  //get all events
  export const getAllPublicEventsThunk = () => async dispatch => { 
@@ -48,6 +50,7 @@ const deleteEvent = () =>{
     
     if(response.ok){
       const data = await response.json();
+      dispatch(clearState());
       dispatch(setEvents(data));
       return response;
     }
@@ -60,7 +63,8 @@ export const getGroupEventsThunk = (groupId) => async dispatch => {
 
     if(response.ok){
         const data = await response.json();
-        dispatch(setGroupEvents(data));
+        dispatch(clearState());
+        dispatch(setEvents(data));
         return response;
     }
 }
@@ -73,6 +77,7 @@ export const getUserEventsThunk = () => async dispatch => {
 
     if(response.ok){
         const data = await response.json();
+        dispatch(clearState());
         dispatch(setEvents(data));
         return response;
     }
@@ -85,7 +90,8 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
 
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentEvent(data));
+        dispatch(clearState());
+        dispatch(setEvent(data));
         return response;
     }
 } 
@@ -110,7 +116,7 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentEvent(null));
+        dispatch(clearState());
         return response;
     }    
   }
@@ -122,7 +128,7 @@ export const deleteEventThunk = (eventId)=> async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(deleteEvent());
+        dispatch(clearState());
         return response;
     }
   }
@@ -145,7 +151,7 @@ export const createNewEventThunk = (event) => async dispatch => {
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentEvent(null));
+        dispatch(clearState());
         return response;
     }    
 }
@@ -155,24 +161,26 @@ const initialState = {};
 const eventReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case SET_CURRENT_EVENT:
-            newState = {...state};
-            newState.currentEvent = action.payload;
-            return newState;     
-        case SET_GROUP_EVENTS:
-            newState = {...state};
-            newState.events = action.payload.Events;
-            return newState;
-        case SET_EVENTS:
-                newState = {...state};
-                newState.events = action.payload.Events;
-                return newState;
-        case DELETE_EVENT:
-            newState = {...state};
-            newState.currentEvent = null;
-            return newState;
-        default:
-            return state;
+      case SET_EVENT:
+        newState = {...state};
+        newState.event = action.payload;
+        return newState;     
+      case SET_EVENTS:
+        newState = {...state};
+        newState.events = action.payload.Events;
+        return newState;
+      case REMOVE_EVENT:
+        newState = {...state};
+        newState.event = null;
+        return newState;
+      case REMOVE_EVENTS:
+        newState = {...state};
+        newState.events = null;
+        return newState;
+      case CLEAR_STATE:
+        return initialState;
+      default:
+      return state;
     }
   };
 

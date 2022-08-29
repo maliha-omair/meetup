@@ -1,6 +1,6 @@
 import { csrfFetch } from './csrf';
 import { useDispatch} from 'react-redux';
-import {removerUserGroups} from "../store/groups"
+import {removeGroups} from "../store/groups"
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -75,7 +75,7 @@ export const logout = () => async (dispatch) => {
       method: 'DELETE',
     });
     dispatch(removeUser());
-    dispatch(removerUserGroups())
+    dispatch(removeGroups())
     
     return response;
 };

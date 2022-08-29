@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
-const {User,Group} = require('../models');
+const {User,Group, Venue} = require('../models');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -102,8 +102,23 @@ module.exports = {
       })
 
 
+
       await queryInterface.bulkInsert('Groups',
         groups, { transaction: t });
+
+      const allGroups = await Group.findAll({ transaction: t });
+      for(let i=0;i<allGroups.length;i++){
+        const newVenue = await Venue.create({
+          groupId: allGroups[i].id,
+          address:"Online",
+          city:"N/A",
+          state:"N/A",
+          lat:0,
+          lng:0
+        }, { transaction: t });
+      }
+  
+
 
       const group = await Group.findOne({
         where: {
@@ -173,6 +188,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Venues', null, {});
     await queryInterface.bulkDelete('Events', null, {});
     await queryInterface.bulkDelete('Groups', null, {});
     await queryInterface.bulkDelete('Users', null, {});

@@ -46,11 +46,12 @@
     font-size: 14px;
 }
 
-.image{
-    max-width: 220px;
-    max-height: 220px;
-}
-/* .main{
+.img{
+    max-width: 120px;
+    max-height: 120px;
+} 
+
+ .main{
    
     max-width:80%;
     display: flex;
@@ -89,4 +90,4 @@
 .group{
     color:#008294;
     border-bottom: 3px solid ;
-} */
+}

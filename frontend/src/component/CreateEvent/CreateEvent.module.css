@@ -61,6 +61,18 @@
     border-color:rgba(59,130,246,.5);
 }
 
+.venue{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    border-radius:8px;
+    height: 22px;    
+    border-color: rgba(230,230,230,.5);
+}
+
+.venue:focus{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
 .dateTime{
     display:flex;
     flex-direction: row;

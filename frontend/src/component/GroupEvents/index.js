@@ -5,6 +5,7 @@ import * as eventActions from "../../store/events";
 import { useDispatch,useSelector } from 'react-redux';
 import ListEvents from "../ListEvents";
 import ListControl from "../ListControl";
+import EmptyListMessage from "../EmptyListMessage";
 
 export default function GroupEvents(){
     const dispatch = useDispatch()
@@ -26,14 +27,13 @@ export default function GroupEvents(){
         });
     },[dispatch, groupId])
 
-    console.log(allEvents)
    
     return(
-        <ListControl altMessage="No events found" elements={allEvents}>
+        <ListControl altChildren={<EmptyListMessage listType="events"/>} elements={allEvents}>
             {
             allEvents && (
             <div className={styles.main}>
-            <ul>
+                <ul>
                     {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
                 </ul>
                 <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />

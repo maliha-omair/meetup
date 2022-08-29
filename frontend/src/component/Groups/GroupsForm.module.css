@@ -5,6 +5,7 @@
     
     /* padding: 20px 20px 20px 20px; */
     background-color: white;
+    padding-bottom: 20px;
 }
 
 .subMain{
@@ -15,6 +16,7 @@
     align-items: center;
     height: 750px;
     /* width: 25%; */
+    min-width: 350px;
     padding:0px 50px 0px 50px;
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
     
@@ -87,6 +89,7 @@
     font-weight: 700;
     font-family: Roboto,Helvetica,Arial,sans-serif;
     text-align: left;
+    
 }
 
 .formButton{
@@ -116,6 +119,7 @@
     display: grid;
     grid-template-rows: auto;
     margin: 8px;
+    text-align: left;
 }
 
 .errorMessageLi{
@@ -125,7 +129,8 @@
 .innerDivPrivate{
     display:flex;
     flex-direction: row;
-    
+    align-items: flex-start;
+    margin: 8px;    
 }
 
 

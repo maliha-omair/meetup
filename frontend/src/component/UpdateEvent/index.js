@@ -24,8 +24,8 @@ export default function UpdateEvent({ sessionUser }){
     const [capacity,setCapacity] = useState(0);
     const [price,setPrice] = useState(0);
    
-    const event  = useSelector(state => state.event.currentEvent);
-    const currentGroup  = useSelector(state => state.group.currentGroup);
+    const event  = useSelector(state => state.event.event);
+    const currentGroup  = useSelector(state => state.group.group);
     
     const history = useHistory()
     const dispatch = useDispatch();   

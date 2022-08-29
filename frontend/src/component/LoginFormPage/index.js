@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory} from 'react-router-dom';
 import smallLogo from "../../assets/meetup-logo.png"
 import * as sessionActions from '../../store/session';
-import { Redirect } from 'react-router-dom';
 import "./LoginFormPage.css"
 
 export default function LoginFormPage(){

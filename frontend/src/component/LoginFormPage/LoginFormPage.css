@@ -4,31 +4,28 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    
-    /* width: x; */
-    /* padding: 20px 20px 20px 20px; */
-    
-    
+    padding-bottom:20px;   
 }
+
 .sub-main-login{
     display: flex;
     flex-direction: column;    
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     height: 600px;    
     box-shadow: 8px 8px 8px 8px rgb(207,207,207);
     padding-top: 0px;
     padding-left: 40px;
     padding-right: 40px;
-    border-radius: 8px;
-    
-
+    border-radius: 8px;   
 }
+
 .logo-login{
     height:50px;
     width:50px;
     border-radius: 130px;
 }
+
 .li-login{
     color:red;
     text-align: left;
@@ -77,7 +74,7 @@
 }
 .login-button-div{
     display: flex;
-    padding-top: 20px;
+    padding-top:15px;
 }
 
 .not-a-amember-login{
@@ -94,7 +91,7 @@
 .login-sub-div{
     display: grid;
     grid-template-rows: auto;
-    margin: 10px;
+    /* margin: 10px; */
 }
 .login-top{
     display: flex;

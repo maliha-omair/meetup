@@ -46,10 +46,16 @@
     font-size: 14px;
 }
 
-.image{
-    max-width: 220px;
-    max-height: 220px;
+.imageDiv{
+    max-width: 200px;
 }
+
+.image{
+    max-width: 120px;
+    max-height: 120px;
+}
+
+
 /* .main{
    
     max-width:80%;

@@ -7,31 +7,23 @@ import styles from "../GetAllGroups/GetAllGroups.module.css"
 import ListControl from '../ListControl';
 import ListGroups from "../ListGroups"
 import Divider from '../Divider/Divider';
+import EmptyListMessage from '../EmptyListMessage';
 
 export default function GetAllGroups(){
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
-    const allGroups = useSelector(state => state.group.allGroups);
+    const allGroups = useSelector(state => state.group.groups);
     const history = useHistory();
     
     let groupsArr = [];
     
     useEffect(()=>{
-        dispatch(groupActions.getGroups())        
+        dispatch(groupActions.getAllGroupsThunk())        
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
         });
-    },[dispatch])   
-
-    if(!allGroups){
-        return null; 
-    }else{
-        groupsArr = Object.values(allGroups);
-    }
-    function handleClick(groupId){      
-        history.push(`/groups/${groupId}`)        
-    }
+    },[dispatch]);   
 
     return(allGroups && (
       
@@ -45,7 +37,7 @@ export default function GetAllGroups(){
             <div className={styles.pageHeading}>
                     <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events</NavLink></div><div className={styles.group}>Groups</div>
             </div>
-            <ListControl altMessage="Create group" elements={allGroups}>            
+            <ListControl altChildren={<EmptyListMessage listType="groups"/>} elements={allGroups}>            
                   <ListGroups groups={allGroups}/>
             </ListControl>    
             </div>

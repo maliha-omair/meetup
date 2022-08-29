@@ -1,73 +1,84 @@
 .main{
-    display:flex;
-    flex-direction: column;
+    margin:auto;
+}
 
-    justify-content: center;
-    align-items: center;
-    justify-content: flex-end;
-    align-items: center;
-    align-content: stretch;
-    max-width:80%;
-    margin: 0 auto;
+.eventsHeading{
+    font-size: 30px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight:bold;
+    letter-spacing: -1px;
+}
+
+.name{
+    color: #212121;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight:bold;
+    padding-bottom: 5px;;
+}
+
+.description{
+    color: #757575;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;  
+    
+   
+}
+
+.numAttending{
+    font-size: 14px;
+    color: #757575;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    padding-top: 20px;
 }
 
 .subDiv{
     display:flex;
     flex-direction: column;
+    min-width: 800px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    /* max-width: 200px; */
+    /* align-items: center; */
 }
 
 .middleDiv{
     display:flex;
     flex-direction: row;
-}
-.eventsHeading{
-    font-size: 40px;
-    font-weight: bold;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-
-}
-.displayImage{
-    width:200px;
-    height:200px;
-}
-
-.listEvents{
-    display: flex;
-    flex-direction: column;
-    padding-left: 20px;
-    padding-bottom: 20px;
-    max-width:60%;
-    margin: 0 ;
-    
+    padding-bottom:20px;
     
 }
 
 .date{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-}
-
-.name{
-    font-family:Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
-    font-weight: bold;
-    padding-bottom: 20px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: #757575;
+    padding-bottom: 5px;
 }
 
-.discription{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-    color:#757575;
+.body{
+    min-width:100%;
+    background-color: #F5F5F5;
+    padding-top: 40px;
+    align-items: center;
+    justify-content: center;
+}
+.middle{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    padding-bottom:10px;
+   
 }
 
-.numAttending{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-    padding-top:20px;
-    color:#757575;
+.image{
+    border-radius: 8px;
+    width: 180px;
+    height: 180px;
 }
 
-.loginUserFeatures{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    
+.displayImage{
+    /* width: 200px; */
+    /* height: 200px;   */
+    padding-right:20px;
 }
+

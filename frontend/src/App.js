@@ -48,7 +48,7 @@ function App() {
     
       <div className="page-container">
         <div className = "content-wrap">
-          <Navigation isLoaded={isLoaded}/>          
+          <Navigation isLoaded={isLoaded} className="navigationStyle"/>          
           {isLoaded && (
           <Switch>
             <Route exact path="/">

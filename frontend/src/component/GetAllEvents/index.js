@@ -6,6 +6,7 @@ import styles from "../GetAllEvents/GetAllEvents.module.css"
 import ListControl from '../ListControl';
 import ListEvents from '../ListEvents';
 import ListPublicEvents from '../ListPublicEvents/ListPublicEvents';
+import EmptyListMessage from '../EmptyListMessage';
 
 export default function GetAllEvents(){
     const dispatch = useDispatch();
@@ -44,8 +45,9 @@ export default function GetAllEvents(){
             <div className={styles.pageHeading}>
                     <div className={styles.event}>Events</div><div className={styles.group}><NavLink className={styles.links} to="/allGroups">Groups</NavLink></div>
             </div>
-            <ListControl altMessage="Create group" elements={allEvents}>    
-                  <ListPublicEvents events={allEvents}></ListPublicEvents>                          
+            <ListControl altChildren={<EmptyListMessage listType="groups" />} elements={allEvents}>
+                <ListEvents events={allEvents} />    
+                {/* <ListPublicEvents events={allEvents}></ListPublicEvents>                           */}
             </ListControl>    
             </div>
             </>

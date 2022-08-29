@@ -7,8 +7,6 @@ import styles from "../ListGroups/ListGroups.module.css"
 
 
 export default function ListPublicEvents({events}){
-    const dispatch = useDispatch();
-    const [errors, setErrors] = useState([]);
     const allEvents = events;
     const history = useHistory();
     
@@ -31,17 +29,18 @@ export default function ListPublicEvents({events}){
            <div>
             {eventsArr.map((event,idx)=>{
                 return(
+
             <div key={idx} value={event.id} onClick={()=>{handleClick(event.id)}} className={styles.body}>  
                 
                 <div className={styles.middleList}>
                     <div className={styles.imageDivList}> 
                             { (event.Images && event.Images.length > 0) && ( 
-                            <div >
-                                <img src={event.Images[0].url} className={styles.event}  alt="The image alt"/>
+                            <div className={styles.imageDiv} >
+                                <img src={event.Images[0].url} className={styles.image}  alt="The image alt"/>
                             </div>
                             )}
                             { (!event.Images || event.Images.length===0)&&  ( 
-                                <div>
+                                <div className={styles.imageDiv}>
                                         <img src={image} className={styles.image}/>
                                 </div>
                             )}
@@ -50,7 +49,7 @@ export default function ListPublicEvents({events}){
                         <div className={styles.titleList}> {event.startDate}</div>
                         <div className={styles.titleList}> {event.name}</div>
                         <div> <p className={styles.paragraphList}> {event.description.substring(0,200)}... </p></div>
-                        {/* <div className={styles.membersList}> {group.numMembers} members - {group.private ? `Private`: `Public`} </div> */}
+                      
                     </div>
                 </div>
             </div>        

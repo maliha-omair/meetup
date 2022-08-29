@@ -26,7 +26,6 @@ module.exports = {
           },
           key: 'id'
         },
-        onDelete: 'SET NULL',
       },
       name: {
         type: Sequelize.STRING

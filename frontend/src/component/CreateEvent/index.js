@@ -18,31 +18,24 @@ export default function CreateEvent({ sessionUser}){
     
     const [capacity,setCapacity] = useState("");
     const [price,setPrice] = useState("");
-    const currentGroup = useSelector(state => state.group.currentGroup);
+    const currentGroup = useSelector(state => state.group.group);
     
     
     const history = useHistory()
     const dispatch = useDispatch();   
   
-    // if(!sessionUser || !currentGroup){
-    //     console.log(sessionUser,currentGroup)
-    //     history.push("/")
-    // }
+    useEffect(()=>{
+        if(currentGroup && currentGroup.Venues.length > 0){
+            setVenueId(currentGroup.Venues[0].id)
+           
+        }
+    },[currentGroup]);
+
 
     function handleSubmit(e){ 
         e.preventDefault();
         setErrors([]);
-        // let error = [];
-        // if(!capacity || !Number.isInteger(capacity) )
-        // {   
-        //     error.push("Capacity must be an integer")
-        // }
-        // if(!price || !isNaN(price)){
-        //     error.push("Price is invalid")
-        // }
-        // if(!description)error.push("Description is required")
-        // if(error.length > 0) return setErrors(error)
-
+    
         const groupId = currentGroup.id;
         const event ={
             groupId,
@@ -91,7 +84,7 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>Start Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" className={styles.date}  value={startDate} onChange={(e)=>setStartDate(e.target.value)}/>
+                                <input type="datetime-local" min={new Date().toLocaleDateString()} className={styles.date}  value={startDate} onChange={(e)=>setStartDate(e.target.value)}/>
                             </div>
                             
                         </div>                        
@@ -134,15 +127,18 @@ export default function CreateEvent({ sessionUser}){
                         <input type="text" className={styles.amountDiv} value={price} onChange={(e)=>setPrice(e.target.value)} />
                     </div>
 
-                    <select className={styles.inputDiv} value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
-                        {(
-                            Object.values(currentGroup.Venues).map((ele,index)=>{
-                                return(
-                                    <option key={index} value={ele.id} className={styles.inputOption}>{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
-                                )
-                            })
-                        )}
-                    </select>
+                    <div className={styles.inputDiv}>
+                    <label className={styles.label}>Venue </label>
+                        <select className={styles.venue}  value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
+                            {(
+                                Object.values(currentGroup.Venues).map((ele,index)=>{
+                                    return(
+                                        <option className={styles.venue} key={index} value={ele.id} >{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
+                                    )
+                                })
+                            )}
+                        </select>
+                    </div>    
                     
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Image Url</label>

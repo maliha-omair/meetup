@@ -16,7 +16,7 @@ export default function CreateVenue({ sessionUser}){
     
     const dispatch = useDispatch();   
     const params = useParams()
-    const currentGroup = useSelector(state => state.group.currentGroup);
+    const currentGroup = useSelector(state => state.group.group);
     const history = useHistory()
 
     const groupId = params.groupId;

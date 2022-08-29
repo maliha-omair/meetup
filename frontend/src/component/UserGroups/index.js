@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useHistory, Redirect, NavLink} from "react-router-dom"
 import * as groupActions from "../../store/groups";
 import styles from "../UserGroups/UserGroups.module.css"
-import image from "../../assets/groupDisplayImage.jpg"
 import ListControl from "../ListControl";
 import ListGroups from "../ListGroups";
+import EmptyListMessage from "../EmptyListMessage";
 
 export default function UserGroups({sessionUser}){
-    // const sessionUser = useSelector(state => state.session.user);
-    const userGroups = useSelector(state => state.group.userGroups);
+    const userGroups = useSelector(state => state.group.groups);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history= useHistory();
@@ -22,7 +21,7 @@ export default function UserGroups({sessionUser}){
     },[]);
     
     useEffect(()=>{
-        dispatch(groupActions.getUserGroups())
+        dispatch(groupActions.getUserGroupsThunk())
         .then((res)=>{
             console.log("response from geting current users groups",res)
         })
@@ -40,7 +39,7 @@ export default function UserGroups({sessionUser}){
                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
             </ul>
 
-        <ListControl altMessage="No group found" elements={userGroups? Object.values(userGroups): null}>
+        <ListControl altChildren = {<EmptyListMessage listType="groups"/>} elements={userGroups? Object.values(userGroups): null}>
             {
                 userGroups && (
                 <div className={styles.main}>          
@@ -49,43 +48,8 @@ export default function UserGroups({sessionUser}){
                             Your Groups         
                         </div>
                     </div>
-                    <ListGroups groups={userGroups}/>
-                    {/* {Object.values(userGroups).map((group,idx)=>{
-                        return(
-                                <div className={styles.mainDiv} key={idx} value={group.id} onClick={()=>{handleClick(group.id)}}>  
-                                    <div className={styles.subDiv}>                           
-                                    
-                                        {(group.Images && group.Images.length > 0)&&(
-                                            <div>
-                                            <img src={group.Images[0].url} className={styles.image}/>
-                                            </div>
-                                        )}
-                                        {(!group.Images || !group.Images.length > 0)&&(
-                                            <div>
-                                            <img src={image} className={styles.image}/>
-                                            </div>
-                                        )}
-                                        
-                                        <div className={styles.groubDetailDiv}>
-                                        
-                                                <div className={styles.groupName}>
-                                                    {group.name}
-                                                </div>
-                                                <div className={styles.city}>
-                                                    {group.city}, {group.state}
-                                                </div>
-                                                <div className={styles.about}>
-                                                    {group.about.substring(0,200)}...
-                                                </div>
-                                                <div className={styles.members}>
-                                                    {group.numMembers} members - {group.private ? `Private`: `Public`}
-                                                </div>       
-                                        </div>                                   
-                                    </div>                           
-                            
-                                </div>
-                        )
-                    })} */}
+                <ListGroups groups={userGroups}/>
+                
                 </div>
             )}
             </ListControl>

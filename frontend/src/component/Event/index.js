@@ -6,11 +6,11 @@ import image from "../../assets/eventById.png"
 import styles from "../Event/Event.module.css"
 import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
 import {deleteEventThunk} from "../../store/events"
+import AboutEvent from "../AboutEvent";
 
 export default function Event(){
-    const event = useSelector(state=> state.event.currentEvent);
+    const event = useSelector(state=> state.event.event);
     const sessionUser = useSelector(state=> state.session.user);
-    const [errors, setErrors] = useState([]);
     const params = useParams();
     const eventId = params.eventId;
     const dispatch = useDispatch();
@@ -18,50 +18,35 @@ export default function Event(){
    
 
     useEffect(()=>{
-        dispatch(eventActions.getEventByIdThunk(eventId))
-        .catch(async (res) => {
-            const data = await res.json();
-            if (data && data.errors) setErrors(Object.values(data.errors));
-        });
+        dispatch(eventActions.getEventByIdThunk(eventId));
     },[dispatch])
     
     
     function handleDelete(){
         dispatch(deleteEventThunk(eventId))
-        .then((res)=>{history.push("/")})
-        .catch(async (res)=>{
-            const data = await res.json();
-            if (data && data.errors) {
-                setErrors(Object.values(data.errors))            
-            }
-        })
+        .then((res)=>{history.push("/")});
     }
     
     return (event &&(
           <div className={styles.container}>
-            <ul>
-                {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-            </ul>
+            
             <div className={styles.mainDiv}>
-                <div className={styles.mainHeader}>
-                    <div className={styles.date}>
-                        {event.createdAt}
+                <div className={styles.main}>
+                    <div className={styles.date}>{new Date(event.createdAt).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})}</div>
+                    <div className={styles.title}> {event.name}</div>
+                    <div className={styles.hostedBy}>
+                        <div className={styles.hostedText}>Hosted By</div>
+                        <div className={styles.hostedName}>{event.Group.Organizer.firstName}  {event.Group.Organizer.lastName.charAt(0)}.</div>
                     </div>
-                    <div className={styles.eventHeading}>
-                        <h1>
-                            {event.name}
-                        </h1>
-                    </div>
-                    <div>
-                        <span className={styles.hostedBy}>Hosted By</span> <br></br><span className={styles.orga}> {event.Group.Organizer.firstName}  {event.Group.Organizer.lastName}</span>
-                        <hr className={styles.solid}></hr>
-                    </div>                     
                 </div>
-                
-                
-                <div className={styles.detailHeader}>
-                    <div className={styles.detail}>
-                        {(!event.Images || !event.Images.length >0) &&( 
+            </div>
+            <div>
+                <hr className={styles.divider}></hr>
+            </div>
+            <div className={styles.body}>
+                <div className={styles.middle}>
+                    <div>
+                    {(!event.Images || !event.Images.length >0) &&( 
                             <div >
                                 <img src={image} className={styles.displayImage}></img>
                             </div>
@@ -70,47 +55,38 @@ export default function Event(){
                             <div >
                                 <img src={event.Images[0].url} className={styles.displayImage}></img>
                             </div>
-                        )}  
-                        <div className={styles.manageEvent}>
-                            
-                            {sessionUser.id === event.Group.organizerId &&
-                                <div className={styles.deleteEvent}>
-                                     <NavLink to={`/events/${eventId}/update`} className={styles.update}>Update</NavLink>
-                                     <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
-                                     
-                                </div>
-                            }
-                            
-                        </div>    
-                        <div className={styles.detailText}>
-                            Details                            
-                        </div>
-                        <div>
-                            {event.description}
-                        </div>
-                        <div>
-                            $ {event.price} for a week
-                        </div>
-                        
-
-                    </div>
-                    <div>
-                        <div>
-                            {event.startDate} to {event.endDate}
-                        </div>
-                        <div>
-                            {event.Group.name}
-                        </div>                 
-                        <div>
-                            {event.Group.private ? "Private" : "Public"}
-                        </div>
-                    </div>   
+                        )}      
+                    </div>  
+                    
+                    <div className={styles.rightBlock}>
+                        <div className={styles.groupName}>{event.Group.name}</div>
+                        <div className={styles.type}>{event.Group.private? "Private" : "Public"} Group</div>
+                    </div> 
                 </div>
-                <div>
 
+                    
+                <div className={styles.bottom}>
+                    
+                    <nav>
+                        <NavLink className={styles.about} to={`/events/${eventId}/about`} >About</NavLink> 
+                    </nav>
+                   {sessionUser.id === event.Group.organizerId &&
+                    <nav className={styles.deleteEvent}>
+                        <NavLink to={`/events/${eventId}/update`} className={styles.update}>Update</NavLink>
+                        <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
+                    </nav>
+                    }
+                    
+                </div>
+                <div className={styles.desc}>
+                <Switch>
+                  <Route exact path="/events/:eventId/about">
+                        <AboutEvent event={event}/>
+                    </Route>
+                </Switch>
                 </div>
             </div>
             </div>
         
-    ));
+        ));
 }

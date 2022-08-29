@@ -15,8 +15,9 @@ app.use(cookieParser());
 const validateNewGroup = [
     check('name')
         .exists({ checkFalsy: true })
+        .withMessage('Name is required')
         .isLength({ max: 60 })
-        .withMessage( 'Name must be 60 characters or less'),
+        .withMessage('Name must be 60 characters or less'),
     check('about')
         .exists({ checkFalsy: true })
         .isLength({ min: 50 })
@@ -35,6 +36,11 @@ const validateNewGroup = [
     check('state')
         .exists({ checkFalsy: false })
         .withMessage("State is required"),
+    check('imageUrl')
+        .optional({checkFalsy: true})
+        .isURL()
+        .matches(/\.(jpg|jpeg|png|webp|avif|gif|svg)$/)
+        .withMessage("Image must be valid image URL"),
     handleValidationErrors
 ];
 
@@ -88,7 +94,7 @@ const validateNewEvent = [
         .withMessage("Capacity must be an integer"),
     check('price')
         .isNumeric()
-        .withMessage("Price is invalid"),
+        .withMessage("Event fee is invalid"),
     check('description')
         .exists({ checkFalsy: false })
         .withMessage("Description is required")
@@ -100,10 +106,17 @@ const validateNewEvent = [
         .withMessage("Start date must be in the future"),
     check('endDate')
         .isISO8601()
+        .withMessage("End date must be a valid date")
     .custom((value, {req}) =>{
             if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
             return true;
-        }),        
+    }),
+    check('imageUrl')
+        .optional({checkFalsy: true})
+        .isURL()
+        .matches(/\.(jpg|jpeg|png|webp|avif|gif|svg)$/)
+        .withMessage("Image must be valid image URL"),
+
     handleValidationErrors
 ];
 
@@ -127,6 +140,16 @@ router.post("/", requireAuth, validateNewGroup, async (req, res, next) => {
             groupId: newGroup.id
         })
     }
+
+    const newVenue = await Venue.create({
+        groupId: newGroup.id,
+        address:"Online",
+        city:"N/A",
+        state:"N/A",
+        lat:0,
+        lng:0
+    });
+
 
     res.status(201)
     res.json(getGroupById(newGroup.id))

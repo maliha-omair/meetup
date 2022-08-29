@@ -1,10 +1,11 @@
-import styles from "../GroupEvents/GroupEvents.module.css"
+import styles from "./UserEvents.module.css"
 import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useInsertionEffect, useState } from "react";
 import * as eventActions from "../../store/events";                                               
 import { useDispatch,useSelector } from 'react-redux';
 import ListEvents from "../ListEvents";
 import ListControl from "../ListControl";
+import EmptyListMessage from "../EmptyListMessage";
 
 
 export default function UserEvents({}){
@@ -29,22 +30,18 @@ export default function UserEvents({}){
         });
     },[dispatch])
 
-    console.log(allEvents)
    
     return(
-        <>
+        <div className={styles.main}>
             <ul>
                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
             </ul>
 
-            <ListControl altMessage="No Events found" elements={allEvents}>
+            <ListControl altChildren={<EmptyListMessage listType="events" />}  elements={allEvents}>
                 {allEvents && (
-                    <div className={styles.main}>
-                        <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />
-                    </div>
-                    )
-                }
+                    <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />
+                )}
             </ListControl>
-        </>
+        </div>
     )
 }

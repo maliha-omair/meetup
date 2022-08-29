@@ -1,44 +1,44 @@
 // import GetAllGroups from "../component/GetAllGroups";
 import { csrfFetch } from "./csrf";
 
-
-const SET_CURRENT_GROUP = 'group/setCurrentGroup';
-const GET_GROUPS = 'group/getGroups';
-const USER_GROUPS = 'group/userGroups';
-const REMOVE_USER_GROUPS = 'group/removeUserGroups';
+const CLEAR_STATE = 'group/clear';
+const SET_GROUP = 'group/setGroup';
+const SET_GROUPS = 'group/setGroups';
+const REMOVE_GROUPS = 'group/removeGroups';
 const UPDATE_GROUP = 'group/updateGroup';
-const DELETE_GROUP = "group/deleteGroup"
+const REMOVE_GROUP = "group/removeGroup"
 
 
-const setCurrentGroup = (group) => {
+const clearState = () => {
   return {
-    type: SET_CURRENT_GROUP,
+    type: CLEAR_STATE
+  }
+}
+
+
+const setGroup = (group) => {
+  return {
+    type: SET_GROUP,
     payload: group
   }
 }
 
-const getAllGroups = (groups) => {
+const setGroups = (groups) => {
   return {
-    type: GET_GROUPS,
+    type: SET_GROUPS,
     payload: groups    
   }
 }
 
-const userGroups = (groups) => {
-  return{
-    type: USER_GROUPS,
-    payload: groups
-  }
-}
-const deleteGroup = () =>{
+const removeGroup = () =>{
   return {
-    type: DELETE_GROUP
+    type: REMOVE_GROUP
   }
 }
 
-export function removerUserGroups (){
+export function removeGroups (){
   return {
-    type: REMOVE_USER_GROUPS
+    type: REMOVE_GROUPS
   }
 }
 
@@ -50,7 +50,7 @@ export function updateGroup(id){
 }
 
 //create new group
-export const createGroup = (group) => async dispatch =>{
+export const createGroupThunk = (group) => async dispatch =>{
     const {name, about, type, isPrivate, city, state, imageUrl } = group;
   
     const response = await csrfFetch("/api/groups",{
@@ -67,7 +67,8 @@ export const createGroup = (group) => async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentGroup(data))
+        dispatch(clearState())
+        dispatch(setGroup(data))
         return response;
     }    
   }
@@ -90,7 +91,8 @@ export const createGroup = (group) => async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(setCurrentGroup(data))
+        dispatch(clearState())
+        dispatch(setGroup(data))
         return response;
     }    
   }
@@ -101,43 +103,35 @@ export const createGroup = (group) => async dispatch =>{
     })
     if(response.ok){
         const data = await response.json();
-        dispatch(deleteGroup())
+        dispatch(clearState());
         return response;
     }
   }
   //get all groups
-  export const getGroups = () => async dispatch => { 
+  export const getAllGroupsThunk = () => async dispatch => { 
     const response = await csrfFetch("/api/groups",{
       method:'GET'
     })
     
     if(response.ok){
       const data = await response.json();
-      dispatch(getAllGroups(data));
+      dispatch(clearState())
+      dispatch(setGroups(data));
       return response;
     }
   }
 
  
   //get user groups
-  export const getUserGroups = () => async dispatch => {
+  export const getUserGroupsThunk = () => async dispatch => {
     const response = await csrfFetch(`/api/groups/current`,{
       method: 'GET'
     });
     
     if(response.ok){
       const data = await response.json();
-      // const userId = data.organizerId;
-      // const userResponse = await csrfFetch(`/api/user`,
-      // {
-      //     method:"GET", 
-      //     body:JSON.stringify({
-      //       userId: userId,
-      //     }),
-      // })
-      // if(userResponse.ok) data.organizer = await userResponse.json()
-     
-      dispatch(userGroups(data));
+      dispatch(clearState())
+      dispatch(setGroups(data));
       return response;
     }
   }
@@ -151,38 +145,35 @@ export const createGroup = (group) => async dispatch =>{
     
     if(response.ok){
       const data = await response.json();
-      dispatch(setCurrentGroup(data));
+      dispatch(clearState())
+      dispatch(setGroup(data));
       return response;
     }
   }
 
 
-  const initialState = { currentGroup: null };
+  const initialState = {  };
   const groupReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-      case SET_CURRENT_GROUP:
+      case SET_GROUP:
         newState = Object.assign({}, state);
-        newState.currentGroup = action.payload;
+        newState.group = action.payload;
         return newState;
-      
-      case GET_GROUPS:
+      case SET_GROUPS:
         newState = {...state};
-        newState.allGroups = action.payload.Groups;
+        newState.groups = action.payload.Groups;
         return newState;
-      case USER_GROUPS:
-        newState = {...state}; 
-        newState.userGroups = action.payload.Groups;
-        return newState;
-      case REMOVE_USER_GROUPS:
+      case REMOVE_GROUPS:
         newState = {...state};
-        newState.userGroups = null;
+        newState.groups = null;
         return newState;
-      case DELETE_GROUP:
+      case REMOVE_GROUP:
         newState = {...state};
-        newState.currentGroup = null;
-        newState.allGroups = null;
+        newState.group = null;
         return newState;
+      case CLEAR_STATE:
+        return initialState;
       default:
         return state;
     }

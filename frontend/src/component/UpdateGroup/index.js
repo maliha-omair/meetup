@@ -7,18 +7,18 @@ import styles from "../UpdateGroup/UpdateGroup.module.css"
 
 export default function UpdateGroup(){
     const dispatch = useDispatch();
-    const [groupName,setGroupName] = useState("")
-    const [about,setAbout] = useState("")
-    const [isPrivate,setIsPrivate] = useState(false)
-    const [city,setCity] = useState("")
-    const [state,setState] = useState("")
-    const [type,setType] = useState("")
+    const [groupName,setGroupName] = useState("");
+    const [about,setAbout] = useState("");
+    const [isPrivate,setIsPrivate] = useState(false);
+    const [city,setCity] = useState("");
+    const [state,setState] = useState("");
+    const [type,setType] = useState("");
     const [errors, setErrors] = useState([]);
-    const [imageUrl,setImageUrl] = useState("")
-    const sessionUser = useSelector(state => state.session.user)
-    const history = useHistory()
+    const [imageUrl,setImageUrl] = useState("");
+    const sessionUser = useSelector(state => state.session.user);
+    const history = useHistory();
     const params = useParams();
-    const group  = useSelector(state => state.group.currentGroup);
+    const group  = useSelector(state => state.group.group);
     const groupTypeOptions = ["In person","Online"];
     useEffect(()=>{
         dispatch(groupActions.getGroupByIdThunk(groupId))
