@@ -1,7 +1,7 @@
 import { useDispatch,useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import image from "../../assets/groupDisplayImage.jpg"
+import image from "../../assets/ImageNotFound.jpg"
 
 import styles from "../ListGroups/ListGroups.module.css"
 
@@ -40,7 +40,7 @@ export default function ListGroups({groups}){
                             )}
                             { (!group.Images || group.Images.length===0)&&  ( 
                                 <div className={styles.img}>
-                                        <img src={image} />
+                                        <img src={image} className={styles.img}/>
                                 </div>
                             )}
                     </div>

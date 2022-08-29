@@ -2,12 +2,14 @@
 .middleList{
     display: flex;
     flex-direction: row;
-    padding-top:35px;    
-    padding-bottom:35px;
+        
+    padding-bottom: 20px;
     max-width: 640px;
+    margin-top: 0 auto;
 }
 .imageDivList{
-    padding-right: 20px;
+    margin-right: 40px;
+    margin-top: 0 auto;
 }
 .bodyList{
     display: flex;
@@ -15,6 +17,10 @@
     align-items: center;
     border-bottom: 1px solid;
     border-color: rgb(128, 128, 128,0.3);
+}
+
+.body{
+    cursor: pointer;
 }
 
 .titleList{
@@ -47,8 +53,8 @@
 }
 
 .img{
-    max-width: 120px;
-    max-height: 120px;
+    max-width: 250px;
+    max-height: 250px;
 } 
 
  .main{

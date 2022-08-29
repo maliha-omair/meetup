@@ -1,4 +1,4 @@
-import image from "../../assets/eventDisplay.jpeg";
+import image from "../../assets/ImageNotFound.jpg";
 import { useHistory } from "react-router-dom";
 import styles from "../ListEvents/ListEvents.module.css";
 export default function ListEvents({events, currentUser}){
@@ -29,13 +29,8 @@ export default function ListEvents({events, currentUser}){
     }
     if(!events) return null;
     return (events &&(
-        <div className={styles.main}>
-            <div>
-                <div className={styles.eventsHeading}>
-                   Your events
-                </div>
-            </div>
-            <div className={styles.subDiv}>
+        <div>
+           
             {events.map((event,index)=>{
                 return(
                     <div className={styles.middleDiv} key={index} value={event.id} onClick={()=>{handleClick(event.id)}}>
@@ -61,7 +56,6 @@ export default function ListEvents({events, currentUser}){
                     </div>
                 )
             })}
-            </div>
         </div>
         
     ))

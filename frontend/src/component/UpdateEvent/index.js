@@ -55,14 +55,13 @@ export default function UpdateEvent({ sessionUser }){
         if(event){
             setName(event.name);
             setType(event.type);
-            setStartDate(event.startDate);
-            setEndDate(event.endDate);
+            setStartDate(new Date(event.startDate).toISOString().slice(0,-1));
+            setEndDate(new Date(event.endDate).toISOString().slice(0,-1));
             setCapacity(event.capacity)
             setPrice(event.price)
             setDescription(event.description);
             setVenueId(event.venueId)
-            if(event.Images) setImageUrl(event.Images[0])
-           
+            if(event.Images && event.Images.length > 0) setImageUrl(event.Images[0].url);
         }
     },[event]);
 
@@ -131,7 +130,7 @@ export default function UpdateEvent({ sessionUser }){
                         <label className={styles.label}>Start Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" className={styles.date}  defaultValue ={startDate} onChange={(e)=>handleStartDate(e)}/>
+                                <input type="datetime-local" className={styles.date}  value={startDate} onChange={(e)=>handleStartDate(e)}/>
                             </div>
                         </div>                        
                     </div>
@@ -171,16 +170,18 @@ export default function UpdateEvent({ sessionUser }){
                         <label className={styles.label}>Event Fee</label>
                         <input type="text" className={styles.amountDiv} value={price} onChange={(e)=>setPrice(e.target.value)} />
                     </div>
-                   
-                    <select className={styles.inputDiv} value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
-                        {(
-                            Object.values(currentGroup.Venues).map((ele,index)=>{
-                                return(
-                                    <option key={index} value={ele.id} className={styles.inputOption}>{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
-                                )
-                            })
-                        )}
-                    </select> 
+                   <div className={styles.inputDiv}>
+                        <label className={styles.label}>Venue </label>
+                        <select className={styles.titleTextArea} value={venueId} onChange={(e)=>setVenueId(e.target.value)}>
+                            {(
+                                Object.values(currentGroup.Venues).map((ele,index)=>{
+                                    return(
+                                        <option key={index} value={ele.id} className={styles.inputOption}>{ele.address} latitude {ele.lat} longitude {ele.long}</option>                                
+                                    )
+                                })
+                            )}
+                        </select> 
+                    </div>
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Image url </label>
                         <input type="text" className={styles.titleTextArea}  value={imageUrl} onChange={(e)=>setImageUrl(e.target.value)} />

@@ -2,9 +2,10 @@ import { NavLink, useParams, useHistory, Route, Switch } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { useState,useEffect } from "react";
 import * as eventActions from "../../store/events";  
-import image from "../../assets/eventById.png"
+import image from "../../assets/ImageNotFound.jpg"
 import styles from "../Event/Event.module.css"
-import { faStickyNote } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faLocationDot, faClock} from '@fortawesome/free-solid-svg-icons'
 import {deleteEventThunk} from "../../store/events"
 import AboutEvent from "../AboutEvent";
 
@@ -28,6 +29,7 @@ export default function Event(){
     }
     
     return (event &&(
+        
           <div className={styles.container}>
             
             <div className={styles.mainDiv}>
@@ -59,8 +61,21 @@ export default function Event(){
                     </div>  
                     
                     <div className={styles.rightBlock}>
-                        <div className={styles.groupName}>{event.Group.name}</div>
-                        <div className={styles.type}>{event.Group.private? "Private" : "Public"} Group</div>
+                        <div>
+                            <div className={styles.groupName}>{event.Group.name}</div>
+                            <div className={styles.type}>{event.Group.private? "Private" : "Public"} Group</div>
+                        </div>
+                        <div>
+                            <div className={styles.eventDate}>
+                            <FontAwesomeIcon icon={faClock} />  From {new Date(event.startDate).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})} 
+                                &nbsp;at {new Date(event.startDate).toLocaleTimeString()}&nbsp;
+                                to {new Date(event.endDate).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})}
+                                &nbsp;at {new Date(event.endDate).toLocaleTimeString()}
+                            </div>
+                            <div className={styles.eventVenue}>
+                            <FontAwesomeIcon icon={faLocationDot} /> {event.Venue.city} , {event.Venue.state}
+                            </div>
+                        </div>
                     </div> 
                 </div>
 

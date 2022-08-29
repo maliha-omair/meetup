@@ -32,7 +32,7 @@ export default function UpdateGroup(){
             setCity(group.city);
             setState(group.state);
             setType(group.type);
-            if(group.Images) setImageUrl(group.Images[0])
+            if(group.Images) setImageUrl(group.Images[0].url)
         }
     },[group]);
 

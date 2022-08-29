@@ -1,7 +1,7 @@
 .home-guest-main-div{
     display: flex;
     /* 1align-items: center; */
-    width: 80%;
+    max-width: 80%;
     justify-content: center;
     align-items: center;
     padding-left: 70px;
@@ -10,7 +10,8 @@
 .sub-div-guest-view{
     display: flex;
     flex-direction: row;
-    justify-content: center;  
+    justify-content: center; 
+    max-width: 80%;
 }
 
 @media screen and (min-width: 577px) {
@@ -20,14 +21,17 @@
     
 }
 
+/* .items-center {
+    align-items: center;
+} */
 .guest-view-p {
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 16px;
-    font-weight: 100;
+    font-weight: 300;
 }
 
 .left-intro-div{
-    width:50%;    
+    margin: 0px 20px 0px 0px;   
 }
 .right-intro-div{
     width:50%;    

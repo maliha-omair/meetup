@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
     min-width:100%;
     margin: auto;
     margin:auto;
@@ -14,8 +13,9 @@
 .mainDiv{
     display:flex;
     flex-direction: column;
-    min-width: 800px;
-    /* align-items: center; */
+    min-width: 60%;
+    align-items: left;
+    
 }
 
 .title{
@@ -56,10 +56,10 @@
 .bottom{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     
-    min-width: 800px;
+    min-width: 100%;
     padding-top: 10px;
+    align-items: center;
     justify-content: center;
 }
 
@@ -147,102 +147,21 @@
     padding-left: 20px;
     min-width: 200px;
 }
-/* 
-.date{
-    color: #757575;
+
+.eventDate{
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 12px;
-}
-.detailText{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    padding-top:10px;
-    padding-bottom:10px;
-}
-
-.eventHeading{
-    color:black;
-    padding-top:-10px;
-    margin:0px;
-    letter-spacing: -2px;
-    position:sticky;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-
-}
-.detail{
-    
-    width:55%;
-    padding-right: 20px;
-
-
-}
-
-.hostedBy{
-    color: #757575;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-}
-
-.organizerName{
-    display: inline-block;
-    color:black;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 500   
-}
-
-.mainHeader{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    padding-bottom: 18px;
-    
-}
-
-.detailHeader{
-    display:flex;
-    flex-direction: row;
-    padding-bottom: 20px;
-}
-
-.solid{
-    border-top: 1px solid #bbb;
-  
-}
-
-.manageEvent{
-    display: flex;
-    flex-direction: row;
-    
-}
-.editEvent{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 16px;
-}
-
-.deleteEvent{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 16px;
-}
-
-.delete{
-    font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 13px;
     text-decoration: none;
-    color: black;
-    padding-left:20px;
-    padding-right:20px; 
-    
+    color: #212121;
+    font-size: 14px;
+    padding-top: 20px;
+
 }
 
-.displayImage{
-    display: flex;
-    width:600px;
-    height:376px;
-    border-radius: 10PX;
-}
+.eventVenue{
+    padding-top:20px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    text-decoration: none;
+    color: #212121;
+    font-size: 14px;
 
-.delete:hover{
-   color: rgb(151, 202, 209);
-} */
+}

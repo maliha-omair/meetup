@@ -84,7 +84,7 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>Start Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" min={new Date().toLocaleDateString()} className={styles.date}  value={startDate} onChange={(e)=>setStartDate(e.target.value)}/>
+                                <input type="datetime-local"  className={styles.date}  value={startDate} onChange={(e)=>setStartDate(e.target.value)}/>
                             </div>
                             
                         </div>                        
@@ -94,7 +94,7 @@ export default function CreateEvent({ sessionUser}){
                         <label className={styles.label}>End Date and time</label>
                         <div className={styles.dateTime}>
                             <div >
-                                <input type="datetime-local" className={styles.date} value={endDate} onChange={(e)=>setEndDate(e.target.value)}/>
+                                <input type="datetime-local"  className={styles.date} value={endDate} onChange={(e)=>setEndDate(e.target.value)}/>
                             </div>
                             
                             

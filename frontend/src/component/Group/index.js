@@ -1,13 +1,13 @@
 import { NavLink, useParams, useHistory, Route, Switch } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import image from "../../assets/groupDisplayHd.jpeg"
+import image from "../../assets/ImageNotFound.jpg"
 import styles from "./Group.module.css"
 import Divider from "../Divider/Divider";
 import { useState,useEffect } from "react";
 
 import { getGroupByIdThunk,deleteGroupThunk } from "../../store/groups";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faAngleDown} from '@fortawesome/free-solid-svg-icons'
+import {faAngleDown, faLocationDot , faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons'
 import AboutGroup from "../AboutGroup";
 import GroupEvents from "../GroupEvents";
 
@@ -74,9 +74,9 @@ export default function Group({sessionUser}){
                 </div>
                 <div className={styles.detailText}>
                     <div className={styles.title}> {group.name}</div>
-                    <div className={styles.cityState}> <i className='fas fa-map-marker-alt'></i> {group.city}, {group.state}</div>
-                    <div className={styles.members}> {group.numMembers} members - {group.private ? `Private`: `Public`}</div>
-                    <div className={styles.organized}>Organized by <b> {group.Organizer.firstName}  {group.Organizer.lastName.charAt(0)}.</b></div>
+                    <div className={styles.cityState}>  <FontAwesomeIcon icon={faLocationDot} />&nbsp;&nbsp;{group.city}, {group.state}</div>
+                    <div className={styles.members}> <FontAwesomeIcon icon={faUserGroup} />&nbsp;{group.numMembers} members - {group.private ? `Private`: `Public`}</div>
+                    <div className={styles.organized}><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;Organized by <b> {group.Organizer.firstName}  {group.Organizer.lastName.charAt(0)}.</b></div>
                 </div>
             </div>
 
@@ -85,7 +85,7 @@ export default function Group({sessionUser}){
             <div className={styles.navigationMenu}>
                 <div className={styles.navItems}>
                     <nav className={styles.aboutEvent}>
-                        <NavLink className={styles.about} to={`/groups/${groupId}/about`} classgit >About</NavLink> 
+                        <NavLink className={styles.about} to={`/groups/${groupId}/about`} >About</NavLink> 
                         <NavLink className={styles.event}  to={`/groups/${groupId}/events`} >Events</NavLink>     
                     </nav>
                 

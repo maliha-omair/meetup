@@ -32,16 +32,24 @@ export default function UserEvents({}){
 
    
     return(
-        <div className={styles.main}>
+        
+        <>
             <ul>
                 {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
             </ul>
-
+            
             <ListControl altChildren={<EmptyListMessage listType="events" />}  elements={allEvents}>
                 {allEvents && (
+                    <div className={styles.main}>
+                        <div className={styles.pageHeading}>
+                            <div className={styles.eventHeading}>
+                                Your Events         
+                            </div>
+                        </div>
                     <ListEvents events={Object.values(allEvents)} currentUser={sessionUser} />
+                    </div>
                 )}
             </ListControl>
-        </div>
+        </>
     )
 }

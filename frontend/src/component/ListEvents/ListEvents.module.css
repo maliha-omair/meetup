@@ -1,6 +1,4 @@
-.main{
-    margin:auto;
-}
+
 
 .eventsHeading{
     font-size: 30px;
@@ -16,10 +14,11 @@
     padding-bottom: 5px;;
 }
 
-.description{
+.discription{
     color: #757575;
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;  
+    max-width:450px;
     
    
 }
@@ -44,7 +43,9 @@
 .middleDiv{
     display:flex;
     flex-direction: row;
-    padding-bottom:20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    
     
 }
 

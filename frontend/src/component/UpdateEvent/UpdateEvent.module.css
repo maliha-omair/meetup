@@ -61,10 +61,11 @@
     border-color:rgba(59,130,246,.5);
 }
 
-.dateTime{
-    display:flex;
-    flex-direction: row;
+.titleTextArea:hover{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
 }
+
 
 .date{
     font-family: Roboto,Helvetica,Arial,sans-serif;
@@ -74,21 +75,18 @@
     height: 22px;
     border-color: rgba(230,230,230,.5);
 }
-.time{
-    border-radius:8px;
-    width: 70px;
-    height: 22px;    
-    border-color: rgba(230,230,230,.5);
-    
-}
+
 .date:focus{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
-.time:focus{
+
+.date:hover{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
+
+
 
 .description{
     height: 100px;
@@ -100,6 +98,11 @@
 }
 
 .description:focus{
+    outline: none !important;
+    border-color:rgba(59,130,246,0.5);
+}
+
+.description:hover{
     outline: none !important;
     border-color:rgba(59,130,246,0.5);
 }
@@ -125,6 +128,11 @@
     border-color:rgba(59,130,246,.5);
 }
 
+.attendeeInput:hover{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
 .attendeeTextAndInput{
     display: flex;
     flex-direction: row;
@@ -146,6 +154,11 @@
 }
 
 .amountDiv:hover{
+    outline: none !important;
+    border-color:rgba(59,130,246,.5);
+}
+
+.amountDiv:foucs{
     outline: none !important;
     border-color:rgba(59,130,246,.5);
 }
