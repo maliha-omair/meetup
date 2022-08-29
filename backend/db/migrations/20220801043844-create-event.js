@@ -24,7 +24,8 @@ module.exports = {
           model: {
             tableName: 'Venues',
           },
-          key: 'id'
+          key: 'id',
+          onDelete: 'CASCADE'
         },
       },
       name: {
