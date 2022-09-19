@@ -6,7 +6,7 @@ import styles from "../CreateEvent/CreateEvent.module.css"
 
 import { useEffect } from "react";
 
-export default function CreateEvent({ sessionUser}){
+export default function CreateEvent({ sessionUser }){
     const [name,setName] = useState("");
     const [type,setType] = useState("In person");
     const [startDate,setStartDate] = useState("");
@@ -53,6 +53,7 @@ export default function CreateEvent({ sessionUser}){
         console.log("submitted")
         return dispatch(createNewEventThunk(event))
         .then((res)=>{
+            console.log("res is ", res);
             history.push(`/groups/${groupId}`)
         })
         .catch(async (res) => {

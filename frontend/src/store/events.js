@@ -152,7 +152,7 @@ export const createNewEventThunk = (event) => async dispatch => {
     if(response.ok){
         const data = await response.json();
         dispatch(clearState());
-        return response;
+        return data;
     }    
 }
 
