@@ -5,12 +5,28 @@ import eventReducer from './events';
 import groupReducer from './groups';
 // import {thunkSetSession} from "../store/session"
 
+const RESET_STATE = 'root/RESET_STATE';
 
-const rootReducer = combineReducers({
+
+export function resetState() {
+  return {
+    type: RESET_STATE
+  };
+};
+
+
+const appReducer = combineReducers({
     session:sessionReducer,
     group: groupReducer,
     event: eventReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === RESET_STATE) {
+    return appReducer(undefined, action)
+  }
+  return appReducer(state, action)
+}
 let enhancer;
 
 if (process.env.NODE_ENV === 'production') {

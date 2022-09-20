@@ -14,7 +14,6 @@ import GroupEvents from "../GroupEvents";
 export default function Group({sessionUser}){
 
     
-    const [showManageGroup,setShowManageGroup] = useState(false);
     const [errors, setErrors] = useState([]);
 
     const history = useHistory();
@@ -32,18 +31,8 @@ export default function Group({sessionUser}){
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
         });
+    },[dispatch, groupId]);
 
-        if(!sessionUser){
-            setShowManageGroup(false);        
-        }else{
-           
-            setShowManageGroup(true);
-        }
-    },[dispatch, groupId, sessionUser]);
-
-    function handleNewEventClick(){     
-        history.push(`/event/new`, sessionUser={sessionUser}, groupId={groupId})
-    }
     function handleDelete(){
         dispatch(deleteGroupThunk(groupId))
         .then((res)=>{history.push("/userGroup")})
@@ -54,9 +43,8 @@ export default function Group({sessionUser}){
             }
         })
     }
-    return( group &&(
-       
-        
+
+    return(group &&(
         <div className={styles.main}>
             <div>
                 <ul>
@@ -90,7 +78,7 @@ export default function Group({sessionUser}){
                     </nav>
                 
                 
-                {showManageGroup && 
+                {(sessionUser && sessionUser.id === group.organizerId) && 
                    <nav>
                         <NavLink className={styles.update} to={`/groups/${groupId}/update`} > Update</NavLink> 
                         <NavLink className={styles.delete} to="#" onClick={()=>handleDelete()} >Delete</NavLink>
@@ -108,98 +96,16 @@ export default function Group({sessionUser}){
             </div>
             
             <div className={styles.groupDesc}>            
-                   <Switch>
-                        <Route path="/groups/:groupId/about">
-                            <AboutGroup group={group} />
-                        </Route>
-                        <Route path="/groups/:groupId/events">
-                            <GroupEvents group={group}/>
-                        </Route>
-                    </Switch>
-                </div>             
+                <Switch>
+                    <Route path="/groups/:groupId/about">
+                        <AboutGroup group={group} />
+                    </Route>
+                    <Route path="/groups/:groupId/events">
+                        <GroupEvents group={group}/>
+                    </Route>
+                </Switch>
+            </div>             
             
         </div>
-        // <div className={styles.main}>
-        //     <div>
-        //     <div>
-        //         <ul>
-        //             {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
-        //         </ul>
-        //     </div>
-            
-        //     <div className={styles.mainDiv}> 
-            
-                
-        //         <div className={styles.groupDetail}>
-        //             <div className={styles.imageDiv}>
-        //                 {(group.Images && group.Images.length > 0)&&(
-        //                       <img src={group.Images[0].url} className={styles.groupImage} alt="display"></img>
-        //                 )}
-        //                  {(!group.Images || !group.Images.length > 0)&&(
-        //                       <img src={image} className={styles.groupImage} alt="display"></img>
-        //                 )}
-                      
-        //             </div>
-                    
-        //             <div>
-        //                 <div className={styles.groupName}>
-        //                     {group.name}
-        //                 </div>
-        //                 <div className={styles.cityState}>
-        //                     {group.city}, {group.state}
-        //                 </div>
-        //                 <div className={styles.members}>
-        //                     {group.numMembers} members - {group.private ? `Private`: `Public`}
-        //                 </div>
-        //                 <div className={styles.organizedBy}>
-        //                     Organized by <b> {group.Organizer.firstName}  {group.Organizer.lastName.charAt(0)}.</b>  
-        //                 </div>
-                        
-        //             </div>                    
-        //         </div>               
-                
-        //         <div>
-        //         </div>  
-               
-
-        //         <div className={styles.innerMenu}>
-               
-        //              <div>
-        //                 <nav className={styles.aboutEvent}>
-        //                 <NavLink to={`/groups/${groupId}/about`} className={styles.about}>About</NavLink> 
-        //                 <NavLink to={`/groups/${groupId}/events`} className={styles.event} >Events</NavLink>                         
-        //                 </nav>
-        //             </div>
-        //             {showManageGroup && 
-        //                     <div >
-        //                             <NavLink to={`/groups/${groupId}/update`} className={styles.update}> Update</NavLink> 
-        //                             <NavLink to="#" onClick={()=>handleDelete()} className={styles.delete}>Delete</NavLink>
-        //                             <NavLink to="/event/new" >                                
-        //                                 <button className={styles.createEvent} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
-        //                             </NavLink>
-        //                             <NavLink to={`/${groupId}/venue`} >                                
-        //                                 <button className={styles.createVenue} >Create Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
-        //                             </NavLink>
-
-        //                     </div>
-        //             } 
-                        
-        //         </div>
-        //         </div>               
-        //         <div>
-        //             <Switch>
-        //                 <Route path="/groups/:groupId/about">
-        //                     <AboutGroup group={group}/>
-        //                 </Route>
-        //                 <Route path="/groups/:groupId/events">
-        //                     <GroupEvents group={group}/>
-        //                 </Route>
-        //             </Switch>
-        //         </div>   
-                                               
-        //     </div>
- 
-        // </div>
-        
     ))
 }

@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react"
 import { useDispatch} from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { resetState } from "../../store";
 import { logout } from "../../store/session";
 
 export default function Logout(){
@@ -9,6 +10,7 @@ export default function Logout(){
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(logout())
+        .then(()=> dispatch(resetState()))
         .then(() => history.push('/'))
         .catch(async (res) => {
             const data = await res.json();

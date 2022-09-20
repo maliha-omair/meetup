@@ -5,6 +5,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import './Navigation.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons'
+import { resetState } from "../../store";
 
 
 function ProfileButton({ user }) {
@@ -31,6 +32,8 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    dispatch(resetState());
+
     history.push("/");
 
   };
@@ -54,7 +57,7 @@ function ProfileButton({ user }) {
             <NavLink to="/userEvent" className="dropdown-link">Your events</NavLink>         
             
             <NavLink to="/profile" className="dropdown-link">View profile</NavLink>
-            <NavLink onClick={logout} to="#" className="dropdown-link">Log out</NavLink> 
+            <NavLink to="/logout" className="dropdown-link">Log out</NavLink> 
           </div>
         )}
       </div>
