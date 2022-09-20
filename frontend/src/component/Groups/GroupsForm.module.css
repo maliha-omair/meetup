@@ -37,6 +37,7 @@
 
 .titleTextArea{
     font-family: Roboto,Helvetica,Arial,sans-serif;
+    resize:none;
     border-radius: 8px;
     border-color: rgba(230,230,230,.5);
     font-size: 14px;
@@ -81,4 +82,23 @@
     align-items: left;
     justify-content: left;
     margin:0;
+}
+
+.errorMessageLi{
+    color: #f65858;
+    text-decoration: none;
+    text-align: left;    
+}
+
+.errorDiv{
+    font-size: 14px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight: normal;
+}
+
+.errorMessageUl{ 
+    list-style-type: none;    
+    list-style:none;
+    padding-left:0;
+    text-align: left;
 }

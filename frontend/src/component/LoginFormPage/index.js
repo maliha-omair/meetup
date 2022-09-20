@@ -53,9 +53,11 @@ export default function LoginFormPage(){
                         <h1 className="login-title">Log in</h1>
                         <div className="not-a-member-login"><span className="notMember">Not a member yet?</span> <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div>
                     </div>
-                    <ul>
-                        {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-                    </ul>
+                    <div className="errorDiv">
+                        <ul className="errorMessageUl">
+                            {errors.map((error, idx) => <li className="errorMessageLi" key={idx}>{error}</li>)}
+                        </ul>
+                    </div>
                  
                     <div className="login-sub-div">
                         <label className="login-label" >Email</label>

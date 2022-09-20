@@ -93,3 +93,22 @@
     grid-template-rows: auto;
     margin: 8px;
 }
+
+.signup-errorMessageLi{
+    color: #f65858;
+    text-decoration: none;
+    text-align: left;    
+}
+
+.signup-errorDiv{
+    font-size: 14px;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight: normal;
+}
+
+.signup-errorMessageUl{ 
+    list-style-type: none;    
+    list-style:none;
+    padding-left:0;
+    text-align: left;
+}

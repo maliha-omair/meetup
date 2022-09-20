@@ -59,9 +59,11 @@ export default function CreateVenue({ sessionUser}){
                         <hr></hr>
                     </div>
                     <div>
-                    <ul>
-                        {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
-                    </ul>
+                    <div className={styles.errorDiv}>
+                        <ul className={styles.errorMessageUl}>
+                            {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
+                        </ul>
+                    </div>
                     </div>
                     
                     <div className={styles.inputDiv}>

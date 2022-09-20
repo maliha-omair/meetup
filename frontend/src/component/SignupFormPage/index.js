@@ -42,9 +42,11 @@ function SignupFormPage() {
           <img src={smallLogo} alt="logo" className="logo-signup" />
           <h1 className="login-title-signup">Finish signing up</h1>    
         </div>
-        <ul>
-          {errors.map((error, idx) => <li className="error-message-signup" key={idx}>{error}</li>)}
-        </ul>
+        <div className="signup-errorDiv">
+                <ul className="signup-errorMessageUl">
+                    {errors.map((error, idx) => <li className="signup-errorMessageLi" key={idx}>{error}</li>)}
+                </ul>
+            </div>
 
         <div className="sub-div-signup">
           <label className="signup-label">First Name</label>
