@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import mainLogo from "../../assets/meetup-main-logo.png"
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
+import SignUpFormModal from '../SignupFormModal';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
@@ -25,7 +26,8 @@ function Navigation({ isLoaded }){
         <div className='link-div'>
           <LoginFormModal  />
           {/* <NavLink to="/login" className="navigate-link">Log In</NavLink> */}
-          <NavLink to="/signup"className="navigate-link">Sign Up</NavLink>
+          <SignUpFormModal />
+        
         </div>
       </>
     );

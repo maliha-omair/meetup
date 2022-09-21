@@ -1,9 +1,9 @@
-/* .main-signup{
+.main-signup{
     text-align: center;
     justify-content: space-evenly;
     display:flex;
     
-
+    /* padding: 20px 20px 20px 20px; */
     background-color: white;
     padding-bottom: 20px;
 }
@@ -14,10 +14,10 @@
     
     justify-content: center;
     align-items: center;
-    height: 750px;
-   
+    height: 800px;    
+    width: 400px;  
     padding:0px 50px 0px 50px;
-    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
+    
     
     border-radius: 8px;
     background-color: white;
@@ -41,7 +41,7 @@
 }
 
 .input-signup{
-    width: 250px;
+    width: 300px;
     height: 30px;
     border-radius: 0.5rem;
     border-color: rgba(230,230,230,0.2);
@@ -62,7 +62,7 @@
 .login-button-signup{
     align-items: center;
     justify-content: center; 
-    width:255px;
+    width:300px;
     height:35px;
     border-radius: 8px;
     background-color:#f65858;
@@ -111,4 +111,4 @@
     list-style:none;
     padding-left:0;
     text-align: left;
-} */
+}

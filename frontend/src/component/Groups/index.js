@@ -38,7 +38,7 @@ export function GroupsForm() {
 
         setErrors([]);
         return dispatch(groupActions.createGroupThunk(group)).then((res) => {
-            history.push("/profile");
+            history.push("/userGroup");
         }).catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) {

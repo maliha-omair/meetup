@@ -28,6 +28,7 @@ import UserEvents from "./component/UserEvents";
 import GetAllEvents from "./component/GetAllEvents";
 import LoginFormModal from "./component/LoginFormModal";
 import LoginForm from "./component/LoginFormModal/LoginForm";
+import SignUpFormModal from "./component/SignupFormModal";
 
 
 function App() {
@@ -61,7 +62,8 @@ function App() {
               
             </Route>
             <Route path="/signup">
-              <SignupFormPage />
+              <SignUpFormModal />
+              
             </Route>
             <Route path="/logout">
               <Logout />
