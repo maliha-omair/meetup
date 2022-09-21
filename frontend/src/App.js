@@ -62,8 +62,7 @@ function App() {
               
             </Route>
             <Route path="/signup">
-              <SignUpFormModal />
-              
+              <SignUpFormModal />              
             </Route>
             <Route path="/logout">
               <Logout />
