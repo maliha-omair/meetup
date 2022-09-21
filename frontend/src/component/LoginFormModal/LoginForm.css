@@ -5,6 +5,8 @@
     align-items: center;
     justify-content: center;
     padding-bottom:20px;   
+    border-radius: 0.5rem;
+    
 }
 
 .sub-main-login{
@@ -12,12 +14,14 @@
     flex-direction: column;    
     justify-content: space-evenly;
     align-items: center;
-    height: 600px;    
-    box-shadow: 8px 8px 8px 8px rgb(207,207,207);
+    height: 800px;    
+    width: 400px;
+    /* box-shadow: 8px 8px 8px 8px rgb(207,207,207); */
+    border-radius: 0.5rem;
     padding-top: 0px;
     padding-left: 40px;
     padding-right: 40px;
-    border-radius: 8px;   
+   
 }
 
 .logo-login{
@@ -49,7 +53,7 @@
 }
 
 .input-login{
-    width: 250px;
+    width: 300px;
     height:30px;
     border-radius: 8px;
     justify-content: center;
@@ -62,7 +66,7 @@
 .login-button{
     align-items: center;
     justify-content: center; 
-    width:255px;
+    width:300px;
     height:35px;
     border-radius: 8px;
     background-color:#f65858;

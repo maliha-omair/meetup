@@ -26,6 +26,8 @@ import CreateVenue from "./component/CreateVenue";
 import UpdateEvent from "./component/UpdateEvent";
 import UserEvents from "./component/UserEvents";
 import GetAllEvents from "./component/GetAllEvents";
+import LoginFormModal from "./component/LoginFormModal";
+import LoginForm from "./component/LoginFormModal/LoginForm";
 
 
 function App() {
@@ -34,28 +36,29 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
 
-  useEffect(() => {   
+  useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true);
-    
-    }).catch((res)=>{
+
+    }).catch((res) => {
       setIsLoaded(true);
-    
+
     });
   }, []);
-  
+
   return (isLoaded && (
-    
-      <div className="page-container">
-        <div className = "content-wrap">
-          <Navigation isLoaded={isLoaded} className="navigationStyle"/>          
-          {isLoaded && (
+
+    <div className="page-container">
+      <div className="content-wrap">
+        <Navigation isLoaded={isLoaded} className="navigationStyle" />
+        {isLoaded && (
           <Switch>
             <Route exact path="/">
               <Home />
             </Route>
             <Route path="/login">
-              <LoginFormPage />
+            <LoginFormModal />
+              
             </Route>
             <Route path="/signup">
               <SignupFormPage />
@@ -70,54 +73,54 @@ function App() {
               <GroupsForm />
             </Route>
             <Route path="/event/new">
-              {sessionUser ?  <CreateEvent sessionUser={sessionUser}></CreateEvent> : <Redirect to="/" />  }
+              {sessionUser ? <CreateEvent sessionUser={sessionUser}></CreateEvent> : <Redirect to="/" />}
             </Route>
             <Route path="/:groupId/venue">
-              <CreateVenue sessionUser={sessionUser} />              
+              <CreateVenue sessionUser={sessionUser} />
             </Route>
             <Route path="/allGroups">
-              <GetAllGroups/>
+              <GetAllGroups />
             </Route>
             <Route path="/allEvents">
               <GetAllEvents />
             </Route>
             <Route path="/events/:eventId/update">
-                <UpdateEvent sessionUser={sessionUser}/>
+              <UpdateEvent sessionUser={sessionUser} />
             </Route>
             <Route path="/groups/:groupId/update">
               <UpdateGroup />
-            </Route> 
+            </Route>
             <Route path="/groups/:groupId/events">
               <GroupEvents />
-            </Route> 
+            </Route>
             <Route path="/groups/:groupId/photos">
               <GroupPhotos />
-            </Route> 
+            </Route>
             <Route path="/groups/:groupId">
-              <Group sessionUser={sessionUser}/>
+              <Group sessionUser={sessionUser} />
             </Route>
             <Route path="/events/:eventId">
-              <Event sessionUser={sessionUser}/>
+              <Event sessionUser={sessionUser} />
             </Route>
             <Route path="/userGroup">
-             <UserGroups sessionUser={sessionUser}/>
+              <UserGroups sessionUser={sessionUser} />
             </Route>
             <Route path="/userEvent">
-              <UserEvents sessionUser={sessionUser}/>              
+              <UserEvents sessionUser={sessionUser} />
             </Route>
             <Route path="/aboutMeetup">
-             <AboutMeetup/>
-            </Route>          
+              <AboutMeetup />
+            </Route>
           </Switch>
-          )}
-          
-          <div className="footer">
-          <Footer sessionUser={sessionUser} />
-          </div>
+        )}
 
+        <div className="footer">
+          <Footer sessionUser={sessionUser} />
         </div>
+
       </div>
-    
+    </div>
+
   ));
 }
 

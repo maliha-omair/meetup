@@ -1,11 +1,11 @@
-import {useState} from "react"
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import * as sessionActions from "../../store/session";
 import { NavLink, useHistory} from 'react-router-dom';
-import smallLogo from "../../assets/meetup-logo.png"
-import * as sessionActions from '../../store/session';
-// import "./LoginFormPage.css"
+import { useDispatch, useSelector } from "react-redux";
+import smallLogo from "../../assets/meetup-logo.png";
+import "./LoginForm.css";
 
-export default function LoginFormPage(){
+function LoginForm() {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [demoUser,setDemoUser] = useState(false);
@@ -45,7 +45,8 @@ export default function LoginFormPage(){
     
 
     return(   
-        <form onSubmit={handleSubmit} className="main-login">          
+        <form onSubmit={handleSubmit} className="main-login">        
+
                 <div className="sub-main-login">                   
                     <div className="login-top">                            
                         <img src={smallLogo} alt="logo" className="logo-login"/>
@@ -80,3 +81,5 @@ export default function LoginFormPage(){
         
     )
 }
+
+export default LoginForm;
