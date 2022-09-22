@@ -22,7 +22,9 @@
     padding-top:20px;
     padding-bottom: 20px;
 }
-
+.backgroundImage{
+    max-width:100%
+}
 .button{
     align-items: center;
     justify-content: center; 

@@ -15,7 +15,7 @@ export default function AboutMeetup(){
                 <button className={styles.button} onClick={()=>history.push("/signup")}> Join Meetup</button>
             </div>
             <div style={{ backgroundImage: `url(${image})` }}>
-                <img src={image}></img>
+                <img src={image} className={styles.backgroundImage}></img>
             </div>
         </div>
     )
