@@ -53,6 +53,23 @@
    color:#008294;
 }
 
+.login{
+    text-decoration: none;     
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:black;
+    font-size: 16px;
+    color:#212121;
+    font-style:normal;
+    font-weight: 550;
+    padding-top:20px;
+ }
+ 
+.login:hover{
+   text-decoration: none; 
+   color:#008294;
+   padding-top:20px;
+}
+
 .profile-dropdown-main{
     display: grid;
     position:relative;   
