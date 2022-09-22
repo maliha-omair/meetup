@@ -22,7 +22,7 @@ body{
     display:flex;
     flex-direction: row;
     max-width: 100%;
-    min-height: 35vh;
+    min-height: 40vh;
     background-color: black;
     justify-content:center;
     align-items:center;
