@@ -8,6 +8,7 @@
     height:50px;
     position: relative;
     border: 0.5px solid;
+    
     margin-bottom: 50px;
     /* margin: top -20px; */
     background-color: white;
@@ -30,10 +31,12 @@
     width: 20px;
 }
 .link-div{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    flex-direction: row;
     
-    justify-content: space-around;   
+
+    
 }
 .navigate-link{
     text-decoration: none;     

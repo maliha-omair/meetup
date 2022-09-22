@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../context/Modal';
+import { closeLoginModal } from '../../store/ui';
 import LoginForm from './LoginForm';
-import styles from "../LoginFormModal/loginFormModal.module.css"
+
 
 function LoginFormModal() {
-  const [showModal, setShowModal] = useState(false);
  
+  const showModal = useSelector(state => state.ui.showLoginModal)
+  const dispatch = useDispatch();
+
   return (
     <>
-
-      <div className={styles.navigateLink} onClick={() => {setShowModal(true)}}>Log In</div>
       {showModal && (
         <div>
-           
-        <Modal onClose={() => setShowModal(false)} onOpen= {()=>setShowModal(true)}>
+        <Modal onClose={() => dispatch(closeLoginModal())} >
           <LoginForm />
         </Modal>
         </div>

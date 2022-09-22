@@ -1,11 +1,10 @@
 .main-signup{
+    display: flex;
     text-align: center;
-    justify-content: space-evenly;
-    display:flex;
-    
-    /* padding: 20px 20px 20px 20px; */
-    background-color: white;
-    padding-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom:20px;   
+    border-radius: 0.5rem;
 }
 
 .sub-main-signup{
@@ -19,7 +18,7 @@
     padding:0px 50px 0px 50px;
     
     
-    border-radius: 8px;
+    border-radius: 0.5rem;
     background-color: white;
     
 }

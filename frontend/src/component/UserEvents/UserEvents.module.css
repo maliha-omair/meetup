@@ -1,4 +1,5 @@
 .main{
+   
     max-width:80%;
     display: flex;
     flex-direction: column;
@@ -12,7 +13,7 @@
     font-family: Roboto,Helvetica,Arial,sans-serif;
     min-width: 640px;
     font-size: 20px;
-    font-weight: bold; 
+    font-weight: bold;    
     padding-bottom: 20px;
 }
 

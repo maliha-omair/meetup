@@ -1,7 +1,7 @@
 .home-guest-main-div{
     display: flex;
-    /* 1align-items: center; */
     max-width: 80%;
+    min-height: 500px;
     justify-content: center;
     align-items: center;
     padding-left: 70px;

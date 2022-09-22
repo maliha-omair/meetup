@@ -4,13 +4,16 @@ import { NavLink, useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import smallLogo from "../../assets/meetup-logo.png";
 import "./LoginForm.css";
+import SignUpFormModal from "../SignupFormModal";
+import { closeLoginModal, showSignupModal } from "../../store/ui";
 
 function LoginForm() {
+    const dispatch = useDispatch();
+
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [demoUser,setDemoUser] = useState(false);
     const [errors, setErrors] = useState([]);
-    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
    
@@ -43,6 +46,10 @@ function LoginForm() {
                 });
     }
     
+    function openSignupModal(){
+        dispatch(closeLoginModal());
+        dispatch(showSignupModal());
+    }
 
     return(   
         <form onSubmit={handleSubmit} className="main-login">        
@@ -51,7 +58,11 @@ function LoginForm() {
                     <div className="login-top">                            
                         <img src={smallLogo} alt="logo" className="logo-login"/>
                         <h1 className="login-title">Log in</h1>
-                        <div className="not-a-member-login"><span className="notMember">Not a member yet?</span> <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div>
+                        <div className="not-a-member-login"><span className="notMember">Not a member yet?</span> 
+                        <SignUpFormModal  />
+                        <NavLink to="#" onClick={openSignupModal} className="signup-link">  Sign Up</NavLink>
+                        </div>
+                        {/* <NavLink to="/signup" className="signup-link" >Sign up</NavLink> </div> */}
                     </div>
                     <div className="errorDiv">
                         <ul className="errorMessageUl">

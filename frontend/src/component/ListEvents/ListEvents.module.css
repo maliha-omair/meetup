@@ -85,8 +85,9 @@
 }
 
 .displayImage{
-    /* width: 200px; */
-    /* height: 200px;   */
+    max-width: 180px;
+    max-height: 180px;
     padding-right:20px;
+    object-fit:cover;
 }
 

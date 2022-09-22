@@ -58,11 +58,10 @@ function App() {
               <Home />
             </Route>
             <Route path="/login">
-            <LoginFormModal />
-              
+              <LoginFormModal showModal={false} />
             </Route>
             <Route path="/signup">
-              <SignUpFormModal />              
+              <SignUpFormModal showModal={false} />
             </Route>
             <Route path="/logout">
               <Logout />
@@ -115,11 +114,12 @@ function App() {
           </Switch>
         )}
 
-        <div className="footer">
-          <Footer sessionUser={sessionUser} />
-        </div>
+        
 
       </div>
+      <div className="footer">
+          <Footer sessionUser={sessionUser} />
+        </div>
     </div>
 
   ));

@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import sessionReducer from "../store/session"
 import eventReducer from './events';
 import groupReducer from './groups';
+import uiReducer from './ui';
 // import {thunkSetSession} from "../store/session"
 
 const RESET_STATE = 'root/RESET_STATE';
@@ -18,7 +19,8 @@ export function resetState() {
 const appReducer = combineReducers({
     session:sessionReducer,
     group: groupReducer,
-    event: eventReducer
+    event: eventReducer,
+    ui: uiReducer
 });
 
 const rootReducer = (state, action) => {

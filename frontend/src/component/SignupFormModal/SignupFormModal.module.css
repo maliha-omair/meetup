@@ -1,0 +1,17 @@
+.navigateLink{
+    text-decoration: none;     
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color:black;
+    font-size: 16px;
+    color:#212121;
+    font-style:normal;
+    font-weight: 550;
+    cursor: pointer;
+ 
+ }
+ 
+.navigateLink:hover{
+   text-decoration: none; 
+   color:#0070f3;
+   cursor: pointer;
+}

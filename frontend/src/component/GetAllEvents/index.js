@@ -45,7 +45,7 @@ export default function GetAllEvents() {
                 </div>
 
                 <div className={styles.pageHeading}>
-                    <div className={styles.event}>Events</div><div className={styles.group}><NavLink className={styles.links} to="/allGroups">Groups</NavLink></div>
+                    <div className={styles.event}>Events</div><div className={styles.group}><NavLink className={styles.links} to="/allGroups">&nbsp;&nbsp;Groups</NavLink></div>
                 </div>
                 <ListControl altChildren={<EmptyListMessage listType="groups" />} elements={allEvents}>
                     <ListEvents events={allEvents} />

@@ -44,9 +44,7 @@ export default function UserGroups({sessionUser}){
                 userGroups && (
                 <div className={styles.main}>          
                     <div className={styles.pageHeading}>
-                        <div className={styles.group}>
-                            Your Groups         
-                        </div>
+                        <div className={styles.group}>Your Groups</div>
                     </div>
                 <ListGroups groups={userGroups}/>
                 

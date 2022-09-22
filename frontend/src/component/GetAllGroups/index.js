@@ -13,9 +13,9 @@ export default function GetAllGroups() {
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
     const allGroups = useSelector(state => state.group.groups);
-    const history = useHistory();
 
-    let groupsArr = [];
+
+
 
     useEffect(() => {
         dispatch(groupActions.getAllGroupsThunk())
@@ -37,7 +37,7 @@ export default function GetAllGroups() {
                 </div>
 
                 <div className={styles.pageHeading}>
-                    <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events</NavLink></div><div className={styles.group}>Groups</div>
+                    <div className={styles.event}><NavLink className={styles.links} to="/allEvents">Events&nbsp;&nbsp;</NavLink></div><div className={styles.group}>Groups</div>
                 </div>
 
 
