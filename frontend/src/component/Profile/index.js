@@ -33,7 +33,7 @@ export default function Profile(){
         <div className="profile-main-div">
             <div className="profile-sub-div">
                 <div className="profile-pic-large">
-                    <div className="dot">{`${sessionUser.firstName.charAt(0).toUpperCase()}`}</div>   
+                    <div className="dot"><span className="dSpan">{`${sessionUser.firstName.charAt(0).toUpperCase()}`}</span></div>   
                 </div>
                 <div>
                     <h1>

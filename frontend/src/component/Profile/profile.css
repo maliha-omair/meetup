@@ -1,8 +1,11 @@
 .dot {
+    display: flex;
+    flex-direction: column;
     border-radius: 50%;
     width: 200px;
     height: 200px;
     margin: 40px;
+    
     padding: 50px;
     background: rgb(151, 202, 209);
     border: 8px solid #666;
@@ -15,8 +18,15 @@
   flex-direction: row;
   justify-content: center;
   align-items: center; 
-}
 
+}
+.dSpan{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top:px;
+}
 .profile-sub-div{
   display: grid;
   grid-template-columns: 1fr 1fr;

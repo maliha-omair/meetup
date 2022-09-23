@@ -24,7 +24,7 @@ export default function HomeUser({user}){
     }, [dispatch]);
 
     return(
-        <div className="hone-user-main-div">
+        <div className="home-user-main-div">
             <div className="sub-div">
                 <h1>Welcome {user.firstName} 👋</h1>
                

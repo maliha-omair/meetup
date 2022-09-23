@@ -1,6 +1,5 @@
-.main{
-   
-    max-width:80%;
+.main{   
+    max-width:100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,11 +10,12 @@
     display: flex;
     flex-direction: row;
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    min-width: 640px;
+    min-width: 600px;
     font-size: 20px;
     font-weight: bold; 
     padding-bottom: 20px;
 }
+
 .event{
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 20px;
@@ -28,10 +28,12 @@
     border-bottom: 3px solid ;
 }
 
+
 .links{
     text-decoration: none;
     color: #757575;
 }
+
 
 .errorMessageLi{
     color: #f65858;
@@ -39,11 +41,13 @@
     text-align: left;    
 }
 
+
 .errorDiv{
     font-size: 14px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
     font-weight: normal;
 }
+
 
 .errorMessageUl{ 
     list-style-type: none;    

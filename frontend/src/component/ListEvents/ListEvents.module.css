@@ -1,5 +1,15 @@
 
 
+.middleDiv{
+    display:flex;
+    flex-direction: row;
+
+    padding-bottom: 20px;
+    cursor: pointer;
+    
+    
+}
+
 .eventsHeading{
     font-size: 30px;
     font-family: Roboto,Helvetica,Arial,sans-serif;
@@ -47,14 +57,7 @@
     /* align-items: center; */
 }
 
-.middleDiv{
-    display:flex;
-    flex-direction: row;
-    padding-bottom: 20px;
-    cursor: pointer;
-    
-    
-}
+
 
 .date{
     font-size: 16px;

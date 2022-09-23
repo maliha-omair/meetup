@@ -1,15 +1,18 @@
 .home-user-main-div{
     display: flex;
-    justify-content: center;
+    flex-direction: column;    
     align-items: center;
+    
+    
    
 }
 .sub-div{
 
     display: flex;
     flex-direction: row;
-    justify-content: left;
-    padding-left: 30px;
+    min-width: 650px;
+    padding-bottom: 20px;
+    
 
 }
 

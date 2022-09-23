@@ -143,31 +143,42 @@
 }
 
 .createEvent{
-    color: white;
+    align-items: center;
+    justify-content: center; 
+    width:120px;
+    height:24px;
+    border-radius: 7px;
+    background-color:#f65858;
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    background-color:#f65858;  
-    margin-right: 20px;  
-    padding-left:10px;
+    cursor: pointer;
+    color:white;
+    font-size:14px;
+    border:none;
 }
 
 .createEvent:hover{
     background-color:rgba(246, 88, 88,0.8);
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    color:white;
     cursor: pointer;
 }
 
 .createVenue{
-    color: white;
+    align-items: center;
+    justify-content: center; 
+    width:120px;
+    height:24px;
+    border-radius: 7px;
+    background-color:#f65858;
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    background-color:#f65858;    
-    padding-left:10px;
+    cursor: pointer;
+    color:white;
+    font-size:14px;
+    border:none;
 }
 
 .createVenue:hover{
     background-color:rgba(246, 88, 88,0.8);
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    color:white;
     cursor: pointer;
 }
 

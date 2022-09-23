@@ -85,6 +85,7 @@ export default function Group({ sessionUser }) {
                             <NavLink to="/event/new" >
                                 <button className={styles.createEvent} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                             </NavLink>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <NavLink to={`/${groupId}/venue`} >
                                 <button className={styles.createVenue} >Create Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                             </NavLink>
