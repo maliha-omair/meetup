@@ -22,7 +22,7 @@ export default function UpdateEvent({ sessionUser }) {
     const [errors, setErrors] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
     const [capacity, setCapacity] = useState(0);
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState(0.01);
 
     const event = useSelector(state => state.event.event);
     const currentGroup = useSelector(state => state.group.group);
@@ -163,14 +163,14 @@ export default function UpdateEvent({ sessionUser }) {
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Capacity</label>
                         <div className={styles.attendeeTextAndInput}>
-                            <input type="text" key={capacity} className={styles.attendeeInput} value={capacity} onChange={(e) => setCapacity(e.target.value)} />
+                            <input type="number" min="0.0" className={styles.attendeeInput} value={capacity} onChange={(e) => setCapacity(e.target.value)} />
                             <span className={styles.attendeeText}>Set the total number of attendees for this event. Members will see how many spots are available</span>
                         </div>
                     </div>
 
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Event Fee</label>
-                        <input type="text" className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
+                        <input type="number" min="0.01" step={0.01} className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
                     </div>
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Venue </label>

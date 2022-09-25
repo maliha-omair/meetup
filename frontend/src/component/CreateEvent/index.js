@@ -16,8 +16,8 @@ export default function CreateEvent({ sessionUser }) {
     const [errors, setErrors] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
 
-    const [capacity, setCapacity] = useState("");
-    const [price, setPrice] = useState("");
+    const [capacity, setCapacity] = useState(0);
+    const [price, setPrice] = useState(0.0);
     const currentGroup = useSelector(state => state.group.group);
 
 
@@ -120,14 +120,14 @@ export default function CreateEvent({ sessionUser }) {
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Capacity</label>
                         <div className={styles.capacityDiv}>
-                            <input type="text" className={styles.capacity} value={capacity} onChange={(e) => setCapacity(e.target.value)} />
+                            <input type="number" min="0.0" className={styles.capacity} value={capacity} onChange={(e) => setCapacity(e.target.value)} />
                             <span className={styles.capacityText}>Set the total number of attendees for this event. Members will see how many spots are available</span>
                         </div>
                     </div>
 
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Event Fee</label>
-                        <input type="text" className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
+                        <input type="number" min="0.01" step={0.01} className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
                     </div>
 
                     <div className={styles.inputDiv}>

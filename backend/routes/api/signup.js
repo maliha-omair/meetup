@@ -57,7 +57,8 @@ let signup  =  async (req, res) => {
     id:user.id, 
     firstName:user.firstName, 
     lastName:user.lastName,
-    email:user.email, token
+    email:user.email, token,
+    memberSince: user.createdAt
   });
 }
 

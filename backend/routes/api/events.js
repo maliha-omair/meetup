@@ -55,7 +55,7 @@ const validateUpdateEvent = [
         .isIn(['Online', 'In person'])
         .withMessage('Type must be Online or In person'),
     check('capacity')
-        .isNumeric()
+        .isNumeric() 
         .withMessage("Capacity must be an integer"),
     check('price')
         .isNumeric()
