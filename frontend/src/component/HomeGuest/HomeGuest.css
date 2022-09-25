@@ -1,12 +1,27 @@
-.home-guest-main-div{
-    display: flex;
-    max-width: 80%;
-    min-height: 500px;
-    justify-content: center;
+.home-main-div{
     align-items: center;
-    padding-left: 70px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 80%;
+    
 }
 
+.home-guest-main-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-guest-lower-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+    justify-content: center; 
+    justify-items: center;
+    /* padding-left:40px; */
+    max-width: 80%;
+}
 .sub-div-guest-view{
     display: flex;
     flex-direction: row;
@@ -14,20 +29,79 @@
     max-width: 80%;
 }
 
+.middle-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
 @media screen and (min-width: 577px) {
     .home-guest-main-div{
         flex-direction: row;
     }
-    
 }
 
+.bottom-link{
+      color: #008294;
+      text-decoration: none;
+}
+
+.bottom-link:hover{
+    color: #008294;
+    /* text-decoration: none; */
+
+}
+
+.lower-div{
+    align-items: baseline;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* max-width: 1120px; */
+    padding: 60px
+
+}
+
+.guest-group{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+   
+}
+
+.content-text{
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.guest-event{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px; 
+}
+
+.guest-start-group{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+}
 /* .items-center {
     align-items: center;
 } */
 .guest-view-p {
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
+    text-align: center;
+
 }
 
 .left-intro-div{
@@ -40,3 +114,4 @@
     width:600px;
     height:300px;
 }
+
