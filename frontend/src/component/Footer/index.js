@@ -2,9 +2,6 @@ import React from "react"
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Footer.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faYoutube, faTiktok, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { useState } from "react";
 import LoginFormModal from "../LoginFormModal";
 import SignUpFormModal from "../SignupFormModal";
 import { showLoginModal, showSignupModal } from "../../store/ui";
@@ -17,8 +14,6 @@ export default function Footer({ sessionUser }) {
 
     return (
         <div className={styles.mainDiv}>
-
-
             <div className={styles.top}>
                 <div className={styles.topText}>
                     Create your own Meetup group.
@@ -41,10 +36,10 @@ export default function Footer({ sessionUser }) {
                     )}
                     {(
                         !sessionUser && <div className={styles.subNavLink}>
-                            <LoginFormModal  />
+                            <LoginFormModal />
                             <NavLink to="#" className={styles.footerLink} onClick={() => dispatch(showLoginModal())} >Log In</NavLink>
 
-                            <SignUpFormModal  />
+                            <SignUpFormModal />
                             <NavLink to="#" className={styles.footerLink} onClick={() => dispatch(showSignupModal())} >Sign up</NavLink>
                             {/* <NavLink to="/signup" className={styles.footerLink}>Sign Up</NavLink> */}
                         </div>

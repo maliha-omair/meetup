@@ -35,17 +35,18 @@ export default function ListEvents({ events, currentUser }) {
                 return (
                     <>
                         <div className={styles.middleDiv} key={index} value={event.id} onClick={() => { handleClick(event.id) }}>
-
-                            {(!event.Images || !event.Images.length > 0) && (
-                                <div className={styles.displayImage}>
-                                    <img src={image} className={styles.image}></img>
-                                </div>
-                            )}
-                            {(event.Images && event.Images.length > 0) && (
-                                <div className={styles.displayImage}>
-                                    <img src={event.Images[0].url} className={styles.image}></img>
-                                </div>
-                            )}
+                            <div className={styles.imageDivList}>
+                                {(!event.Images || !event.Images.length > 0) && (
+                                    <div className={styles.displayImage}>
+                                        <img src={image} className={styles.image}></img>
+                                    </div>
+                                )}
+                                {(event.Images && event.Images.length > 0) && (
+                                    <div >
+                                        <img src={event.Images[0].url} className={styles.image}></img>
+                                    </div>
+                                )}
+                            </div>
                             <div className={styles.listEvents}>
                                 <div className={styles.date}>{formatMemberSinceDate(event.createdAt)}</div>
                                 <div className={styles.name}>{event.name}</div>

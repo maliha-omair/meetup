@@ -28,12 +28,12 @@ export default function ListGroups({groups}){
            <div>
             {groupsArr.map((group,idx)=>{
                 return(
-            <div key={idx} value={group.id} onClick={()=>{handleClick(group.id)}} className={styles.body}>  
+            <div key={idx} value={group.id} onClick={()=>{handleClick(group.id)}} >  
                 
                 <div className={styles.middleList}>
                     <div className={styles.imageDivList}> 
                             { (group.Images && group.Images.length > 0) && ( 
-                            <div className={styles.img} >
+                            <div  >
                                 
                                 <img src={group.Images[0].url} className={styles.img}  alt="The image alt"/>
                             </div>

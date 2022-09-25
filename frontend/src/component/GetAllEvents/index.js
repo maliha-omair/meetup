@@ -5,7 +5,6 @@ import * as eventActions from "../../store/events";
 import styles from "../GetAllEvents/GetAllEvents.module.css"
 import ListControl from '../ListControl';
 import ListEvents from '../ListEvents';
-import ListPublicEvents from '../ListPublicEvents/ListPublicEvents';
 import EmptyListMessage from '../EmptyListMessage';
 
 export default function GetAllEvents() {
@@ -38,11 +37,6 @@ export default function GetAllEvents() {
         <>
             <div className={styles.main}>
 
-                <div className={styles.errorDiv}>
-                    <ul className={styles.errorMessageUl}>
-                        {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
-                    </ul>
-                </div>
 
                 <div className={styles.pageHeading}>
                     <div className={styles.event}>Events</div><div className={styles.group}><NavLink className={styles.links} to="/allGroups">&nbsp;&nbsp;Groups</NavLink></div>

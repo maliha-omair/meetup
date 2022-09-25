@@ -8,6 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Home(){
    
     const sessionUser = useSelector(state => state.session.user);
-    return (sessionUser ? <HomeUser user={sessionUser}/> : <HomeGuest />);
+    return (sessionUser ? <HomeUser user={sessionUser}/> : <HomeGuest user={sessionUser}/>);
 
 }

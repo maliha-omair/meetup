@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom"
 
 
 export default function HomeGuest() {
+
     return (
         <div className="home-main-div">
             <div className="home-guest-main-div">
@@ -46,11 +47,11 @@ export default function HomeGuest() {
                         <div className="bottom-link"><NavLink to="/allEvents" className="bottom-link"><h3>Find an event</h3></NavLink></div>
                         <div className="content-text">Events are happening on just about any topic you can think of, from online gaming and photography to yoga and hiking.</div>
                     </div>
-                    <div className="guest-start-group">
+                    {/* <div className="guest-start-group">
                         <div><img src={groupImage} /></div>
-                        <div className="bottom-link"><h3>Start a group</h3></div>
+                        <div className="bottom-link"><NavLink to="/signup" className="bottom-link"><h3>Start a group</h3></NavLink></div>
                         <div className="content-text">You don’t have to be an expert to gather people together and explore shared interests.</div>
-                    </div>
+                    </div> */}
                 </div>
             {/* </div> */}
         </div>

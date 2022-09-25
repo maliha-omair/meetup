@@ -1,10 +1,9 @@
 .home-main-div{
-    align-items: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: auto;
-    max-width: 80%;
-    
+    max-width: var(--main-div-width);
 }
 
 .home-guest-main-div{
@@ -56,13 +55,9 @@
 }
 
 .lower-div{
-    align-items: baseline;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* max-width: 1120px; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding: 60px
-
 }
 
 .guest-group{

@@ -1,4 +1,8 @@
 /* TODO Add site wide styles */
+:root{
+    --main-div-width: 80%;
+}
+
 
 body{
     margin: 0px;
@@ -9,7 +13,9 @@ body{
 .page-container{
     min-height: 100vh;
     position: relative;
-    
+    display: flex;
+    flex-direction: column;
+    margin: 0;
     
 }
 
@@ -21,11 +27,12 @@ body{
     display:flex;
     flex-direction: row;
     max-width: 100%;
-    min-height: 40vh;
+    min-height: 25vh;
+    overflow: hidden;
     background-color: black;
     justify-content:center;
     align-items:center;
-    
+    margin-top: auto;
 }
 
 .navigationStyle{
