@@ -136,7 +136,7 @@ export default function CreateEvent({ sessionUser }) {
 
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Event Fee</label>
-                        <input type="number" min="0.01" step={0.01} className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
+                        <input type="number" min={0} step={0.1} className={styles.amountDiv} value={price} onChange={(e) => setPrice(e.target.value)} />
                     </div>
 
                     <div className={styles.inputDiv}>
