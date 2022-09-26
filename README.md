@@ -2,7 +2,8 @@
 
 # About Mulaqat
 
-Mulaqat is a web application inspired by Meetup, that is a platform for finding and building local communities. 
+Mulaqat is a web application inspired by Meetup, that is a platform for finding and building local communities.
+App is designed and developed using Express Js, React and Redux. 
 
 Read [Click here to view Mulaqat live site] (https://mo-meetup.herokuapp.com/)
 
