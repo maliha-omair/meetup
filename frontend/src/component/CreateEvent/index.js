@@ -5,6 +5,7 @@ import { createNewEventThunk } from "../../store/events"
 import styles from "../CreateEvent/CreateEvent.module.css"
 
 import { useEffect } from "react";
+import { getGroupByIdThunk } from "../../store/groups";
 
 export default function CreateEvent({ sessionUser }) {
     const [name, setName] = useState("");
@@ -19,6 +20,9 @@ export default function CreateEvent({ sessionUser }) {
     const [capacity, setCapacity] = useState(0);
     const [price, setPrice] = useState(0.0);
     const currentGroup = useSelector(state => state.group.group);
+    const params = useParams();
+
+    const groupId = params.groupId;
 
 
     const history = useHistory()
@@ -27,9 +31,14 @@ export default function CreateEvent({ sessionUser }) {
     useEffect(() => {
         if (currentGroup && currentGroup.Venues.length > 0) {
             setVenueId(currentGroup.Venues[0].id)
-
+        }else{
+            dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+    
         }
-    }, [currentGroup]);
+    }, [dispatch, groupId, currentGroup]);
 
 
     function handleSubmit(e) {

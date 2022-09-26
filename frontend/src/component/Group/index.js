@@ -26,7 +26,6 @@ export default function Group({ sessionUser }) {
 
 
     useEffect(() => {
-
         dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(Object.values(data.errors));
@@ -46,11 +45,6 @@ export default function Group({ sessionUser }) {
 
     return (group && (
         <div className={styles.main}>
-            <div className={styles.errorDiv}>
-                <ul className={styles.errorMessageUl}>
-                    {errors.map((error, idx) => <li className={styles.errorMessageLi} key={idx}>{error}</li>)}
-                </ul>
-            </div>
             <div className={styles.groupDetail}>
                 <div>
                     {(group.Images && group.Images.length > 0) && (
@@ -82,11 +76,11 @@ export default function Group({ sessionUser }) {
                         <nav>
                             <NavLink className={styles.update} to={`/groups/${groupId}/update`} > Update</NavLink>
                             <NavLink className={styles.delete} to="#" onClick={() => handleDelete()} >Delete</NavLink>
-                            <NavLink to="/event/new" >
+                            <NavLink to={`/groups/${groupId}/event/new`} >
                                 <button className={styles.createEvent} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                             </NavLink>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <NavLink to={`/${groupId}/venue`} >
+                            <NavLink to={`/groups/${groupId}/venue/new`} >
                                 <button className={styles.createVenue} >Create Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                             </NavLink>
 

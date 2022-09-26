@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from "../CreateVenue/CreateVenue.module.css"
 import createVenue from "../../store/venue";
 import { useEffect } from "react";
+import { getGroupByIdThunk } from "../../store/groups";
 
 export default function CreateVenue({ sessionUser}){
 
@@ -15,15 +16,22 @@ export default function CreateVenue({ sessionUser}){
     const [errors, setErrors] = useState([]);
     
     const dispatch = useDispatch();   
-    const params = useParams()
+    const params = useParams();
     const currentGroup = useSelector(state => state.group.group);
-    const history = useHistory()
-
+    const history = useHistory();
     const groupId = params.groupId;
-    if(!sessionUser || !currentGroup){
-        console.log(sessionUser,currentGroup)
+    if(!sessionUser ){
         history.push("/")
     }
+
+    useEffect(() => {
+        if (!currentGroup) {
+            dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+        }
+    }, [dispatch, groupId, currentGroup]);
 
     function handleSubmit(e){ 
         e.preventDefault();

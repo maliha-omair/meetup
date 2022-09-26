@@ -34,8 +34,6 @@
 .navigationMenu{
     display:flex;
     flex-direction: row;
-    align-items: left;
-    
 }
 
 .cityState{

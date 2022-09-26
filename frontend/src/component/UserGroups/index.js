@@ -35,10 +35,6 @@ export default function UserGroups({sessionUser}){
 
     return (
         <>
-            <ul>
-                {errors.map((error, idx) => <li className="li-login" key={idx}>{error}</li>)}
-            </ul>
-
         <ListControl altChildren = {<EmptyListMessage listType="groups"/>} elements={userGroups? Object.values(userGroups): null}>
             {
                 userGroups && (

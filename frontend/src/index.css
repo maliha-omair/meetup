@@ -27,7 +27,7 @@ body{
     display:flex;
     flex-direction: row;
     max-width: 100%;
-    min-height: 25vh;
+    min-height: 30vh;
     overflow: hidden;
     background-color: black;
     justify-content:center;

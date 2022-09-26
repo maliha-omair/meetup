@@ -72,10 +72,10 @@ function App() {
             <Route path="/createGroup">
               <GroupsForm />
             </Route>
-            <Route path="/event/new">
+            <Route path="/groups/:groupId/event/new">
               {sessionUser ? <CreateEvent sessionUser={sessionUser}></CreateEvent> : <Redirect to="/" />}
             </Route>
-            <Route path="/:groupId/venue">
+            <Route path="/groups/:groupId/venue/new">
               <CreateVenue sessionUser={sessionUser} />
             </Route>
             <Route path="/allGroups">
