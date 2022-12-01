@@ -2,34 +2,39 @@ const express = require('express')
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
-const { User, Group, Image, Membership, Venue } = require('../../db/models');
+const { User, Group, Image, Membership, Venue, Event } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
 // const group = require("./groups")
 
 
-const validateNewVenue = [
+const validateVenueUpdate = [
     check('address')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("Street address is required"),
     check('city')
-        .exists({ checkFalsy: false })
+        .exists({ checkFalsy: true })
         .withMessage("City is required"),
     check('state')
-        .exists({ checkFalsy: false })
-        .withMessage("state is required"),
+        .exists({ checkFalsy: true })
+        .withMessage("State is required"),
     check('lat')
-        .isNumeric({ min: -90, max: 90 })
+        .isFloat({ min: -90, max: 90 })
         .withMessage("Latitude is not valid"),
     check('lng')
-        .isNumeric({ min: -180, max: 180 })
+        .isFloat({ min: -180, max: 180 })
         .withMessage("Longitude is not valid"),
     handleValidationErrors
 ];
 
-
-
-router.put("/:venueId", requireAuth,validateNewVenue, async (req, res, next) => {
+function eventHasVenue(req, _res, next) {
+    const err = new Error("Cannot delete, as an event is happening at this venue");
+    err.title = 'Bad Request';
+    err.errors = ["cannot delete, as an event is happening at this venue"];
+    err.status = 400;
+    return next(err);
+}
+router.put("/:venueId", requireAuth,validateVenueUpdate, async (req, res, next) => {
 
     const{ address, city, state, lat, lng } = req.body;
     const venueId = req.params.venueId;
@@ -52,6 +57,33 @@ router.put("/:venueId", requireAuth,validateNewVenue, async (req, res, next) => 
 });
 
 
+router.delete("/:venueId", requireAuth, async (req, res, next) => {
+    const venue = await Venue.findOne({
+        where: {
+            id: req.params.venueId,
+           
+        }
+    });
+    if (!venue) venueNotFoundError(req, res, next);
+    const event = await Event.findAll({
+        where:{
+            venueId: req.params.venueId           
+        }
+    })
+    if(event) eventHasVenue(req, res, next);
+    
 
+    if ((await isOrganizer(venue.groupId, req.user)) || (await isCoHost(venue.groupId, req.user))) {
+        if(!event) await venue.destroy();
+    }else {
+        return notAuthorizedErr(req,res,next);
+    }
+    
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
+
+});
 
 module.exports = router;

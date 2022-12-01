@@ -59,10 +59,10 @@ export default function CreateEvent({ sessionUser }) {
             imageUrl
         }
 
-        console.log("submitted")
+       
         return dispatch(createNewEventThunk(event))
             .then((res) => {
-                console.log("res is ", res);
+             
                 history.push(`/groups/${groupId}`)
             })
             .catch(async (res) => {

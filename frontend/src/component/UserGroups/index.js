@@ -12,9 +12,9 @@ export default function UserGroups({sessionUser}){
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history= useHistory();
-    console.log("user is",sessionUser)
+  
     useEffect(()=>{
-        console.log(sessionUser)
+       
         if(!sessionUser){
             history.push("/")
         }   

@@ -15,12 +15,20 @@ if (listType === "groups")
             <h3>No groups joined</h3>
             <div className={styles.noGroups}> groups you join and organize will be shown here. </div>
         </div>
-)}else{
+)}else if (listType === "events"){
     return (
         <div className={styles.main}>
             <NavLink to="/" className={styles.back}>&lt;- Back to home page</NavLink>
             <img src={emptyEvents} className={styles.image}></img>
             <div className={styles.noEvents}>You are not hosting any upcoming events</div>
+        </div>
+    )    
+}else{
+    return (
+        <div className={styles.main}>
+            <NavLink to="/" className={styles.back}>&lt;- Back to home page</NavLink>
+            <img src={emptyEvents} className={styles.image}></img>
+            <div className={styles.noEvents}>You have not added any venue</div>
         </div>
     )    
 }

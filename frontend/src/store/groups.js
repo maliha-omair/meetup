@@ -7,6 +7,7 @@ const SET_GROUPS = 'group/setGroups';
 const REMOVE_GROUPS = 'group/removeGroups';
 const UPDATE_GROUP = 'group/updateGroup';
 const REMOVE_GROUP = "group/removeGroup"
+// const VIEW_VENUE = "group/viewVenue"
 
 
 const clearState = () => {

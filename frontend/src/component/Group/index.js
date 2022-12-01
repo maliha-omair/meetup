@@ -69,16 +69,22 @@ export default function Group({ sessionUser }) {
                     <nav className={styles.aboutEvent}>
                         <NavLink className={styles.about} to={`/groups/${groupId}/about`} >About</NavLink>
                         <NavLink className={styles.event} to={`/groups/${groupId}/events`} >Events</NavLink>
+                        
                     </nav>
 
 
                     {(sessionUser && sessionUser.id === group.organizerId) &&
                         <nav>
+                            <NavLink className={styles.event} to={`/venue/${groupId}`} >Venues </NavLink>
                             <NavLink className={styles.update} to={`/groups/${groupId}/update`} > Update</NavLink>
                             <NavLink className={styles.delete} to="#" onClick={() => handleDelete()} >Delete</NavLink>
                             <NavLink to={`/groups/${groupId}/event/new`} >
                                 <button className={styles.createEvent} >Create Event <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
                             </NavLink>
+                            {/* &nbsp;&nbsp;&nbsp;&nbsp;
+                            <NavLink to={`/venue/${groupId}`} >
+                                <button className={styles.createVenue} >View Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
+                            </NavLink> */}
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <NavLink to={`/groups/${groupId}/venue/new`} >
                                 <button className={styles.createVenue} >Create Venue <FontAwesomeIcon className="arrowIcon" icon={faAngleDown} /></button>
