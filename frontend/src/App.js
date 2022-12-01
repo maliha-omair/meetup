@@ -29,6 +29,8 @@ import GetAllEvents from "./component/GetAllEvents";
 import LoginFormModal from "./component/LoginFormModal";
 import LoginForm from "./component/LoginFormModal/LoginForm";
 import SignUpFormModal from "./component/SignupFormModal";
+import ViewVenue from "./component/ViewVenue";
+import EditVenue from "./component/EditVenue";
 
 
 function App() {
@@ -78,11 +80,17 @@ function App() {
             <Route path="/groups/:groupId/venue/new">
               <CreateVenue sessionUser={sessionUser} />
             </Route>
+            <Route path="/groups/:groupId/venues/:venueId/edit">
+              <EditVenue sessionUser={sessionUser}  />
+            </Route>
             <Route path="/allGroups">
               <GetAllGroups />
             </Route>
             <Route path="/allEvents">
               <GetAllEvents />
+            </Route>
+            <Route path="/venue/:groupId">
+              <ViewVenue />
             </Route>
             <Route path="/events/:eventId/update">
               <UpdateEvent sessionUser={sessionUser} />

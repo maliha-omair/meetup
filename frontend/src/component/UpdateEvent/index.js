@@ -100,12 +100,12 @@ export default function UpdateEvent({ sessionUser }) {
     }
 
     function handleEndDate(e) {
-        console.log(e)
+        
         setEndDate(e.target.value)
     }
 
     function handleStartDate(e) {
-        console.log(e)
+      
         setStartDate(e.target.value)
     }
 
