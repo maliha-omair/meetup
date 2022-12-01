@@ -74,7 +74,7 @@ router.delete("/:venueId", requireAuth, async (req, res, next) => {
     
 
     if ((await isOrganizer(venue.groupId, req.user)) || (await isCoHost(venue.groupId, req.user))) {
-        if(!event) await venue.destroy();
+        await venue.destroy();
     }else {
         return notAuthorizedErr(req,res,next);
     }

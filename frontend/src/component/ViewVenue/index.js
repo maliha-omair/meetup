@@ -10,12 +10,12 @@ export default function ViewVenue() {
     const groupId = useParams().groupId;
     const [errors, setErrors] = useState([]);
     const venues = useSelector(state => state.group.group && state.group.group.Venues);
+    const group = useSelector(state => state.group && state.group.group);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
-            const data = await res.json();
-
+            
         });
     }, [dispatch, groupId]);
     function handleDelete(id){
@@ -27,32 +27,36 @@ export default function ViewVenue() {
         });
     }
 
-    return (venues && (
+    return (venues && venues.length >1 &&(
         <div>
+            <div className={styles.groupName}>
+                    Venues for &nbsp; <span className={styles.name}>{group.name}</span>
+            </div>
             {Object.values(venues).map((venue, idx) => {
                 return (venue.address !== "Online") && (
+
                     <div key={idx} value={venue.id} className={styles.mainDiv} >
                         <div className={styles.subDiv}>
                             <div className={styles.innerDiv}>
                                 <div>
-                                    Address: {venue.address}
+                                    Address: &nbsp;&nbsp;&nbsp; {venue.address}
                                 </div>
                                 <div>
-                                    City: {venue.city}
+                                    City:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {venue.city}
                                 </div>
                                 <div>
-                                    State: {venue.state}
+                                    State: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{venue.state}
                                 </div>
                                 <div>
-                                    lattitude: {venue.lat}
+                                    lattitude: &nbsp;&nbsp;&nbsp;&nbsp;{venue.lat}
                                 </div>
                                 <div>
-                                    longitude: {venue.lng}
+                                    longitude: &nbsp;&nbsp;{venue.lng}
                                 </div>
                             </div>
-                            <div className={styles.edit}> <NavLink to={`/groups/${groupId}/venues/${venue.id}/edit`} ><i class="fa-solid fa-pen-to-square"></i> </NavLink></div>
+                            <div className={styles.edit}> <NavLink className={styles.edit} to={`/groups/${groupId}/venues/${venue.id}/edit`} ><i class="fa-solid fa-pen-to-square"></i> </NavLink></div>
 
-                            <div onClick={()=>handleDelete(venue.id)}>  <i class="fa-solid fa-trash"></i></div>
+                            <div onClick={()=>handleDelete(venue.id)} className={styles.edit}>  <i class="fa-solid fa-trash"></i></div>
                             
                         </div>
                         <hr className={styles.divider}></hr>
@@ -62,5 +66,12 @@ export default function ViewVenue() {
             })}
 
         </div>
-    ))
+    )) || (venues && venues.length <=1 &&  (
+        <div className={styles.main}>
+            <NavLink to="/" className={styles.back}>&lt;- Back to home page</NavLink>
+            <div className={styles.noVenues}>You have not created any venue for events</div>
+        </div>
+    )   
+        
+        )
 }
