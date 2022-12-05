@@ -15,6 +15,8 @@ export default function Event() {
     const params = useParams();
     const eventId = params.eventId;
     const dispatch = useDispatch();
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
     const history = useHistory();
 
 
@@ -81,16 +83,32 @@ export default function Event() {
 
                 <div className={styles.navigationMenu}>
                     <div className={styles.bottom}>
-
-                        <nav>
+                        <div>
                             <NavLink className={styles.about} to={`/events/${eventId}/about`} >About</NavLink>
-                        </nav>
+                        </div>
                         {(sessionUser && sessionUser.id === event.Group.organizerId) &&
-                            <nav >
+                            <div className={styles.manageEvents}>
                                 <NavLink to={`/events/${eventId}/update`} className={styles.update}>Update</NavLink>
-                                <NavLink to="#" onClick={() => handleDelete()} className={styles.delete}>Delete</NavLink>
-                            
-                            </nav>
+                                {!confirmDelete && (
+                                    <div>
+                                        <NavLink to="#" onClick={() => setConfirmDelete(true)} className={styles.delete}>Delete</NavLink>
+                                    </div>
+                                )}
+                                {confirmDelete && (
+                                    // <div className={styles.delete}>
+                                    //     <button className={styles.confirmDelete} onClick={handleDelete} >Confirm</button>
+                                    //     <button className={styles.confirmDelete} onClick={() => setConfirmDelete(false)}>Cancel</button>
+                                    // </div>
+                                    <div className={styles.confirmDelete}>
+                                        <button  onClick={handleDelete} className={styles.button}>Confirm</button>&nbsp;&nbsp;&nbsp;
+                                        <button className={styles.button} onClick={() => setConfirmDelete(false)}>Cancel</button>
+                                    </div>
+
+                                )}
+
+                            </div>
+
+
                         }
 
                     </div>

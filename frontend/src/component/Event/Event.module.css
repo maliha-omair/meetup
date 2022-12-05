@@ -67,8 +67,8 @@
     flex-direction: row;
     min-width: 60%;
     padding-top: 10px;
-    /* align-items: center; */
-    /* justify-content: center; */
+    align-items: center;
+    justify-content: center;
 }
 
 .desc{
@@ -173,4 +173,34 @@
     color: #212121;
     font-size: 14px;
 
+}
+
+.confirmDelete{
+    display:flex;
+    flex-direction: row;
+}
+
+.manageEvents{
+    display:flex;
+    flex-direction: row;
+}
+
+.button{
+    align-items: center;
+    justify-content: center; 
+    width:120px;
+    height:24px;
+    border-radius: 7px;
+    background-color:#f65858;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    cursor: pointer;
+    color:white;
+    font-size:14px;
+    border:none;
+}
+
+.button:hover{
+    background-color:rgba(246, 88, 88,0.8);
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    cursor: pointer;
 }
