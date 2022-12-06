@@ -19,6 +19,7 @@ export default function CreateEvent({ sessionUser }) {
 
     const [capacity, setCapacity] = useState(0);
     const [price, setPrice] = useState(0.0);
+    const [file, setFile] = useState(null);
     const currentGroup = useSelector(state => state.group.group);
     const params = useParams();
 
@@ -27,6 +28,7 @@ export default function CreateEvent({ sessionUser }) {
 
     const history = useHistory()
     const dispatch = useDispatch();
+
 
     useEffect(() => {
         if (currentGroup && currentGroup.Venues.length > 0) {
@@ -56,7 +58,8 @@ export default function CreateEvent({ sessionUser }) {
             price,
             startDate,
             endDate,
-            imageUrl
+            imageUrl,
+            file
         }
 
        
@@ -72,6 +75,11 @@ export default function CreateEvent({ sessionUser }) {
                 }
             });
 
+    }
+    
+    function fileSelected(e){
+        const file = e.target.files[0];
+        setFile(file)
     }
 
     return (currentGroup && (
@@ -155,6 +163,8 @@ export default function CreateEvent({ sessionUser }) {
                     <div className={styles.inputDiv}>
                         <label className={styles.label}>Image Url</label>
                         <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+                        <input type="file" onChange={fileSelected} accept="image/*"></input>
+
                     </div>
 
                     <div className={styles.inputDiv}>

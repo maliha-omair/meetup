@@ -15,6 +15,10 @@ export async function csrfFetch(url, options = {}) {
       options.headers['Content-Type'] || 'application/json';
     options.headers['XSRF-Token'] = Cookies.get('XSRF-TOKEN');
   }
+
+  if(options.headers['Content-Type']==='multipart/form-data'){
+    delete options.headers['Content-Type'];
+  }
   // call the default window's fetch with the url and the options passed in
   const res = await window.fetch(url, options);
   
