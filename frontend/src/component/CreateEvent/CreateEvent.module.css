@@ -207,16 +207,23 @@
     width:255px;
     height:45px;
     border-radius: 8px;
-    background-color:#f65858;
-    
+    background-color:#f65858;    
     color:white;
-    font-size:20px;
-    
+    font-size:20px;    
     border:none;
 }
 .publishEvent:hover{
     background-color:rgba(246, 88, 88,0.8);
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    cursor: pointer;
-   
+    cursor: pointer;   
+}
+
+.imageFile{
+    display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
 }

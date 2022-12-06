@@ -133,7 +133,7 @@ export const deleteEventThunk = (eventId)=> async dispatch =>{
     }
   }
 export const createNewEventThunk = (event) => async dispatch => {
-    const {groupId, venueId, name, type, description, capacity, price, startDate, endDate, imageUrl,file } = event;
+    const {groupId, venueId, name, type, description, capacity, price, startDate, endDate,file } = event;
     const formData  = new FormData();
     for(const name in event) {
       formData.append(name, event[name]);

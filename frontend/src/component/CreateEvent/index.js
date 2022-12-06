@@ -58,7 +58,6 @@ export default function CreateEvent({ sessionUser }) {
             price,
             startDate,
             endDate,
-            imageUrl,
             file
         }
 
@@ -161,10 +160,11 @@ export default function CreateEvent({ sessionUser }) {
                     </div>
 
                     <div className={styles.inputDiv}>
-                        <label className={styles.label}>Image Url</label>
-                        <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-                        <input type="file" onChange={fileSelected} accept="image/*"></input>
-
+                        <label className={styles.label}>Upload Image</label>
+                        {/* <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} /> */}
+                        <input type="file" onChange={fileSelected} className={styles.imageFile} aria-label="File browser example" accept="image/*"></input>
+                       
+                        
                     </div>
 
                     <div className={styles.inputDiv}>
