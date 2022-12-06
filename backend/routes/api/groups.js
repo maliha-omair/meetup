@@ -570,7 +570,7 @@ router.get("/:groupId/events", async (req, res, next) => {
 
 router.post("/:groupId/events",upload.single('file'), requireAuth,validateNewEvent, async (req,res,next)=>{
     const groupId = parseInt(req.params.groupId);
-    const {venueId,name,type,capacity,price,description,startDate,endDate, imageUrl,file} = req.body
+    const {venueId,name,type,capacity,price,description,startDate,endDate,file} = req.body
     if(!(await isGroup(groupId))) return groupNotFoundError(req,res,next);
     if ((await isOrganizer(groupId, req.user) ) || (await isCoHost(groupId, req.user))) {
         const newEvent = await Event.create({
@@ -584,16 +584,15 @@ router.post("/:groupId/events",upload.single('file'), requireAuth,validateNewEve
             startDate,
             endDate
         });
-        const file = req.file;
-        const imageResult = await uploadFile(file);
-        console.log("file is ", imageResult);
-        if(imageResult.Location) await Image.create({
-            url:imageResult.Location,
-            eventId:newEvent.id,
-            userId: req.user.id
-        })
-        // if(file) await 
-
+        if(file) {
+            imageResult = await uploadFile(file);
+            if(imageResult.Location) await Image.create({
+                url:imageResult.Location,
+                eventId:newEvent.id,
+                userId: req.user.id
+            })
+        }
+        
         res.status(200);
         const result = await getEventById(newEvent.id);
         res.json(result);        

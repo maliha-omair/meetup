@@ -15,29 +15,34 @@ export default function ViewVenue() {
 
     useEffect(() => {
         dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
-            
+
         });
     }, [dispatch, groupId]);
-    function handleDelete(id){
+    function handleDelete(id) {
         dispatch(deleteVenue(id)).then(() => dispatch(getGroupByIdThunk(groupId)))
-        .catch(async (res) => {
-            const data = await res.json();
-
-            if (data && data.errors) setErrors(Object.values(data.errors));
-        });
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
     }
 
-    return (venues && venues.length >1 &&(
+    return (venues && venues.length > 1 && (
         <div>
             <div className={styles.groupName}>
-                    Venues for &nbsp; <span className={styles.name}>{group.name}</span>
+                Venues for &nbsp; <span className={styles.name}>{group.name}</span>
             </div>
             {Object.values(venues).map((venue, idx) => {
                 return (venue.address !== "Online") && (
 
                     <div key={idx} value={venue.id} className={styles.mainDiv} >
                         <div className={styles.subDiv}>
+                            
                             <div className={styles.innerDiv}>
+                            <div className="signup-errorDiv">
+                                <ul className="signup-errorMessageUl">
+                                    {errors.map((error, idx) => <li className="signup-errorMessageLi" key={idx}>{error}</li>)}
+                                </ul>
+                            </div>
                                 <div>
                                     Address: &nbsp;&nbsp;&nbsp; {venue.address}
                                 </div>
@@ -56,22 +61,22 @@ export default function ViewVenue() {
                             </div>
                             <div className={styles.edit}> <NavLink className={styles.edit} to={`/groups/${groupId}/venues/${venue.id}/edit`} ><i class="fa-solid fa-pen-to-square"></i> </NavLink></div>
 
-                            <div onClick={()=>handleDelete(venue.id)} className={styles.edit}>  <i class="fa-solid fa-trash"></i></div>
-                            
+                            <div onClick={() => handleDelete(venue.id)} className={styles.edit}>  <i class="fa-solid fa-trash"></i></div>
+
                         </div>
                         <hr className={styles.divider}></hr>
                         {/* <br></br> */}
-                    </div>               
-                ) 
+                    </div>
+                )
             })}
 
         </div>
-    )) || (venues && venues.length <=1 &&  (
+    )) || (venues && venues.length <= 1 && (
         <div className={styles.main}>
             <NavLink to="/" className={styles.back}>&lt;- Back to home page</NavLink>
             <div className={styles.noVenues}>You have not created any venue for events</div>
         </div>
-    )   
-        
+    )
+
         )
 }

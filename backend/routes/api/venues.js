@@ -30,7 +30,7 @@ const validateVenueUpdate = [
 function venueIsInUse(req, _res, next) {
     const err = new Error("Cannot delete, as an event is happening at this venue");
     err.title = 'Bad Request';
-    err.errors = ["cannot delete, as an event is happening at this venue"];
+    err.errors = ["Cannot delete, as an event is happening at this Venue"];
     err.status = 400;
     return next(err);
 }
@@ -63,13 +63,13 @@ router.delete("/:venueId", requireAuth, async (req, res, next) => {
             id: req.params.venueId,           
         }
     });
-    if (!venue) venueNotFoundError(req, res, next);
+    if (!venue) return venueNotFoundError(req, res, next);
     const event = await Event.findAll({
         where:{
             venueId: req.params.venueId           
         }
     })
-    if(event && event.length > 0) venueIsInUse(req, res, next);
+    if(event && event.length > 0) return venueIsInUse(req, res, next);
     
 
     if ((await isOrganizer(venue.groupId, req.user)) || (await isCoHost(venue.groupId, req.user))) {

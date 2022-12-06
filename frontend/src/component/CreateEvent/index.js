@@ -33,12 +33,12 @@ export default function CreateEvent({ sessionUser }) {
     useEffect(() => {
         if (currentGroup && currentGroup.Venues.length > 0) {
             setVenueId(currentGroup.Venues[0].id)
-        }else{
+        } else {
             dispatch(getGroupByIdThunk(groupId)).catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
-    
+
         }
     }, [dispatch, groupId, currentGroup]);
 
@@ -61,10 +61,9 @@ export default function CreateEvent({ sessionUser }) {
             file
         }
 
-       
         return dispatch(createNewEventThunk(event))
             .then((res) => {
-             
+
                 history.push(`/groups/${groupId}`)
             })
             .catch(async (res) => {
@@ -75,8 +74,8 @@ export default function CreateEvent({ sessionUser }) {
             });
 
     }
-    
-    function fileSelected(e){
+
+    function fileSelected(e) {
         const file = e.target.files[0];
         setFile(file)
     }
@@ -163,8 +162,8 @@ export default function CreateEvent({ sessionUser }) {
                         <label className={styles.label}>Upload Image</label>
                         {/* <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} /> */}
                         <input type="file" onChange={fileSelected} className={styles.imageFile} aria-label="File browser example" accept="image/*"></input>
-                       
-                        
+
+
                     </div>
 
                     <div className={styles.inputDiv}>

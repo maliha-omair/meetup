@@ -23,6 +23,7 @@ export default function UpdateEvent({ sessionUser }) {
     const [imageUrl, setImageUrl] = useState("");
     const [capacity, setCapacity] = useState(0);
     const [price, setPrice] = useState(0.01);
+    const [file, setFile] = useState(null);
 
     const event = useSelector(state => state.event.event);
     const currentGroup = useSelector(state => state.group.group);
@@ -80,7 +81,7 @@ export default function UpdateEvent({ sessionUser }) {
             price,
             startDate,
             endDate,
-            imageUrl
+            file
         }
         setErrors([]);
         if (!venueId) {
@@ -100,15 +101,18 @@ export default function UpdateEvent({ sessionUser }) {
     }
 
     function handleEndDate(e) {
-        
+
         setEndDate(e.target.value)
     }
 
     function handleStartDate(e) {
-      
+
         setStartDate(e.target.value)
     }
-
+    function fileSelected(e) {
+        const file = e.target.files[0];
+        setFile(file)
+    }
 
     return (currentGroup && event && (
         <form onSubmit={handleSubmit}>
@@ -185,19 +189,29 @@ export default function UpdateEvent({ sessionUser }) {
                         </select>
                     </div>
                     <div className={styles.inputDiv}>
-                        <label className={styles.label}>Image url </label>
-                        <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+                        <label className={styles.label}>Upload Image</label>
+                        {/* <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} /> */}
+                        <input type="file" onChange={fileSelected} className={styles.imageFile} aria-label="File browser example" accept="image/*"></input>
+
+
                     </div>
 
-                    <div className={styles.inputDiv}>
-                        <button type="submit" className={styles.publishEvent}>Update</button>
-                    </div>
-                    <br></br>
+                   
+                
+                {/* <div className={styles.inputDiv}>
+                    <label className={styles.label}>Image url </label>
+                    <input type="text" className={styles.titleTextArea} value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+                </div> */}
+
+                <div className={styles.inputDiv}>
+                    <button type="submit" className={styles.publishEvent}>Update</button>
                 </div>
-
-
-
+                <br></br>
             </div>
-        </form>
+
+
+
+        </div>
+        </form >
     ));
 }

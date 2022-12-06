@@ -2,11 +2,14 @@ const express = require('express')
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
-const { User, Group, Image, Membership, Venue, Event , Attendee} = require('../../db/models');
+const { User, Group, Image, Membership, Venue, Event, Attendee } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
-const { Op, Sequelize} = require('sequelize')
-const  { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError,isEvent } = require('../../utils/common');
+const { Op, Sequelize } = require('sequelize')
+const { isGroup, isCoHost, isOrganizer, notAuthorizedErr, venueNotFoundError, isEvent } = require('../../utils/common');
 const { route } = require('./session');
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+const { uploadFile } = require("./s3");
 
 const validateQueryParams = [
     check('page')
@@ -31,23 +34,23 @@ const validateQueryParams = [
         .optional()
         .isISO8601('yyyy-mm-dd')
         .withMessage("Start date must be a valid datetime"),
-    
+
     handleValidationErrors
 ];
 
 const validateUpdateEvent = [
     check('venueId')
-        .custom((value, {req}) => {
-            
-                   return Venue.findAll({
-                        where : {id: value}
-                    }).then(venue => {
-                        if (venue.length <= 0) {
-                            return Promise.reject('Venue does not exist')
-                        }
-                    })              
-        }),       
-    
+        .custom((value, { req }) => {
+
+            return Venue.findAll({
+                where: { id: value }
+            }).then(venue => {
+                if (venue.length <= 0) {
+                    return Promise.reject('Venue does not exist')
+                }
+            })
+        }),
+
     check('name')
         .isLength({ min: 5 })
         .withMessage('Name must be at least 5 characters'),
@@ -55,7 +58,7 @@ const validateUpdateEvent = [
         .isIn(['Online', 'In person'])
         .withMessage('Type must be Online or In person'),
     check('capacity')
-        .isNumeric() 
+        .isNumeric()
         .withMessage("Capacity must be an integer"),
     check('price')
         .isNumeric()
@@ -69,48 +72,48 @@ const validateUpdateEvent = [
         .withMessage("Start date must be in the future"),
     check('endDate')
         .isISO8601()
-    .custom((value, {req}) =>{
-        if(new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
+        .custom((value, { req }) => {
+            if (new Date(value) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
             return true;
-    }),  
+        }),
     handleValidationErrors
 ];
 
 
 
 router.get("/", validateQueryParams, async (req, res, next) => {
-   
-    let { page, size, name, type, startDate} = req.query; 
-    
-    
-    if(!page) page =0
-    if(!size) size =20
-    
+
+    let { page, size, name, type, startDate } = req.query;
+
+
+    if (!page) page = 0
+    if (!size) size = 20
+
     let pagination = {}
     let where = {}
-    if(name)where.name = name
-    if(type) where.type= type
-    if(startDate)where.startDate = startDate
+    if (name) where.name = name
+    if (type) where.type = type
+    if (startDate) where.startDate = startDate
 
     pagination.limit = size
-    pagination.offset = size * (page )
-    
+    pagination.offset = size * (page)
+
     const events = await Event.findAll({
-       
-       
+
+
         include: [
-            
-             {
+
+            {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
             },
             {
                 model: Group,
-                attributes:['id','name','city','state','organizerId','private'],
-                nested:true,
+                attributes: ['id', 'name', 'city', 'state', 'organizerId', 'private'],
+                nested: true,
                 include: [
                     {
-                        model:User, 
+                        model: User,
                         as: 'Organizer',
                         attributes: ['id', 'firstName', 'lastName']
                     }
@@ -118,21 +121,21 @@ router.get("/", validateQueryParams, async (req, res, next) => {
             },
             {
                 model: Venue,
-                attributes:['id','city','state']
+                attributes: ['id', 'city', 'state']
             },
-            
+
         ],
-        
+
         where,
-         ...pagination
-     
+        ...pagination
+
 
     });
-    for(let i=0; i<events.length; i++){
+    for (let i = 0; i < events.length; i++) {
         events[i] = events[i].toJSON();
         events[i].numAttending = await Attendee.count({
-            where:{
-                eventId : events[i].id
+            where: {
+                eventId: events[i].id
             }
         })
     }
@@ -143,103 +146,107 @@ router.get("/", validateQueryParams, async (req, res, next) => {
 
 });
 
-router.delete("/:eventId", requireAuth, async (req,res,next)=>{
+router.delete("/:eventId", requireAuth, async (req, res, next) => {
     const eventId = req.params.eventId
-    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next)
+    if (!(await isEvent(eventId))) return eventNotFoundError(req, res, next)
 
     const event = await Event.findByPk(eventId)
 
-    if(event){
+    if (event) {
         event.destroy();
         res.status(200);
         res.json({
             "message": "Successfully deleted"
         });
-    }else{
-        return eventNotFoundError(req,res,next)
+    } else {
+        return eventNotFoundError(req, res, next)
     }
 });
 
-router.put("/:eventId", requireAuth,validateUpdateEvent, async (req,res,next)=>{
+router.put("/:eventId", upload.single('file'), requireAuth, validateUpdateEvent, async (req, res, next) => {
     const eventId = parseInt(req.params.eventId);
-    const {venueId,name,type,capacity,price,description,startDate,endDate,imageUrl} = req.body
+    const { venueId, name, type, capacity, price, description, startDate, endDate, file } = req.body
+    console.log(req.file)
     const e = await Event.findByPk(eventId);
-    if(!e) return eventNotFoundError(req, res, next);
+    if (!e) return eventNotFoundError(req, res, next);
     const group = await e.getGroup();
-    if ((await isOrganizer(group.id, req.user) ) || (await isCoHost(group.id, req.user))) {
+    if ((await isOrganizer(group.id, req.user)) || (await isCoHost(group.id, req.user))) {
         e.venueId = venueId;
         e.name = name;
-        e.description =description;
-        e.type =type;
-        e.capacity =capacity;
-        e.price =price;
-        e.startDate =startDate;
-        e.endDate =endDate;
-        if(imageUrl){
+        e.description = description;
+        e.type = type;
+        e.capacity = capacity;
+        e.price = price;
+        e.startDate = startDate;
+        e.endDate = endDate;
+        if (req.file) {
+            imageResult = await uploadFile(req.file);
+            console.log("image on update event  ..........", imageResult.Location)
             const image = await Image.findOne({
-                where:{
-                    eventId:eventId
+                where: {
+                    eventId: eventId
                 },
-                limit:1
+                limit: 1
             });
-            if(image){ 
-                await image.update({ url:imageUrl })}
+            if (image) {
+                if (imageResult.Location) await image.update({ url: imageResult.Location })
+            }
             else {
-                const newImage = await Image.create({
-                    url:imageUrl,
-                    eventId:eventId,
-                    userId:req.user.id
+                if (imageResult.Location) await Image.create({
+                    url: imageResult.Location,
+                    eventId: eventId,
+                    userId: req.user.id
                 })
             }
         }
         await e.save();
         res.status(200)
         const result = await getEventById(eventId);
-        res.json(result)      
+        res.json(result)
     } else {
         return notAuthorizedErr(req, res, next)
     }
-    
+
 });
 
 router.get("/:eventId", async (req, res, next) => {
     const eventId = req.params.eventId;
-    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next);
+    if (!(await isEvent(eventId))) return eventNotFoundError(req, res, next);
 
-    const event =  await getEventById(eventId);
+    const event = await getEventById(eventId);
 
     res.status(200);
     res.json(event);
 });
 
-router.get("/:eventId/attendees", async (req,res,next)=>{
+router.get("/:eventId/attendees", async (req, res, next) => {
     const eventId = parseInt(req.params.eventId);
     const event = await Event.findByPk(eventId);
-    
-    if(!event) return eventNotFoundError(req,res,next);
+
+    if (!event) return eventNotFoundError(req, res, next);
 
     const groupId = event.groupId;
 
 
-    if((await isOrganizer(groupId,req.user)) || ((await isCoHost(groupId,req.user)))){
+    if ((await isOrganizer(groupId, req.user)) || ((await isCoHost(groupId, req.user)))) {
         const attendance = await Attendee.findAll({
             where: {
-                eventId: eventId               
+                eventId: eventId
             },
-            attributes: ['eventId','userId','status']
+            attributes: ['eventId', 'userId', 'status']
         });
         res.status(200);
         res.json(attendance);
-    }else if(!(await isOrganizer(groupId,req.user)) || (!(await isCoHost(groupId,req.user)))){
+    } else if (!(await isOrganizer(groupId, req.user)) || (!(await isCoHost(groupId, req.user)))) {
         const attendance = await Attendee.findAll({
-            
+
             where: {
                 eventId: eventId,
                 status: {
                     [Op.notIn]: ['pending']
                 }
             },
-            attributes: ['eventId','userId','status']
+            attributes: ['eventId', 'userId', 'status']
         });
         res.status(200);
         res.json(attendance);
@@ -247,41 +254,41 @@ router.get("/:eventId/attendees", async (req,res,next)=>{
 
 });
 
-router.delete("/:eventId/attendees", requireAuth, async (req,res,next)=>{
+router.delete("/:eventId/attendees", requireAuth, async (req, res, next) => {
     const eventId = parseInt(req.params.eventId)
-   
+
     const userId = req.body.userId;
 
     const event = await Event.findByPk(eventId)
-    if(!event) return eventNotFoundError(req,res,next);
+    if (!event) return eventNotFoundError(req, res, next);
 
     const attendance = await Attendee.findOne({
-        where:{
+        where: {
             eventId: eventId,
-            userId : userId
-        }        
+            userId: userId
+        }
     });
 
-    
-    if(!attendance) return attendanceNotFoundErr(req,res,next)
+
+    if (!attendance) return attendanceNotFoundErr(req, res, next)
 
     const groupId = attendance.groupId;
-    if((req.user.id === attendance.userId) || (await isOrganizer(groupId,req.user) || (await isCoHost(groupId,req.user)))){
+    if ((req.user.id === attendance.userId) || (await isOrganizer(groupId, req.user) || (await isCoHost(groupId, req.user)))) {
         await attendance.destroy();
         res.status(200);
         res.json({
             "message": "Successfully deleted attendance from event"
         })
-    }else{
-        return notUserOrOrganizerErr(req,res,next)
+    } else {
+        return notUserOrOrganizerErr(req, res, next)
     }
 });
 
-router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
+router.post("/:eventId/attendees", requireAuth, async (req, res, next) => {
     const eventId = parseInt(req.params.eventId);
     const event = await Event.findByPk(eventId);
-    if(!event) return eventNotFoundError(req,res,next);
-    if(!(await isMember(event.groupId,req.user))) return notAuthorizedErr(req,res,next);
+    if (!event) return eventNotFoundError(req, res, next);
+    if (!(await isMember(event.groupId, req.user))) return notAuthorizedErr(req, res, next);
 
     const attendee = await Attendee.findOne({
         where: {
@@ -302,7 +309,7 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
         eventId: eventId,
         status: "pending"
     });
-    if(newAttendee){
+    if (newAttendee) {
         const result = {
             eventId: newAttendee.eventId,
             userId: newAttendee.userId,
@@ -311,105 +318,105 @@ router.post("/:eventId/attendees",requireAuth, async (req,res,next)=>{
         res.status(200);
         res.json(result)
 
-    }else{
+    } else {
         res.json("error")
     }
 
-   
-    
+
+
 });
 
 router.put("/:eventId/attendees", requireAuth, async (req, res, next) => {
     const { userId, status } = req.body;
     const eventId = req.params.eventId;
     const event = await Event.findByPk(eventId);
-    
+
     const attendee = await Attendee.findOne({
-        where:{
+        where: {
             eventId: eventId,
             userId: userId
         }
-        
+
     });
     const user = await User.findByPk(userId);
     if (!user) return userNotFoundError(req, res, next);
-    if(!event) return eventNotFoundError(req, res, next);    
-    if (!attendee) return attendanceNotFoundErr(req, res, next);    
-    if (status === "pending") cannotChangeStatusError(req,res,next);
+    if (!event) return eventNotFoundError(req, res, next);
+    if (!attendee) return attendanceNotFoundErr(req, res, next);
+    if (status === "pending") cannotChangeStatusError(req, res, next);
     const groupId = event.groupId;
-    if(!(await isOrganizer(groupId,req.user)) && !(await isCoHost(groupId,user))) notAuthorizedErr(req,res,next);
+    if (!(await isOrganizer(groupId, req.user)) && !(await isCoHost(groupId, user))) notAuthorizedErr(req, res, next);
     attendee.status = status;
     attendee.save();
     res.status(200);
-    res.json(attendee);   
+    res.json(attendee);
 });
 
-router.post("/:eventId/images", requireAuth, async(req,res,next)=>{
+router.post("/:eventId/images", requireAuth, async (req, res, next) => {
     const eventId = parseInt(req.params.eventId);
     const url = req.body.url;
-    if(!(await isEvent(eventId))) return eventNotFoundError(req,res,next);
+    if (!(await isEvent(eventId))) return eventNotFoundError(req, res, next);
     const attendee = await Attendee.findOne({
-        where:{
-            eventId:eventId,
-            userId:req.user.id,
+        where: {
+            eventId: eventId,
+            userId: req.user.id,
         }
     });
-    if(!attendee) return notAuthorizedErr(req,res,next);
-    
+    if (!attendee) return notAuthorizedErr(req, res, next);
+
     const image = await Image.create({
-        url:url,
+        url: url,
         userId: req.user.id,
         groupId: null,
         eventId: eventId
     })
     res.status(200)
     res.json({
-        id:image.id,
+        id: image.id,
         imageableId: eventId,
         url: image.url
-    })   
-    
+    })
+
 });
 
-async function getEventById(eventId){
+async function getEventById(eventId) {
     const event = await Event.findOne({
-        where :{
-            id : eventId
-        },      
+        where: {
+            id: eventId
+        },
         attributes: {
-                include: [
-                    [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
-                ]
-            },
+            include: [
+                [Sequelize.fn('COUNT', Sequelize.col('Attendees.id')), 'numAttending']
+            ]
+        },
         include: [
             {
                 model: Attendee,
                 attributes: []
             },
-             
+
             {
                 model: Group,
-                attributes:['id','name','city','state','organizerId','private'],
-                nested:true,
+                attributes: ['id', 'name', 'city', 'state', 'organizerId', 'private'],
+                nested: true,
                 include: [
                     {
-                        model:User, 
+                        model: User,
                         as: 'Organizer',
                         attributes: ['id', 'firstName', 'lastName']
                     }
                 ],
-                group:['Organizer.id']
+                group: ['Organizer.id']
             },
             {
                 model: Venue,
-                attributes:['id','city','state']
+                attributes: ['id', 'city', 'state']
             },
             {
                 model: Image,
                 attributes: ['id', 'groupId', 'url']
             }
         ],
-        group: ['Event.id','Images.id','Group.id','Venue.id','Group->Organizer.id']
+        group: ['Event.id', 'Images.id', 'Group.id', 'Venue.id', 'Group->Organizer.id']
     });
     return event;
 }
@@ -464,14 +471,14 @@ function eventNotFoundError(req, _res, next) {
     err.status = 404;
     return next(err);
 }
-async function isMember(groupId,user){
+async function isMember(groupId, user) {
     const member = await Membership.findAll({
-        where:{
+        where: {
             memberId: user.id,
             groupId: groupId
         }
     });
-    if(!member || member.length < 1) return false;
+    if (!member || member.length < 1) return false;
     else return true;
 
 

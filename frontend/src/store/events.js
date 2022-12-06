@@ -98,22 +98,33 @@ export const getEventByIdThunk = (eventId) => async dispatch => {
 
   //update an event
   export const updateEventThunk = (event) => async dispatch =>{
-    const {venueId, name, description, type, capacity, price, startDate, endDate, imageUrl } = event;
+    // const {venueId, name, description, type, capacity, price, startDate, endDate,file } = event;
    
+    // const response = await csrfFetch(`/api/events/${event.id}`,{
+    //   method: 'PUT',
+    //   body:JSON.stringify({
+    //     venueId,
+    //     name,
+    //     description,
+    //     type,
+    //     capacity,
+    //     price,
+    //     startDate,
+    //     endDate,
+    //     imageUrl
+    //   }),
+    // })
+
+    const formData  = new FormData();
+    for(const name in event) {
+      formData.append(name, event[name]);
+    }
     const response = await csrfFetch(`/api/events/${event.id}`,{
       method: 'PUT',
-      body:JSON.stringify({
-        venueId,
-        name,
-        description,
-        type,
-        capacity,
-        price,
-        startDate,
-        endDate,
-        imageUrl
-      }),
+      headers: {'Content-Type': 'multipart/form-data'},
+      body: formData
     })
+
     if(response.ok){
         const data = await response.json();
         dispatch(clearState());
