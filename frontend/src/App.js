@@ -77,9 +77,9 @@ function App() {
             <Route path="/profile">
               <Profile />
             </Route>
-            <Route path="/fetchGroups">
+            {/* <Route path="/fetchGroups">
               <FetchGroups />
-            </Route>
+            </Route> */}
             <Route path="/createGroup">
               <GroupsForm />
             </Route>
