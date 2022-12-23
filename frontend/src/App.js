@@ -30,10 +30,15 @@ import LoginFormModal from "./component/LoginFormModal";
 import LoginForm from "./component/LoginFormModal/LoginForm";
 import SignUpFormModal from "./component/SignupFormModal";
 import ViewVenue from "./component/ViewVenue";
-import EditVenue from "./component/EditVenue";
 
+import EditVenue from "./component/EditVenue";
+import FetchGroups from "./component/FetchGroups";
+import { QueryClientProvider,  QueryClient } from "react-query";
+
+export const queryClient = new QueryClient();
 
 function App() {
+ 
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -55,6 +60,7 @@ function App() {
       <div className="content-wrap">
         <Navigation isLoaded={isLoaded} className="navigationStyle" />
         {isLoaded && (
+          <QueryClientProvider client={queryClient}>
           <Switch>
             <Route exact path="/">
               <Home />
@@ -71,6 +77,9 @@ function App() {
             <Route path="/profile">
               <Profile />
             </Route>
+            <Route path="/fetchGroups">
+              <FetchGroups />
+            </Route>
             <Route path="/createGroup">
               <GroupsForm />
             </Route>
@@ -80,6 +89,7 @@ function App() {
             <Route path="/groups/:groupId/venue/new">
               <CreateVenue sessionUser={sessionUser} />
             </Route>
+
             <Route path="/groups/:groupId/venues/:venueId/edit">
               <EditVenue sessionUser={sessionUser}  />
             </Route>
@@ -120,6 +130,7 @@ function App() {
               <AboutMeetup />
             </Route>
           </Switch>
+          </QueryClientProvider>
         )}
 
         

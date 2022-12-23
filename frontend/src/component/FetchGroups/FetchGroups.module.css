@@ -1,0 +1,35 @@
+.subDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+.table{
+    border: 1px solid;
+}
+.tr{
+    border: 1px solid;
+}
+
+.td{
+    border: 1px solid;
+}
+
+.th{
+    border: 1px solid;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: crimson;
+    color: white;
+    width: 50px;
+}
