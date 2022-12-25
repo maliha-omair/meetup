@@ -56,32 +56,11 @@ function LoginForm() {
     if (sessionUser) return (
         history.push("/")
     );
-    function handleSubmit(e) {
-        e.preventDefault();
-        let user = {}
-        if (demoUser) {
-            user = {
-                credential: "demo123@aa.com",
-                password: "demouser123"
-            }
-        } else {
-            user = {
-                credential: formik.values.email,
-                password: formik.values.password
-            }
-        }
-        setErrors([]);
-
-        return dispatch(sessionActions.login(user))
-            .then((res) => {
-
-            })
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(Object.values(data.errors));
-            });
-    }
-
+  
+    function handleDemoUser(){
+        formik.values.email = "demo123@aa.com";
+        formik.values.password = "demouser123";
+    }    
     function openSignupModal() {
         dispatch(closeLoginModal());
         dispatch(showSignupModal());
@@ -135,10 +114,10 @@ function LoginForm() {
                 </div>
 
                 <div className="login-button-div">
-                    <button className="login-button" key="login" type="submit" onClick={() => setDemoUser(false)}>Log in</button>
+                    <button className="login-button" key="login" type="submit" >Log in</button>
                 </div>
                 <div className="login-button-div">
-                    <button className="login-button" key="demouser" type="submit" onClick={() => setDemoUser(true)} >Demo User</button>
+                    <button className="login-button" key="demouser" type="submit" onClick={handleDemoUser} >Demo User</button>
                 </div>
             </div>
 
